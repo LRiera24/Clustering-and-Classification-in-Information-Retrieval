@@ -264,10 +264,32 @@ Marcos Manuel Tirador del Riego
 		 \end{algorithm}
 		 
 		Podemos deducir de los algoritmos que la complejidad de ambos es linear en el tiempo que toma escanear la informaci\'on. Dado que esto hay que hacerlo al menos una vez, se puede decir que este m\'etodo tiene complejidad temporal \'optima. Dicha eficiencia hace que NB sea un m\'etodo de clasificaci\'on tan usado.
+	\end{subsection}
+	
+	
+	\begin{subsection}{Feature Selection}
+		Un t\'ermino con ruido (\emph{noise feature}) es aquel que al pertenecer a la representaci\'on de los documentos, provoca un aumento del error de clasificaci\'on de los datos. Por ejemplo, supongamos que tenemos una palabra que ocurre rara vez, pero que en el conjunto de entrenamiento ocurre siempre en la misma clase. Entonces al clasificar un documento nuevo que contiene esta palabra, la misma provocar\'a que el clasificador se incline en cierta medida por seleccionar esta clase. Sin embargo, dado que la ocurrencia de esta palabra solo en la clase mencionada es accidental, claramente no aporta informaci\'on suficiente para la clasificaci\'on y por tanto, al considerarlo de otra forma, aumenta el error.
 		
+		Este es uno de los prop\'positos que tiene la selecci\'on de t\'erminos (\emph{feature selection} (FT)). Esta consiste en reducir el vocabulario, considerado en la clasificaci\'on de textos solo un subconjunto del que aparece en el conjunto de entrenamiento. N\'otese que al disminuir el tama\~no del vocabulario aumenta la eficiencia de los m\'etodos de entrenamiento y clasificaci\'on (aunque no es el caso de NB).
 		
+		Selecci\'on de t\'erminos prefiere un clasificador m\'as simple antes que uno m\'as complejo. Esto es \'util cuando el conjunto de entrenamiento no es muy grande.
 		
+%		Nos concentraremos en describir la Selecci\'on de t\'erminos para la clasificaci\'on de dos clases.
+
+		 En FT usualmente fijamos una cantidad $k$ de vocablos por cada clase $c$, que ser\'an los usados por el clasificador. Para seleccionar los $k$ t\'erminos deseados establecemos un ranking entre los t\'erminos de la clase, haciendo uso de una funci\'on de medida de utilidad $A(t,c)$, y nos quedamos con los $k$ mejor posicionados. El algoritmo b\'asico consiste en para cada clase $c$ iterar por todos los t\'erminos del vocabulario y computar su medida de utilidad para la clase; para finalmente ordenar los resultados y devolver una lista con los $k$ mejores.
+		 
+		 Presentaremos a continuaci\'on tres de los m\'etodos de calcular $A(t,c)$ m\'as comunes.
 		
+		\begin{itemize}
+			\item\textbf{Informaci\'on Manual}
+				Computar $A(t,c)$ como el valor esperado de informaci\'on mutua (\emph{Mutual Information} (MI)), nos da una medida de cuanta informaci\'on, la presencia en $c$ de un t\'ermino dado, aporta a tomar la decisi\'on correcta de clasificaci\'on de un documento. Lo definimos como \color{red}[Hay que poner aqui que esto se cogio del libro, pagina 272]\color{black}
+				\[
+					I(U_t;C_t) = \sum_{e_t \in \{ 1,0 \} } \sum_{e_c \in \{ 1,0 \} } P( U_t = e_t, C_t = e_c) \log_2 \frac{P (U_t = e_t, C_t = e_c) }{ P(U_t = e_t) P(C_t = e_c) },
+				\]
+				donde $U_t$ es una variable aleatoria que toma valor $e_t = 1$ si el documento contiene el t\'ermino $t$ y $e_t = 0$ en otro caso, y $C$ es otra variable aleatoria que toma valor $e_c = 1$ si el documento est\'a en la clase $c$ y $e_c = 0  $ en otro caso. 
+
+			
+		\end{itemize}
 	\end{subsection}
 	
 \begin{itemize}
