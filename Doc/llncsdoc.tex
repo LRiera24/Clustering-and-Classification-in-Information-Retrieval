@@ -6,6 +6,7 @@
 \usepackage{color}
 
 \usepackage{algorithm}
+\usepackage{amsfonts}
 \usepackage[noend]{algpseudocode}
 
 
@@ -302,6 +303,18 @@ Marcos Manuel Tirador del Riego
 			
 		\end{itemize}
 	\end{subsection}
+	
+	\subsection{K Nearest Neighbor}
+	
+		En el algoritmo de Naive Bayes represent\'abamos los documentos como vectores booleanos de t\'erminos. Luego vimos que hay t\'erminos que no eran relevantes y que aportaban ruido, y lo solucionamos seleccionando para el clasificador solamente un subconjunto de todos los t\'erminos. A\'un as\'i estamos clasificando la relevancia de cada t\'ermino  en relevante o no relevante (o que introduce ruido).
+		
+		 El m\'etodo que presentamos en esta secci\'on, as\'i como otros similares, asignan a cada t\'ermino cierto valor de importancia relativa al documento en que aparece. Para esto se cambia la representaci\'on de los documentos a vectores de $\mathbb{R}^{|V|}$ donde a cada componente corresponde cierto peso que se le asigna al t\'ermino correspondiente a esa coordenada. Entonces, el espacio de documentos $\mathcal{X}$ (dominio de $\gamma$) es $\mathbb{R}^{|V|}$. A esta forma de representaci\'on de documentos se le conoce como modelo de espacio de vectores. La hip\'otesis b\'asica para usar el modelo de espacio de vectores es la siguiente \color{red} citar adecuadamente : pagina 289 \color{black}
+		 
+		 \textbf{Hip\'otesis de contig\"uidad:} Documentos en la misma clase forman una regi\'on contigua  y regiones de diferentes clases no se superponen.
+		 
+		 Las decisiones de muchos clasificadores basados en espacio de vectores dependen de una noci\'on de distancia. Pueden ser usadas por ejemplo similitud basado en el coseno (del \'angulo formado entre los vectores) o distancia Euclideana. Por lo general no hay mucha diferencia entre usar una u otra de estas distancias.
+		 
+		 La tarea de la clasificaci\'on en el modelo de espacio de vectores es determinar las fronteras entre los documentos pertenecientes a una u otra clase. Estas \'ultimas son llamadas fronteras de decisi\'on ya que estas dividen el espacio en diferentes hiperespacios, tales que si un documento pertenece a un hiperespacio determinado, autom\'aticamente sabemos de qu\'e clase es. En K Nearest Neighbor esta ...
 	
 \begin{itemize}
 	\item Aprendizaje supervisado
