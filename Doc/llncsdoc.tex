@@ -3,6 +3,16 @@
 % for Lecture Notes in Computer Science, version 2.4
 \documentclass{llncs}
 \usepackage{llncsdoc}
+\usepackage{color}
+
+\usepackage{algorithm}
+\usepackage[noend]{algpseudocode}
+
+
+\usepackage{amsmath}
+\DeclareMathOperator*{\argmax}{arg\,max}
+\DeclareMathOperator*{\argmin}{arg\,min}
+
 \usepackage[spanish]{babel}
 %
 \begin{document}
@@ -142,6 +152,124 @@ Marcos Manuel Tirador del Riego
 
 \section{Clasificaci\'on}
 
+	El problema de clasificaci\'on en sentido general consiste en determinar dentro un conjunto de clases a cu\'a de ellas pertenece un objeto dado. En el marco de este documento estamos interesados en estudiar la clasificaci\'on de textos. 
+	
+	La forma m\'as simple de clasificaci\'on de un conjunto de textos es la denominada clasificaci\'on en dos clases. Dichas clases est\'an determinadas por un t\'opico espec\'ifico y ser\'ian: \emph{documentos sobre dicho tema } y \emph{documentos no relacionados con el tema}. Este tipo de clasificaci\'on en ocasiones es llamada \emph{filtrado}. 
+	
+	La forma m\'as antigua de llevar a cabo la clasificaci\'on es manualmente. Por ejemplo, los bibliotecarios clasifican los libros de acuerdo a ciertos criterios, de modo que encontrar una informaci\'on buscada no resulte una tarea de gigante dificultad. Sin embargo la clasificaci\'on manual tiene sus l\'imites de escalabilidad. 
+	
+	Como alternativa podr\'ia pensarse el uso de \emph{reglas} para determinar autom\'aticamente si un texto pertenece o no a una colecci\'on de documentos relacionados con un tema. Por ejemplo las consultas permanentes son un ejemplo de regla aplicada autom\'aticamente. Una consulta permanente es como una consulta normal pero que es ejecutada repetidamente sobre una colecci\'on de textos a la cual se van adicionando documentos nuevos constantemente. Su finalidad es determinar si los nuevos textos pertenecen o no a la clase en cuesti\'on.
+	
+	Una regla captura una cierta combinaci\'on de palabras claves que identifican una clase. Reglas codificadas a mano pueden llegar a ser altamente escalable, pero crearlas y mantenerlas requiere un elevado costo en recursos humanos.
+	
+	Existe, sin embargo, un enfoque adicional a los dos anteriores mencionados. Nos referimos al uso de \emph{Aprendizaje de M\'aquinas}. En este enfoque el conjunto de reglas de clasificaci\'on, o en general, el criterio usado para clasificar, es aprendido de forma autom\'atica a partir de los datos de entrenamiento.
+	
+	Introduciremos a continuaci\'on la definici\'on forma del problema de clasificaci\'on de textos, en el contexto del Aprendizaje de M\'aquinas.
+	
+	\begin{definition} \label{Problema_de_clasificacion}
+		Sea $\mathcal{{X}}$ el espacio de documentos y $\mathcal{C} := \{c_i \mid c_i \subset \mathcal{X}, i \in \{ 1,2,\dots,n\} \}$ un conjunto fijo de clases (tambi\'en llamadas categor\'ias o etiquetas). Sea adem\'as $D$ un conjunto entrenado de documentos clasificados $(d,c) \in \mathcal X \times \mathcal{C}$. El \emph{problema de la clasificaci\'on de textos} consiste en encontrar, usando m\'etodos o algoritmos de aprendizaje, una funci\'on \emph{clasificadora} $\gamma : \mathcal{X} \rightarrow \mathcal{C}$, que mapee documentos a clases, que satisfaga que $D \subset \gamma$. 	
+
+	\end{definition}
+	
+	El aprendizaje que toma parte en la b\'usqueda de $\gamma$ es llamado \emph{aprendizaje supervisado} debido a que se necesita la ayuda de uno o varios expertos que creen el conjunto de entrenamiento $D$. Estos expertos son  tambi\'en quienes determinan el conjunto de clases en que se clasificar\'an los textos. Denotaremos el m\'etodo de aprendizaje supervisado descrito por $\Gamma$, el cual act\'ua como una funci\'on que mapea un conjunto de datos de entrenamiento en una funci\'on clasificadora, osea que $\Gamma(D) = \gamma$.
+	
+	La definici\'on dada en \ref{Problema_de_clasificacion} implica que cada documento pertenece a una sola clase. Pero existe otro tipo de problemas que permiten que un documento pertenezca a m\'as de una clase. Por ahora enfocaremos nuestra atenci\'on en el tipo de una clase.
+	
+	\begin{subsection}{Naive Bayes}
+
+		Uno de los m\'etodos m\'as comunes de aprendizaje supervisado es el conocido como \emph{Naive Bayes} (NB). Este es un m\'etodo de aprendizaje probabil\'istico. La probabilidad de un documento $d$ de pertenecer a una clase $c$ se puede expresar como $P(c\mid d)$. La tarea del algoritmo es encontrar la mejor clase para cada documento $d$. Para ello NB establece que la clase m\'as apropiada para un documento es la m\'as probable, o sea
+		
+		\[
+		c_{map} = \argmax_{c\in\mathcal{C}} P(c \mid d).
+		\]
+		
+		La clase escogida para $d$ se denota por $c_{map}$ debido a que este m\'etodo de clasificaci\'on, de acuerdo a la clase m\'as probable para un documento dado, es conocido como \emph{maximum a posteriori} (MAP).
+		
+		Sin embargo la probabilidad $P(c \mid d)$ es dif\'icil de determinar. Haciendo uso del \emph{Teorema de Bayes} podemos expresarla como
+		
+		\[
+		P(c \mid d) =\frac{ P(d\mid c) P(c)}{P(d)}.
+		\]
+		
+		El factor de normalizaci\'on $P(d)$ es usualmente ignorado ya que no aporta informaci\'on a la hora de buscar la clase m\'as apropiada para un documento $d$, ya que este tiene el mismo efecto en todos los candidatos. Este c\'alculo puede ser simplificado lo expresamos en t\'erminos de los t\'erminos en los documentos. Supongamos que $\{t_1, t_2, \dots , t_n \}$ son los t\'erminos que aparecen en $d$. Entonces tenemos que  
+		
+		\[
+			c_{map} = \argmax_{c\in\mathcal{C}} P(c) P(d \mid c) = \argmax_{c\in\mathcal{C}} P(c) \prod_{1\leq k\leq n} P(t_k \mid c),
+		\]
+		donde $P(t_k \mid c)$ es la probabilidad de que el t\'ermino $t_k$ aparezca en un documento de la clase $c$. Podemos considerar $p(t_k \mid c)$ como una medida de qu\'e tanto demuestra el t\'ermino $t_k$ que $c$ es la clase correcta. El t\'ermino $P(c)$ es conocido como probabilidad previa (\emph{prior probability}) y en caso de que la informaci\'on aportada por los t\'erminos no sea determinante en la selecci\'on podemos siempre escoger la clase con mayor valor de $P(c)$.
+		
+		Para simplificar a\'un mas el c\'omputo podemos sustituir los valores anteriores por sus logaritmos. Esto reducir'a el costo de hacer los c\'alculos y adem\'as los errores aritm\'eticos dado que la multiplicaci\'on se transforma en suma. La clase seleccionada ser\'ia entonces
+		
+		\[
+				c_{map} = \argmax_{c\in\mathcal{C}} \left( \log(P(c))  + \sum_{1\leq k\leq n} \log(P(t_k\mid c)) \right).
+		\]
+		
+		Solo nos queda ver como estimamos los par\'ametros $P(c)$ y $P (t_k\mid c)$ dado que los valores reales no son posibles de calcular.	Para la probabilidad previa podemos contar la frecuencia relativa de cada clase en $D$:
+		
+		\[P(c) = \frac{ N_c }{N} , \]
+		donde $N_c$ es el n\'umero de documentos en la clase $c$ y $N$ es el numero total de documentos. Procedemos de manera similar para la probabilidad espec\'ifica de una palabra en una clase
+		\[
+			P(t_k\mid c) =\frac{ T_{c,t_k}}{T_{c}},
+		\]
+		donde $T_{c,t_k}$ indica la cantidad de veces que ocurre  la palabra $t_k$ en todos los documentos de la clase $c$ y $T_{c}$ es la cantidad total de palabras contando repeticiones) en toda la clase $c$. Si embargo, a\'un tenemos un problema con estas f\'ormulas y es que estamos asignando probabilidad cero a todos las clases que no contengan a todas las palabras del documento a clasificar. Para evitar esto adicionamos por defecto una unidad a cada contador lo cual es conocido como \emph{Laplace smoothing}
+		\[
+			P(t\mid c) = \frac{T_{c,t} + 1}{T_c + |V|},	
+		\]
+		donde $|V|$ es el n\'umero total de t\'eminos en el vocabulario.
+		
+		 Es importante destacar que en este m\'etodo estamos obviando la posici\'on de las palabras. Presentamos aqu\'i los algoritmos para entrenar y clasificar usando BN que fueron textualmente copiados de \color{red}{2009 Manning C. D., Introduction to Information Retrieval, p\'agina 260. [No recuerdo como citar esto correctamente. Also recordar que agregue unos paquetes arriba que no se si se agragan aqui o en otro de los .tex]}\color{black}.
+		 
+		 
+		 
+		 \begin{algorithm}{}
+		 			\caption{TrainMultinomial}
+		 	\begin{algorithmic}[1]
+		 		
+		 		% ENTRADA / SALIDA
+		 		\Require{Set of classes $\mathcal{C}$ and training set $D$.} 
+%		 		\Ensure{Trained.}
+		 		\State{$ V \leftarrow ExtractVocabulary(D)$}
+		 		\State{$ N \leftarrow CountDocs(D)$}
+		 		\For{$c \in \mathcal{C}$}
+		 		\State $N_c \leftarrow CountDocsInClass(D,c)$
+		 		\State $prior[c] \leftarrow N_c/N$
+		 		\State $text_c \leftarrow ConcatenateTextOfAllDocsInClass(D, c)$
+		 		\For{$t \in V$}
+		 		\State{$T_{ct} \leftarrow CountTokensOfTerm(text_c, t)$}
+		 		\EndFor
+		 		\For{$t \in V$}
+		 		\State{$condprob[t][c] \leftarrow \frac{T_{c,t} + 1}{\sum_{t'} (T_{c,t'} + 1)}$}
+		 		\EndFor 
+		 		\EndFor
+		 		\State \textbf{\Return} $V, prior, condprob$
+		 	\end{algorithmic}
+		 \end{algorithm}
+		 
+		 \begin{algorithm}
+		 	\caption{ApplyMultinomialNB}
+		 	\begin{algorithmic}[1]
+		 		
+		 		% ENTRADA / SALIDA
+		 		\Require{$\mathcal{C}, V$, $prior$, $condprob$, $d$} 
+		 		%		 			\Ensure{Trained.}
+		 		\State{$ W \leftarrow ExtractTokensFromDoc(V, d)$}
+		 		\For{$c \in \mathcal{C}$}
+		 		\State{$ score[c] \leftarrow \log prior[c]$}
+		 		\For{$t \in W$}
+		 		\State{$ score[c] +=  \log condprob[t][c]$}
+		 		\EndFor
+		 		\EndFor
+		 		\State \textbf{\Return} $\argmax_{c\in \mathcal{C}}(score[c])$
+		 	\end{algorithmic}
+		 \end{algorithm}
+		 
+		Podemos deducir de los algoritmos que la complejidad de ambos es linear en el tiempo que toma escanear la informaci\'on. Dado que esto hay que hacerlo al menos una vez, se puede decir que este m\'etodo tiene complejidad temporal \'optima. Dicha eficiencia hace que NB sea un m\'etodo de clasificaci\'on tan usado.
+		
+		
+		
+		
+	\end{subsection}
+	
 \begin{itemize}
 	\item Aprendizaje supervisado
 	
@@ -167,6 +295,8 @@ Marcos Manuel Tirador del Riego
 \item Algoritmos:
 \begin{itemize}
 	\item Naive Bayes
+	
+	
 	\item K-Nearest Neighbours
 \end{itemize}
 \end{itemize}
