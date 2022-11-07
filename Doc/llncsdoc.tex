@@ -270,24 +270,35 @@ Marcos Manuel Tirador del Riego
 	\begin{subsection}{Feature Selection}
 		Un t\'ermino con ruido (\emph{noise feature}) es aquel que al pertenecer a la representaci\'on de los documentos, provoca un aumento del error de clasificaci\'on de los datos. Por ejemplo, supongamos que tenemos una palabra que ocurre rara vez, pero que en el conjunto de entrenamiento ocurre siempre en la misma clase. Entonces al clasificar un documento nuevo que contiene esta palabra, la misma provocar\'a que el clasificador se incline en cierta medida por seleccionar esta clase. Sin embargo, dado que la ocurrencia de esta palabra solo en la clase mencionada es accidental, claramente no aporta informaci\'on suficiente para la clasificaci\'on y por tanto, al considerarlo de otra forma, aumenta el error.
 		
-		Este es uno de los prop\'positos que tiene la selecci\'on de t\'erminos (\emph{feature selection} (FT)). Esta consiste en reducir el vocabulario, considerado en la clasificaci\'on de textos solo un subconjunto del que aparece en el conjunto de entrenamiento. N\'otese que al disminuir el tama\~no del vocabulario aumenta la eficiencia de los m\'etodos de entrenamiento y clasificaci\'on (aunque no es el caso de NB).
+		Este es uno de los prop\'positos que tiene la selecci\'on de t\'erminos (\emph{feature selection} (FS)). Esta consiste en reducir el vocabulario, considerado en la clasificaci\'on de textos solo un subconjunto del que aparece en el conjunto de entrenamiento. N\'otese que al disminuir el tama\~no del vocabulario aumenta la eficiencia de los m\'etodos de entrenamiento y clasificaci\'on (aunque no es el caso de NB).
 		
 		Selecci\'on de t\'erminos prefiere un clasificador m\'as simple antes que uno m\'as complejo. Esto es \'util cuando el conjunto de entrenamiento no es muy grande.
 		
 %		Nos concentraremos en describir la Selecci\'on de t\'erminos para la clasificaci\'on de dos clases.
 
-		 En FT usualmente fijamos una cantidad $k$ de vocablos por cada clase $c$, que ser\'an los usados por el clasificador. Para seleccionar los $k$ t\'erminos deseados establecemos un ranking entre los t\'erminos de la clase, haciendo uso de una funci\'on de medida de utilidad $A(t,c)$, y nos quedamos con los $k$ mejor posicionados. El algoritmo b\'asico consiste en para cada clase $c$ iterar por todos los t\'erminos del vocabulario y computar su medida de utilidad para la clase; para finalmente ordenar los resultados y devolver una lista con los $k$ mejores.
+		 En FS usualmente fijamos una cantidad $k$ de vocablos por cada clase $c$, que ser\'an los usados por el clasificador. Para seleccionar los $k$ t\'erminos deseados establecemos un ranking entre los t\'erminos de la clase, haciendo uso de una funci\'on de medida de utilidad $A(t,c)$, y nos quedamos con los $k$ mejor posicionados. El algoritmo b\'asico consiste en para cada clase $c$ iterar por todos los t\'erminos del vocabulario y computar su medida de utilidad para la clase; para finalmente ordenar los resultados y devolver una lista con los $k$ mejores.
 		 
 		 Presentaremos a continuaci\'on tres de los m\'etodos de calcular $A(t,c)$ m\'as comunes.
 		
 		\begin{itemize}
-			\item\textbf{Informaci\'on Manual}
+			\item\textbf{Informaci\'on Manual.}
 				Computar $A(t,c)$ como el valor esperado de informaci\'on mutua (\emph{Mutual Information} (MI)), nos da una medida de cuanta informaci\'on, la presencia en $c$ de un t\'ermino dado, aporta a tomar la decisi\'on correcta de clasificaci\'on de un documento. Lo definimos como \color{red}[Hay que poner aqui que esto se cogio del libro, pagina 272]\color{black}
 				\[
 					I(U_t;C_t) = \sum_{e_t \in \{ 1,0 \} } \sum_{e_c \in \{ 1,0 \} } P( U_t = e_t, C_t = e_c) \log_2 \frac{P (U_t = e_t, C_t = e_c) }{ P(U_t = e_t) P(C_t = e_c) },
 				\]
 				donde $U_t$ es una variable aleatoria que toma valor $e_t = 1$ si el documento contiene el t\'ermino $t$ y $e_t = 0$ en otro caso, y $C$ es otra variable aleatoria que toma valor $e_c = 1$ si el documento est\'a en la clase $c$ y $e_c = 0  $ en otro caso. 
-
+	
+				MI mide cu\'anta informaci\'on un t\'ermino contiene acerca de una clase. Por tanto mantener los t\'erminos que est\'an cargados de informaci\'on, y eliminar los que no, contribuye a reducir el ruido y mejorar la precisi\'on del clasificador.
+	
+			\item\textbf{Chi cuadrado $\chi^2$ FS.} En estad\'istica se dice que dos eventos son independientes si el resultado de uno no afecta al resultado del otro. Esto se puede escribir formalmente como $P(AB) = P(A) P(B)$. En estad\'istica el test $\chi^2$ se usa para medir el grado de independencia de dos eventos. En FS podemos entonces considerar aplicar este test asumiendo como eventos la ocurrencia de los t\'erminos y la ocurrencia de las clases. Esto es \color{red} Esto tambien hay que poner de donde lo cogi (pag 275)\color{black} 
+			\[
+				\chi^2(D,t,c) = \sum_{e_t\in \{ 1, 0 \}} \sum_{e_c\in \{ 1, 0 \}} \frac{(N_{e_te_c} - E_{e_t e_c}) ^2 } { E_{e_t e_c}},
+			\]
+			donde $N$ es la frecuencia seg\'un $D$, $E$ es la frecuencia esperada y $e_t$ y  $e_c$ se definen como en la medida anterior.
+			
+			\item \textbf{Selecci\'on basada en frecuencia}. Esta medida consiste en priorizar los t\'erminos que son m\'as comunes en la  clase. Puede ser calculado de dos formas diferentes. La primera es cantidad de repeticiones de un t\'ermino en los documentos de una clase, conocida como frecuencia en colecci\'on. La otra es frecuencia de documentos, y se calcula como la cantidad de documentos en la clase que contienen al t\'ermino en cuesti\'on.
+			
+			Cuando son seleccionados varios miles de t\'erminos, entonces esta medida es bastante buena. Esta es preferible a otros m\'etodos m\'as complejos cuando se aceptan soluciones sub\'optimas.
 			
 		\end{itemize}
 	\end{subsection}
