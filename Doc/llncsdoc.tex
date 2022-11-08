@@ -200,9 +200,81 @@ El \textit{agrupamiento particionado} crea un conjunto  de clústeres sin ningun
 
 \subsubsection{Algoritmos}
 \begin{itemize}
-	\item K-means
+	\item \textbf{K-means}
+	
+	Es el algoritmo de agrupamiento plano más importante. 
+	
+	Su \textit{objetivo} es minimizar la distancia euclidiana al cuadrado promedio de documentos de sus centros de conglomerados donde un centro de conglomerados se define como la media o centroide $\mu$ de los documentos en un grupo $\omega$:
+	
+	\begin{center}
+		$ \overrightarrow{\mu}(\omega) \leftarrow \dfrac{1}{|\omega_{k}|} \sum_{\overrightarrow{x} \in \omega_{k}} \overrightarrow{x} $
+	\end{center}
+	
+	Se asume que los documentos se representan como de longitud normalizada vectores en un espacio de valor real de la manera habitual. 
+	
+	Usamos centroides para Rocchio clasificación Aquí juegan un papel similar.
+
+	El grupo ideal en K-means es una esfera con el baricentro como su centro de gravedad. Idealmente, los grupos no deberían superponerse. 
+	
+	Nuestro desiderata para las clases en la clasificación de Rocchio fueron los mismos. 
+	
+	La diferencia es que no tenemos el conjunto de entrenamiento de beled en agrupamiento para el cual sabemos qué documentos deben
+	estar en el mismo grupo.
+	
+	Una medida de qué tan bien los centroides representan a los miembros de su grupo es la suma residual de cuadrados o RSS, la distancia al cuadrado de cada vector desde su centroide sumado sobre todos los vectores:
+	
+	\begin{center}
+		$ RSS_{k} = \sum_{\overrightarrow{x} \in \omega_{k}}|\overrightarrow{x} - \overrightarrow{\mu}(\omega_{k})|^2$
+	
+	\vspace{1em}
+	$ RSS = \sum_{k=1}^{K} RSS_{k} $
+	\end{center}
+
+	RSS es la \textit{función objetivo} en K-means y nuestro objetivo es minimizarla. Ya que N es fijo, minimizar RSS es equivalente a minimizar el promedio al cuadrado distancia, una medida de qué tan bien los centroides representan sus documentos.
+	
+	\begin{algorithm}
+		\caption{K-Means}
+		\begin{algorithmic}[1]
+			\Require{$\{\overrightarrow{x_{1}}, ... , \overrightarrow{x_{N}}\}, K $} 
+			%		 			\Ensure{Trained.}
+			\State{$(\overrightarrow{s_{1}}, . . . , \overrightarrow{s_{K}}) \leftarrow \textbf{SelectRandomSeeds}(\{\overrightarrow{x_{1}}, ... , \overrightarrow{x_{N}}\}, K)$}
+			\For{$k \leftarrow 1$ \textbf{to} $K$}
+			\State{$ \overrightarrow{\mu_{k}} \leftarrow \overrightarrow{s_{k}} $}
+			\EndFor
+			\While{stopping criterion has not been met}
+				\For{$k \leftarrow 1$ \textbf{to} $K$}
+				\State{$ \omega_{k} \leftarrow \{\} $}
+				\EndFor
+				\For{$n \leftarrow 1$ \textbf{to} $N$}
+				\State{$ j \leftarrow \argmin_{j'}|\overrightarrow{\mu_{j'}}-\overrightarrow{x_{n}}| $}
+				\State{$ \mu_{j} \leftarrow \omega_{j} \cup \{\overrightarrow{x_{n}}\} $ \hspace{2em} (reassignment of vectors) }
+				\EndFor
+				\For{$k \leftarrow 1$ \textbf{to} $K$}
+				\State{$ \overrightarrow{\mu_{k}} \leftarrow \dfrac{1}{|\omega_{k}|} \sum_{\overrightarrow{x} \in \omega_{k}} \overrightarrow{x} $ \hspace{2em} (recomputation of centroids)}
+				\EndFor
+			\EndWhile
+			\State{\Return {$\{\overrightarrow{\mu_{1}}, ... , \overrightarrow{\mu_{N}}\}$}}
+		\end{algorithmic}
+	\end{algorithm}
 \end{itemize}
 
+\newpage
+El primer paso de K-means es seleccionar como centros de conglomerados iniciales K al azar documentos seleccionados, las semillas. Luego, el algoritmo mueve los centros de los grupos
+en el espacio para minimizar el RSS. esto es
+iterativamente repitiendo dos pasos hasta que se cumpla un criterio de parada: 
+
+firma de documentos al clúster con el centroide más cercano; y recalculando cada centroide basado en los miembros actuales de su grupo. 
+
+Criterios de parada:
+\begin{itemize}
+	\item Se ha completado un número fijo de iteraciones I. Esta condición limita el tiempo de ejecución del algoritmo de agrupamiento, pero en algunos casos la calidad de el agrupamiento será deficiente debido a un número insuficiente de iteraciones.
+	\item La asignación de documentos a grupos (la función de partición $\gamma$) no
+	no cambia entre iteraciones. Excepto en los casos con un mini local mal mamá, esto produce un buen agrupamiento, pero los tiempos de ejecución pueden ser inaceptablemente
+	largo.
+	\item Los centroides no cambian entre iteraciones. Esto es equivalente a $\gamma$ no cambiando.
+	\item Terminar cuando RSS cae por debajo de un umbral. Este criterio asegura que el agrupamiento tiene la calidad deseada después de la terminación. En la práctica, nosotros necesita combinarlo con un límite en el número de iteraciones para garantizar terminación. 
+	\item Terminar cuando la disminución de RSS cae por debajo de un umbral $\zeta$. Para $\zeta$ pequeño, esto indica que estamos cerca de la convergencia. Una vez más, tenemos que combinar con un límite en el número de iteraciones para evitar tiempos de ejecución muy largos.
+\end{itemize}
 
 \subsection{Agrupamiento jer\'arquico}
 
