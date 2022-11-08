@@ -370,14 +370,54 @@ Marcos Manuel Tirador del Riego
 		donde $S_k(d)$ es el conjunto de los $k$ puntos m\'as cercanos a $d$ e $I_c(d')$ es $1$ o $0$ en dependencia de si $d'$ pertenece a la clase $c$ o no. Finalmente se selecciona para $d$ la clase $c$ que m\'as alto aparezca en el ranking. En ocasiones esta variante presenta mayor exactitud que la anterior.
 		
 		
+		\begin{subsection}{Evaluaci\'on de la clasificaci\'on}
+			
+			Una alta exactitud en la clasificaci\'on de los datos de entrenamiento no necesariamente se traduce en resultados correctos en los nuevos documentos introducidos. Puede sucede que el sistema resulte sobreentrenado (\emph{over-fitting}) o subentrenado (\emph{under-fitting}). El primero de los casos ocurre cuando el modelo se encuentra con muchos datos. En este caso el sistema aprende de los ruidos y de las entradas inexactas lo que provoca que el clasificador aprenda incorrectamente a clasificar los elementos de alguna clase. Por otro lado under-fitting ocurre cuando el sistema tiene informaci\'on muy vaga sobre la frontera entre clases lo que provoca cierta aleatoriedad en la clasificaci\'on.
+			
+			Para evaluar la labor de un clasificador se debe emplear un conjunto de documentos diferentes al conjunto entrenante el cual se llama conjunto de prueba. Este debe estar en todo momento aislado del conjunto de entrenamiento. Si se juntan el clasificador puede aprender en su entrenamiento a reconocer los documentos del conjunto de prueba, y luego  al evaluar el mismo, el desempe\~no del sistema ser\'a mucho m\'as alto que el resultado real que tenga cuando se ponga en uso. Usualmente los datos que se tienen se dividen entre el conjunto entrenante y de prueba a raz\'on de $4:1$.
+			
+			Las siguientes tres m\'etricas pueden ser utilizadas para evaluar clasificadores de dos clases (c y \~c):	
+					
+			\begin{itemize}
+				
+				\item\textbf{Precisi\'on}
+				
+				\[
+				Precision = \frac{\emph{N\'umero de documentos correctamente identificados como $c$} }{\emph{N\'umero de documentos identificados como $c$}}
+				\]
+				
+				\item\textbf{Recobrado}
+				
+				\[
+				recobrado = \frac{\emph{N\'umero de documentos correctamente identificados como $c$} }{\emph{N\'umero de documentos que pertenecen a $c$}}
+				\]
+				
+				\item\textbf{Medida $F$} 
+				
+				\[
+					F = 2 \times  \frac{Precision \times Recobrado}{Precision + Recobrado}
+				\]
+				
+				
+			\end{itemize}
+			
+			El mismo resultado se puede ver usando la matriz de contingencia. Una matriz de contingencia muestra de todas las pruebas realizadas con el clasificador, cu\'antas resultaron en verdadero positivo, falso positivo, falso negativo y verdadero negativo.
+			
+			En el caso que la cantidad de clases sea mayor que dos, podemos computar promedios entre las m\'etricas anteriores viendo el clasificador como uno de dos clases aplicado a cada clase $c$ (y su complemento). Existen dos promedios que son los m\'as usados para esto. Macropromedio calcula simplemente la media entre las medidas anteriores para cada clasificador de dos clases. Microaverage primero adiciona las matrices de contingencia correspondientes a diferentes clases y luego aplica una de las m\'etricas anteriores sobre la matriz resultante. 
+			
+			
+			
+		\end{subsection}
+		
 		\color{red}
 		 NOTA:
 		\begin{itemize}
 			\item Ver lo de cuando estan hablando de clasificacion en dos clases y cuando no. 
+			\item Podr\'ia insertarse una foto de la matriz de contingencia(pagina 16 de classification.pdf)
 			\item Ver si agrego algo de clasificacion any-of
 			\item agregar el c\'odigo del algoritmo de KNN.
 			\item Ver lo de statistical classification que no me queda claro si toda lo que he escrito entra dentro de eso o no.
-			
+			\item citas correctas
 		\end{itemize}
 		\color{black}
 		
