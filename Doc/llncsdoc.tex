@@ -15,6 +15,14 @@
 \DeclareMathOperator*{\argmin}{arg\,min}
 
 \usepackage[spanish]{babel}
+
+% Keywords command
+\providecommand{\keywords}[1]
+{
+	\small	
+	\textbf{\textit{Palabras claves:}} #1
+}
+
 %
 \begin{document}
 \markboth{Sistemas de Recuperaci\'on de Informaci\'on}{Aplicaciones del agrupamiento y de la clasificación en la RI en la Web}
@@ -46,7 +54,17 @@ Marcos Manuel Tirador del Riego
 \end{tabular}
 \end{flushleft}
 
-%
+\newpage
+\pagenumbering{gobble}
+\begin{abstract}
+	Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum pretium libero non odio tincidunt semper. Vivamus sollicitudin egestas mattis. Sed vitae risus vel ex tincidunt molestie nec vel leo. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Maecenas quis massa tincidunt, faucibus magna non, fringilla sapien. In ullamcorper justo a scelerisque egestas. Ut maximus, elit a rutrum viverra, lectus sapien varius est, vel tempor neque mi et augue. Fusce ornare venenatis nunc nec feugiat. Proin a enim mauris. Mauris dignissim vulputate erat, vitae cursus risus elementum at. Cras luctus pharetra congue. Aliquam id est dictum, finibus ligula sed, tempus arcu. 
+	
+	\vspace{1em}
+	\keywords{one, two, three, four}
+\end{abstract} 
+\thispagestyle{empty}
+
+
 \newpage
 \pagenumbering{gobble}
 \tableofcontents
@@ -55,57 +73,210 @@ Marcos Manuel Tirador del Riego
 \newpage
 \pagenumbering{arabic}
 
+\section{Introducci\'on}
+
 \section{Agrupamiento}
 
-\begin{itemize}
-\item Aprendizaje no supervisado
+Los algoritmos de agrupamiento, como su nombre lo indica, agrupan un conjunto de documentos en subconjuntos o clústeres. Son utilizados para generar una estructura de categorías que se ajuste a un conjunto de observaciones. 
 
-\item Problema que resuelve
-\end{itemize}
+Los grupos formados deben tener un alto grado de asociación entre los documentos de un mismo grupo, es decir, deben ser lo m\'as similares posibles, y un bajo grado entre miembros de diferentes grupos. 
 
-\subsection{Algunas definiciones}
+Es la forma más común de \textit{aprendizaje no supervisado}, es decir no hay ningún experto humano que haya asignado documentos a clases. Es la distribución y composición de los datos lo que determinará la pertenencia al clúster. 
 
-\begin{itemize}
-\item Flat clustering
+Si bien el agrupamiento a veces es denominada clasificación automática, esto no es estrictamente exacto ya que las clases formadas no se conocen antes de tratamiento, como implica la clasificación, sino que se definen por los elementos que se les asignan.
 
-\item Hierarchical clustering
+La entrada clave para un algoritmo de agrupamiento es la medida de distancia. Diferentes medidas de distancia dan lugar a diferentes agrupamientos. En el agrupamiento de documentos, la medida de distancia es a menudo también la distancia euclidiana. 
 
-\item Hard clustering
-
-\item Soft clustering
-
-\item Hip\'otesis de agrupamiento
-
-\item Cardinalidad
-\end{itemize}
-
-\subsection{Flat clustering}
-
-\begin{itemize}
-\item Medida de similitud:
-
-\item Medidas de evaluacion:
-\begin{itemize}
-	\item Criterio interno de calidad
+\vspace{1em}
+\textbf{Hip\'otesis de agrupamiento:} \textit{Los documentos en el mismo grupo se comportan de manera similar con respecto a la relevancia para las necesidades de información.}
 	
-	\item Criterio interno de calidad
-	
-	\item Pureza
-	
-	\item \'Indice de frontera?
-	
-	\item Medida F
-\end{itemize}
+\vspace{0.3em}
+La hipótesis establece que si hay un documento de un grupo que es relevante a una solicitud de búsqueda, entonces es probable que otros documentos del mismo clúster también sean relevantes. 
 
-\item Algoritmos:
+\vspace{1em}
+Los algoritmos de agrupamiento pueden ser clasificados seg\'un la pertenencia a los grupos en \textit{agrupamiento exclusivo o fuerte} (hard clustering) donde cada documento es miembro de exactamente un grupo; o \textit{agrupamiento difuso o suave} (soft clustering) donde un documento tiene membresía fraccionaria en varios grupos.
+
+Tambi\'en pueden clasificarse seg\'un el tipo de estructura impuesta sobre los datos como \textit{agrupamiento particionado o plano} (flat clustering) o \textit{agrupamiento jer\'arquico} (hierarchical clustering).
+
+\subsection{Agrupamiento particionado}
+
+El \textit{agrupamiento particionado} crea un conjunto  de clústeres sin ninguna estructura explícita que los relacione entre sí. 
+
+\subsubsection{Medida de similitud}
+
+\subsubsection{Medidas de evaluaci\'on}
+
+
 \begin{itemize}
-	\item K-means
-	\item EM (generalizaci\'on de K-means)
-\end{itemize}
-\end{itemize}
+	\item \textbf{Pureza:} Para calcular la pureza, cada grupo se asigna a la clase que es más frecuente en el grupo, y luego se mide la precisión de esta asignación contando el número de documentos correctamente asignados y dividiendo por N.
+	
+	Formalmente
+	
+	\begin{center}
+		$purity(\Omega, \mathbb{C}) = \dfrac{1}{N} \sum_{k}max_{j} |\omega_{k} \cap c_{j}| $
+	\end{center}
+	donde $ \Omega = \{\omega_{1}, \omega_{2}, ... , \omega_{K}\} $ es el conjunto de cl\'usters y $ C = \{c_{1}, c_{2}, ... , c_{J}\} $ es el conjunto de clases. Se interpreta $ \omega_{k} $ como el conjunto de documentos en el cl\'uster y $ c_{j} $ como el conjunto de documentos que pertenecen a esa clase.
+	
+	Malos agrupamientos tienen valores de pureza cercanos a 0, mientras que un agrupamiento perfecto tiene una pureza 1.
+	
+	La alta pureza es fácil de lograr cuando el número de grupos es grande, en particular, la pureza es 1 si cada documento tiene su propio grupo. Sin embargo en este caso tendr\'iamos la mayor cantidad de grupos posibles, por lo que nuestra soluci\'on no tendr\'ia calidad.
+	\vspace{1em}
+	\item \textbf{Información mutua normalizada:} Una medida que nos permite hacer la compensaci\'on entre calidad y pureza es la información mutua normalizada o $ NMI $ por sus siglas en ingl\'es.
+	
+\begin{center}
+		$ NMI(\Omega, \mathbb{C}) = \dfrac{I(\Omega, \mathbb{C})}{[H(\Omega) + H(\mathbb{C})]/2}
+	 $
+\end{center}
+	
+	I es la informaci\'on mutua:
+	\begin{center}
+		$ I(\Omega, \mathbb{C}) = \sum_{k}\sum_{j}P(\omega_{k} \cap c_{j})\log\frac{P(\omega_{k} \cap c_{j})}{P(\omega_{k})P(c_{j})} $
+	\end{center}
+	donde $ P(\omega_{k}) $, $ P(c_{j}) $ y $ P(\omega_{k} \cap c_{j}) $ son las probabilidades de que un documento sea del cl\'uster $ \omega_{k} $, clase $ c_{j} $, y est\'e la intersección de $ \omega_{k} $ y $ c_{j} $, respectivamente.
+	
+	\vspace{0.5em}
+	Para estimaciones de máxima verosimilitud
+	de las probabilidades (es decir, la estimación de cada probabilidad es la correspondiente frecuencia relativa):
+	\begin{center}
+		$ I(\Omega, \mathbb{C}) = \sum_{k}\sum_{j}|\omega_{k} \cap c_{j}|\log\frac{N|\omega_{k} \cap c_{j}|}{|\omega_{k}||c_{j}|} $
+	\end{center}
+	
+	H es la entropía tal como se define en el Capítulo 5 (página 99):
+	La característica de una distribución de probabilidad discreta3 P que determina
+	sus propiedades de codificación (incluyendo si un código es óptimo)
+	
+	\begin{center}
+		$ H(\Omega) = -\sum_{k}P(\omega_{k} \log P(\omega_{k} $
+	\end{center}
 
 
-\subsection{Hierarchical clustering}
+	donde, de nuevo, la segunda ecuación se basa en estimaciones de máxima verosimilitud
+	de las probabilidades
+	
+	$ I(\Omega, \mathbb{C})$ mide la cantidad de información por la cual nuestro conocimiento sobre las clases aumenta cuando se nos dice cu\'ales son los grupos. 
+	
+	El mínimo de $ I(\Omega, \mathbb{C})$ es 0 si el agrupamiento es aleatorio con respecto a pertenencia a clases. En ese caso, sabiendo que un documento está en un determinado
+	cluster no nos da ninguna información nueva sobre cuál podría ser su clase.
+	
+	Se alcanza la máxima información mutua para un agrupamiento exacto que perfectamente
+	recrea las clases, pero también si los grupos en exact se subdividen en conglomerados más pequeños. En particular, un agrupamiento con K = N los grupos de documentos tienen MI máximo. Entonces MI tiene el mismo problema que la pureza: no penaliza cardinalidades grandes y por lo tanto no formaliza nuestro sesgo
+	que, en igualdad de condiciones, menos grupos son mejores.
+	
+	La normalización por el denominador $ [H(\Omega) + H(\mathbb{C})]/2 $ soluciona este problema ya que la entropía tiende a aumentar con el número de clusters. Por ejemplo, $ H(\Omega) $ alcanza su log N máximo para K = N, lo que asegura que NMI es bajo para K = N. Debido a que NMI está normalizado, podemos usar para comparar agrupaciones con diferentes números de agrupaciones. Lo particular
+	Se elige la forma del denominador porque $ [H(\Omega) + H(\mathbb{C})]/2 $ es una parte superior estrecha atado en $ I(\Omega, \mathbb{C})$. Por lo tanto, NMI es siempre un número entre 0 y 1.
+	
+	\vspace{1em}
+	\item \textbf{\'Indice de frontera (Rand Index)}: Una alternativa a esta interpretación teórica de la información del agrupamiento es
+	para verlo como una serie de decisiones, una para cada uno de los $ N(N - 1)/2 $ pares de
+	documentos de la colección. Queremos asignar dos documentos al mismo
+	clúster si y sólo si son similares. Una decisión positiva verdadera (TP) asigna
+	dos documentos similares al mismo grupo, una verdadera decisión negativa (TN) as-
+	firma dos documentos diferentes a diferentes grupos. Hay dos tipos
+	de errores que podemos cometer. Una decisión de falso positivo (FP) asigna dos disim-
+	documentos ilar al mismo clúster. Una decisión de falso negativo (FN) asigna
+	dos documentos similares a diferentes agrupaciones. El índice de Rand (IR) mide
+	ÍNDICE ALEATORIO
+	Rhode Island
+	el porcentaje de decisiones que son correctas. Es decir, es simplemente precisión.
+	
+	\begin{center}
+		$ RI = \dfrac{TP + TN}{TP + FP + FN + TN} $
+	\end{center}
+
+	El índice de Rand otorga el mismo peso a los falsos positivos y falsos negativos.
+	Separar documentos similares a veces es peor que poner pares de dis-
+	documentos similares en el mismo grupo.
+	
+	\vspace{1em}
+	\item \textbf{Medida F:} Podemos usar la medida F, vista anteriormente en conferencia, para penalizar los falsos negativos más fuertemente que los falsos positivos seleccionando un valor $ \beta > 1 $, dando así más peso a la recuperación.
+	\begin{center}
+	$ P = \dfrac{TP}{TP + FP}  $ \hspace{2em}
+	$ R = \dfrac{TP}{TP + FN} $
+	
+	\vspace{1em}
+	$ F_{\beta} = \dfrac{(\beta^{2} + 1)PR}{\beta^{2}P + R} $
+	\end{center}
+\end{itemize}
+
+\subsubsection{Algoritmos}
+\begin{itemize}
+	\item \textbf{K-means}
+	
+	Es el algoritmo de agrupamiento plano más importante. 
+	
+	Su \textit{objetivo} es minimizar la distancia euclidiana al cuadrado promedio de documentos de sus centros de conglomerados donde un centro de conglomerados se define como la media o centroide $\mu$ de los documentos en un grupo $\omega$:
+	
+	\begin{center}
+		$ \overrightarrow{\mu}(\omega) \leftarrow \dfrac{1}{|\omega_{k}|} \sum_{\overrightarrow{x} \in \omega_{k}} \overrightarrow{x} $
+	\end{center}
+	
+	Se asume que los documentos se representan como de longitud normalizada vectores en un espacio de valor real de la manera habitual. 
+	
+	Usamos centroides para Rocchio clasificación Aquí juegan un papel similar.
+
+	El grupo ideal en K-means es una esfera con el baricentro como su centro de gravedad. Idealmente, los grupos no deberían superponerse. 
+	
+	Nuestro desiderata para las clases en la clasificación de Rocchio fueron los mismos. 
+	
+	La diferencia es que no tenemos el conjunto de entrenamiento de beled en agrupamiento para el cual sabemos qué documentos deben
+	estar en el mismo grupo.
+	
+	Una medida de qué tan bien los centroides representan a los miembros de su grupo es la suma residual de cuadrados o RSS, la distancia al cuadrado de cada vector desde su centroide sumado sobre todos los vectores:
+	
+	\begin{center}
+		$ RSS_{k} = \sum_{\overrightarrow{x} \in \omega_{k}}|\overrightarrow{x} - \overrightarrow{\mu}(\omega_{k})|^2$
+	
+	\vspace{1em}
+	$ RSS = \sum_{k=1}^{K} RSS_{k} $
+	\end{center}
+
+	RSS es la \textit{función objetivo} en K-means y nuestro objetivo es minimizarla. Ya que N es fijo, minimizar RSS es equivalente a minimizar el promedio al cuadrado distancia, una medida de qué tan bien los centroides representan sus documentos.
+	
+	\begin{algorithm}
+		\caption{K-Means}
+		\begin{algorithmic}[1]
+			\Require{$\{\overrightarrow{x_{1}}, ... , \overrightarrow{x_{N}}\}, K $} 
+			%		 			\Ensure{Trained.}
+			\State{$(\overrightarrow{s_{1}}, . . . , \overrightarrow{s_{K}}) \leftarrow \textbf{SelectRandomSeeds}(\{\overrightarrow{x_{1}}, ... , \overrightarrow{x_{N}}\}, K)$}
+			\For{$k \leftarrow 1$ \textbf{to} $K$}
+			\State{$ \overrightarrow{\mu_{k}} \leftarrow \overrightarrow{s_{k}} $}
+			\EndFor
+			\While{stopping criterion has not been met}
+				\For{$k \leftarrow 1$ \textbf{to} $K$}
+				\State{$ \omega_{k} \leftarrow \{\} $}
+				\EndFor
+				\For{$n \leftarrow 1$ \textbf{to} $N$}
+				\State{$ j \leftarrow \argmin_{j'}|\overrightarrow{\mu_{j'}}-\overrightarrow{x_{n}}| $}
+				\State{$ \mu_{j} \leftarrow \omega_{j} \cup \{\overrightarrow{x_{n}}\} $ \hspace{2em} (reassignment of vectors) }
+				\EndFor
+				\For{$k \leftarrow 1$ \textbf{to} $K$}
+				\State{$ \overrightarrow{\mu_{k}} \leftarrow \dfrac{1}{|\omega_{k}|} \sum_{\overrightarrow{x} \in \omega_{k}} \overrightarrow{x} $ \hspace{2em} (recomputation of centroids)}
+				\EndFor
+			\EndWhile
+			\State{\Return {$\{\overrightarrow{\mu_{1}}, ... , \overrightarrow{\mu_{N}}\}$}}
+		\end{algorithmic}
+	\end{algorithm}
+\end{itemize}
+
+\newpage
+El primer paso de K-means es seleccionar como centros de conglomerados iniciales K al azar documentos seleccionados, las semillas. Luego, el algoritmo mueve los centros de los grupos
+en el espacio para minimizar el RSS. esto es
+iterativamente repitiendo dos pasos hasta que se cumpla un criterio de parada: 
+
+firma de documentos al clúster con el centroide más cercano; y recalculando cada centroide basado en los miembros actuales de su grupo. 
+
+Criterios de parada:
+\begin{itemize}
+	\item Se ha completado un número fijo de iteraciones I. Esta condición limita el tiempo de ejecución del algoritmo de agrupamiento, pero en algunos casos la calidad de el agrupamiento será deficiente debido a un número insuficiente de iteraciones.
+	\item La asignación de documentos a grupos (la función de partición $\gamma$) no
+	no cambia entre iteraciones. Excepto en los casos con un mini local mal mamá, esto produce un buen agrupamiento, pero los tiempos de ejecución pueden ser inaceptablemente
+	largo.
+	\item Los centroides no cambian entre iteraciones. Esto es equivalente a $\gamma$ no cambiando.
+	\item Terminar cuando RSS cae por debajo de un umbral. Este criterio asegura que el agrupamiento tiene la calidad deseada después de la terminación. En la práctica, nosotros necesita combinarlo con un límite en el número de iteraciones para garantizar terminación. 
+	\item Terminar cuando la disminución de RSS cae por debajo de un umbral $\zeta$. Para $\zeta$ pequeño, esto indica que estamos cerca de la convergencia. Una vez más, tenemos que combinar con un límite en el número de iteraciones para evitar tiempos de ejecución muy largos.
+\end{itemize}
+
+\subsection{Agrupamiento jer\'arquico}
 
 \begin{itemize}
 \item Hierarchical agglomerative clustering
@@ -499,5 +670,6 @@ Marcos Manuel Tirador del Riego
 Leer: https://futuroelectrico.com/aprendizaje-supervisado/
 
 
+\section{Conclusiones}
 
 \end{document}
