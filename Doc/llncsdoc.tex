@@ -92,20 +92,37 @@ La entrada clave para un algoritmo de agrupamiento es la medida de distancia. Di
 	
 \vspace{0.3em}
 La hipótesis establece que si hay un documento de un grupo que es relevante a una solicitud de búsqueda, entonces es probable que otros documentos del mismo clúster también sean relevantes. 
-
 \vspace{1em}
+
 Los algoritmos de agrupamiento pueden ser clasificados seg\'un la pertenencia a los grupos en \textit{agrupamiento exclusivo o fuerte} (hard clustering) donde cada documento es miembro de exactamente un grupo; o \textit{agrupamiento difuso o suave} (soft clustering) donde un documento tiene membresía fraccionaria en varios grupos.
 
 Tambi\'en pueden clasificarse seg\'un el tipo de estructura impuesta sobre los datos como \textit{agrupamiento particionado o plano} (flat clustering) o \textit{agrupamiento jer\'arquico} (hierarchical clustering).
+
+\subsection{Medidas de similitud}
+\begin{itemize}
+	\item \textbf{Coeficiente de Dice:}
+	\begin{center}
+		$ S_{D_{i}, D_{j}} = \dfrac{2 \sum_{k=1}^{max} (w_{ik}w_{jk})}{\sum_{k=1}^{max}w_{ik}^{2} + \sum_{k=1}^{max}w_{jk}^{2}} $
+	\end{center}
+	\item \textbf{Coeficiente de Dice para documentos representados como vectores binarios:}
+	\begin{center}
+		$ S_{D_{i}, D_{j}} = \dfrac{2C}{A+B} $
+	\end{center}
+	\item \textbf{Coeficiente de Jaccard:}
+	\begin{center}
+		$ S_{D_{i}, D_{j}} = \dfrac{\sum_{k=1}^{max} (w_{ik}w_{jk})}{\sum_{k=1}^{max}w_{ik}^{2} + \sum_{k=1}^{max}w_{jk}^{2} - \sum_{k=1}^{max} (w_{ik}w_{jk})} $
+	\end{center}
+	\item \textbf{Coeficiente del coseno:}
+	\begin{center}
+		$ S_{D_{i}, D_{j}} = \dfrac{\sum_{k=1}^{max} (w_{ik}w_{jk})}{\sqrt{\sum_{k=1}^{max}w_{ik}^{2} \sum_{k=1}^{max}w_{jk}^{2}}} $
+	\end{center}
+\end{itemize}
 
 \subsection{Agrupamiento particionado}
 
 El \textit{agrupamiento particionado} crea un conjunto  de clústeres sin ninguna estructura explícita que los relacione entre sí. 
 
-\subsubsection{Medida de similitud}
-
 \subsubsection{Medidas de evaluaci\'on}
-
 
 \begin{itemize}
 	\item \textbf{Pureza:} Para calcular la pureza, cada grupo se asigna a la clase que es más frecuente en el grupo, y luego se mide la precisión de esta asignación contando el número de documentos correctamente asignados y dividiendo por N.
@@ -320,6 +337,17 @@ Criterios de parada:
 
 \subsection{Ventajas} 
 
+Debido a que no es necesario identificar las clases antes del procesamiento, el análisis de conglomerados es útil para proporcionar
+estructura en grandes conjuntos de datos multivariados. Se ha descrito como una herramienta de descubrimiento porque tiene el potencial
+para revelar relaciones previamente no detectadas basadas en datos complejos
+
+Debido a que el análisis de conglomerados es una técnica de análisis multivariado que tiene aplicación en muchos campos, es
+con el apoyo de una serie de paquetes de software que a menudo están disponibles en la informática académica y otros
+21/03/2021
+Recuperación de información: CAPÍTULO 16: ALGORITMOS DE CLÚSTER
+orion.lcg.ufrj.br/Dr.Dobbs/books/book5/chap16.htm
+21/2
+entornos.
 \subsection{Desventajas} 
 
 \section{Clasificaci\'on}
