@@ -314,7 +314,36 @@ Marcos Manuel Tirador del Riego
 		 
 		 Las decisiones de muchos clasificadores basados en espacio de vectores dependen de una noci\'on de distancia. Pueden ser usadas por ejemplo similitud basado en el coseno (del \'angulo formado entre los vectores) o distancia Euclideana. Por lo general no hay mucha diferencia entre usar una u otra de estas distancias.
 		 
-		 La tarea de la clasificaci\'on en el modelo de espacio de vectores es determinar las fronteras entre los documentos pertenecientes a una u otra clase. Estas \'ultimas son llamadas fronteras de decisi\'on ya que estas dividen el espacio en diferentes hiperespacios, tales que si un documento pertenece a un hiperespacio determinado, autom\'aticamente sabemos de qu\'e clase es. En K Nearest Neighbor esta ...
+		 La tarea de la clasificaci\'on en el modelo de espacio de vectores es determinar las fronteras entre los documentos pertenecientes a una u otra clase. Estas \'ultimas son llamadas fronteras de decisi\'on ya que dividen el espacio en diferentes poliedros, tales que si un documento pertenece a un poliedro determinado, autom\'aticamente sabemos de qu\'e clase es. 
+		 
+		 En K Nearest Neighbor la frontera de decisi\'on se determina localmente. En kNN asignamos cada documento a la misma clase que la mayor\'ia de los $k$ puntos m\'as cercanos al documento. Basado en la hip\'otsis de contig\"uidad esperamos que el documento $d$ pertenezca a la misma clase que aquellos m\'as cercanos a \'el.
+		 
+		En $kNN$ para subdividir el espacio de documentos en poliedros, dado un $k \in \mathbb{N}$ fijo, consideramos cada regi\'on como el conjunto de puntos para los cuales los $k$ puntos m\'as cercanos son los mismos. Estos poliedros son convexos. Luego a cada uno de estos poliedros existe una clase a la que pertenecen todos sus puntos, que es aquella a la que pertenecen la mayor\'ia de los documentos, ya clasificados, dentro del poliedro. En caso de que haya empate, la decisi\'on de a que clase asignar a un nuevo documento que pertenece a esta regi\'on del espacio, es tomada aleatoriamente entre las clases empatadas.
+		
+		El par\'ametro $k$ es usualmente seleccionado basado en el conocimiento que se tiene sobre los problemas de clasificaci\'on similares al que se tiene. Otra forma de seleccionar $k$ es usando conjuntos de documentos de prueba (ya clasificados) para ver que valor de $k$ da mejores resultados.
+		
+		Tambi\'en hay variantes del m\'etodo donde lo que se hace es calcular una similitud entre el documento $d$ a clasificar y cada uno de los $k$ m\'as cercanos, usando, por ejemplo, el coseno entre los vectores. Luego se hace un ranking entre las clases a las que pertenecen cada uno de los $k$ puntos. Para ello se calcula para cada $c$ la suma de la similitud entre $d$ y cada uno de los puntos que pertenecen a $c$ y a la vez est\'an entre los $k$ mencionados. La siguiente funci\'on $score$ produce el resultado deseado
+		\[
+			score(c,d)  = \sum_{d'\in S_k(d)} I_c(d') \cos(\overrightarrow{v}(d'),\overrightarrow{v}(d)),
+		\]
+		donde $S_k(d)$ es el conjunto de los $k$ puntos m\'as cercanos a $d$ e $I_c(d')$ es $1$ o $0$ si $d'$ pertenece a la clase $c$ o no, respectivamente. Finalmente se selecciona para $d$ la clase $c$ que m\'as alto quede en el ranking. En ocasiones esta variante presenta mayor exactitud que la anterior.
+		
+		
+		\color{red}
+		 NOTA:
+		\begin{itemize}
+			\item Ver lo de cuando estan hablando de clasificacion en dos clases y cuando no. 
+			\item Ver si agrego algo de clasificacion any-of
+			\item Ver lo de statistical classification que no me queda claro si toda lo que he escrito entra dentro de eso o no.
+			
+		\end{itemize}
+		\color{black}
+		
+		
+		
+		 
+		 
+		 
 	
 \begin{itemize}
 	\item Aprendizaje supervisado
