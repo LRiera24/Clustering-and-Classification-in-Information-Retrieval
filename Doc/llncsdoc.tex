@@ -405,9 +405,33 @@ Marcos Manuel Tirador del Riego
 			
 			En el caso que la cantidad de clases sea mayor que dos, podemos computar promedios entre las m\'etricas anteriores viendo el clasificador como uno de dos clases aplicado a cada clase $c$ (y su complemento). Existen dos promedios que son los m\'as usados para esto. Macropromedio calcula simplemente la media entre las medidas anteriores para cada clasificador de dos clases. Microaverage primero adiciona las matrices de contingencia correspondientes a diferentes clases y luego aplica una de las m\'etricas anteriores sobre la matriz resultante. 
 			
+		\end{subsection}
 			
+		\begin{subsection}{Ventajas y Desventajas}
+			
+			Ventajas:
+				\begin{itemize}
+					\item A diferencia de el aprendizaje no supervisado se puede tener una idea exacta sobre las clases de los objetos, dado que estas se crean basado en caracter\'isticas externas de los mismos. 
+					\item La salida suele ser m\'as precisa que en el ML supervisado
+					\item El proceso es f\'acil de comprender (las acciones de la maquina se comprenden con precision a diferencia del no supervisado)
+					\item es m\'as facil de trabajar con el supervisado. (supongo que se refiera a m\'as facil de implementar)
+					\item Se eval\'ua y recibe retroalimentaci\'on para comprobar la correctitud. 
+				\end{itemize}
+			Desventajas:
+				\begin{itemize}
+					\item Se necesita un especialista que determine cu\'ales ser\'an las clases en que se desea clasificar
+					\item Se requiere de un conjunto de datos entrenantes
+					\item Por lo general no se resuelven tareas m\'as complejas como en el ML supervisado
+					\item Suelen requerir mucho tiempo de entrenamiento
+					\item Puede predecir la salida incorrecta si los datos de prueba son diferentes de los datos de entrenamiento.
+				\end{itemize}
+			Cogido de:
+			
+-https://www.crehana.com/blog/transformacion-digital/tipos-de-machine-learning/
+-https://aprendeia.com/ventajas-y-desventajas-de-los-algoritmos-de-clasificacion-machine-learning/		
 			
 		\end{subsection}
+			
 		
 		\color{red}
 		 NOTA:
@@ -471,6 +495,8 @@ Marcos Manuel Tirador del Riego
 \section{Agrupamiento vs. Clasificaci\'on}
 
 \section{Ejemplos de aplicación}
+
+Leer: https://futuroelectrico.com/aprendizaje-supervisado/
 
 
 
