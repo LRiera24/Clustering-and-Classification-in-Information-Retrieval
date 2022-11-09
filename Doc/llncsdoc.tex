@@ -444,11 +444,11 @@ entornos.
 		\]
 		donde $|V|$ es el n\'umero total de t\'eminos en el vocabulario.
 		
-		 Es importante destacar que en este m\'etodo estamos obviando la posici\'on de las palabras. Presentamos aqu\'i los algoritmos para entrenar y clasificar usando BN que fueron textualmente copiados de \color{red}{2009 Manning C. D., Introduction to Information Retrieval, p\'agina 260. [No recuerdo como citar esto correctamente. Also recordar que agregue unos paquetes arriba que no se si se agragan aqui o en otro de los .tex]}\color{black}.
+		 Es importante destacar que en este m\'etodo estamos obviando la posici\'on de las palabras. Presentamos aqu\'i los algoritmos para entrenar y clasificar usando BN que fueron casi textualmente copiados de \cite[Figure $13.2$]{B1}.
 		 
 		 
 		 
-		 \begin{algorithm}{}
+		 \begin{algorithm}{}\label{Alg1}
 		 			\caption{TrainMultinomial}
 		 	\begin{algorithmic}[1]
 		 		
@@ -470,9 +470,12 @@ entornos.
 		 		\EndFor
 		 		\State \textbf{\Return} $V, prior, condprob$
 		 	\end{algorithmic}
+		 	
+		 	\smallskip
+		 	\tiny{Algoritmo para entrenar Naive Bayes tomado de \cite[Figura 13.2]{B1}}
 		 \end{algorithm}
 		 
-		 \begin{algorithm}
+		 \begin{algorithm}\label{Alg2}
 		 	\caption{ApplyMultinomialNB}
 		 	\begin{algorithmic}[1]
 		 		
@@ -488,6 +491,9 @@ entornos.
 		 		\EndFor
 		 		\State \textbf{\Return} $\argmax_{c\in \mathcal{C}}(score[c])$
 		 	\end{algorithmic}
+		 	
+		 	\smallskip
+		 	\tiny{Algoritmo para aplicar Naive Bayes tomado de \cite[Figura 13.2]{B1}}
 		 \end{algorithm}
 		 
 		Podemos deducir de los algoritmos que la complejidad de ambos es linear en el tiempo que toma escanear la informaci\'on. Dado que esto hay que hacerlo al menos una vez, se puede decir que este m\'etodo tiene complejidad temporal \'optima. Dicha eficiencia hace que NB sea un m\'etodo de clasificaci\'on tan usado.
@@ -511,7 +517,7 @@ entornos.
 			\item\textbf{Informaci\'on Manual.}
 			\smallskip
 			
-				Computar $A(t,c)$ como el valor esperado de informaci\'on mutua (\emph{Mutual Information} (MI)), nos da una medida de cu\'anta informaci\'on aporta, la presencia en $c$ de un t\'ermino dado, a tomar la decisi\'on correcta de clasificaci\'on de un documento. Lo definimos como \color{red}[Hay que poner aqui que esto se cogio del libro, pagina 272]\color{black}
+				Computar $A(t,c)$ como el valor esperado de informaci\'on mutua (\emph{Mutual Information} (MI)), nos da una medida de cu\'anta informaci\'on aporta, la presencia en $c$ de un t\'ermino dado, a tomar la decisi\'on correcta de clasificaci\'on de un documento. La siguiente definici\'on fue tomada de \cite[Ecuaci\'on 13.16]{B1}
 				\[
 					I(U_t;C_t) = \sum_{e_t \in \{ 1,0 \} } \sum_{e_c \in \{ 1,0 \} } P( U_t = e_t, C_t = e_c) \log_2 \frac{P (U_t = e_t, C_t = e_c) }{ P(U_t = e_t) P(C_t = e_c) },
 				\]
@@ -525,7 +531,7 @@ entornos.
 			\item\textbf{Selecci\'on Chi cuadrado $\chi^2$.} 
 			\smallskip
 			
-			En estad\'istica se dice que dos eventos son independientes si el resultado de uno no afecta al resultado del otro. Esto se puede escribir formalmente como $P(AB) = P(A) P(B)$. En estad\'istica el test $\chi^2$ se usa para medir el grado de independencia de dos eventos. En FS podemos entonces considerar aplicar este test asumiendo como eventos la ocurrencia de los t\'erminos y la ocurrencia de las clases. Esto es \color{red} Esto tambien hay que poner de donde lo cogi (pag 275)\color{black} 
+			En estad\'istica se dice que dos eventos son independientes si el resultado de uno no afecta al resultado del otro. Esto se puede escribir formalmente como $P(AB) = P(A) P(B)$. En estad\'istica el test $\chi^2$ se usa para medir el grado de independencia de dos eventos. En FS podemos entonces considerar aplicar este test asumiendo como eventos la ocurrencia de los t\'erminos y la ocurrencia de las clases.  La siguiente definici\'on fue tomada de \cite[Ecuaci\'on 13.18]{B1}
 			\[
 				\chi^2(D,t,c) = \sum_{e_t\in \{ 1, 0 \}} \sum_{e_c\in \{ 1, 0 \}} \frac{(N_{e_te_c} - E_{e_t e_c}) ^2 } { E_{e_t e_c}},
 			\]
@@ -548,7 +554,7 @@ entornos.
 	
 		En el algoritmo de Naive Bayes represent\'abamos los documentos como vectores booleanos de t\'erminos. Luego vimos que hay t\'erminos que no eran relevantes y que aportaban ruido, y lo solucionamos seleccionando para el clasificador solamente un subconjunto de todos los t\'erminos. A\'un as\'i estamos clasificando la relevancia de cada t\'ermino de manera binaria en relevante o no relevante (que aporta ruido).
 		
-		 El m\'etodo que presentamos en esta secci\'on, as\'i como otros similares, asignan a cada t\'ermino cierto valor de importancia relativa al documento en que aparece. Para esto se cambia la representaci\'on de los documentos a vectores de $\mathbb{R}^{|V|}$, donde a cada componente corresponde cierto peso que se le asigna al t\'ermino correspondiente a esta. Entonces, el espacio de documentos $\mathcal{X}$ (dominio de $\gamma$) es $\mathbb{R}^{|V|}$. A esta forma de representaci\'on de documentos se le conoce como modelo de espacio de vectores. La hip\'otesis b\'asica para usar el modelo de espacio de vectores es la siguiente \color{red} citar adecuadamente : pagina 289 \color{black}
+		 El m\'etodo que presentamos en esta secci\'on, as\'i como otros similares, asignan a cada t\'ermino cierto valor de importancia relativa al documento en que aparece. Para esto se cambia la representaci\'on de los documentos a vectores de $\mathbb{R}^{|V|}$, donde a cada componente corresponde cierto peso que se le asigna al t\'ermino correspondiente a esta. Entonces, el espacio de documentos $\mathcal{X}$ (dominio de $\gamma$) es $\mathbb{R}^{|V|}$. A esta forma de representaci\'on de documentos se le conoce como modelo de espacio de vectores. La hip\'otesis b\'asica para usar el modelo de espacio de vectores la presentamos a acontinuaci\'on y fue tomadada de \cite[p. 289]{B1}.
 		 
 		 \textbf{Hip\'otesis de contig\"uidad:} Documentos en la misma clase forman una regi\'on contigua  y regiones de diferentes clases no se superponen.
 		 
@@ -579,8 +585,10 @@ entornos.
 				\State{$ D' \leftarrow PreProcess(D)$}
 				\State{$ k \leftarrow Selectk(\mathcal{C}, D')$}
 				\State \textbf{\Return} $D', k$
-				
 			\end{algorithmic}
+			
+			\smallskip
+			\tiny{Algoritmo para entrenar KNN tomado de \cite[Figura 14.7]{B1}}
 		\end{algorithm}
 		
 		\begin{algorithm}{}
@@ -595,8 +603,10 @@ entornos.
 					\State{$ p_j \leftarrow | S_k \cap c_j | /k$ }
 				\EndFor
 				\State \textbf{\Return} $\argmax_j p_j$
-				
 			\end{algorithmic}
+				
+			\smallskip
+			\tiny{Algoritmo para aplicar KNN tomado de \cite[Figura 14.7]{B1}}
 		\end{algorithm}
 		
 		
@@ -655,10 +665,13 @@ entornos.
 					\item Suelen requerir mucho tiempo de entrenamiento
 					\item Puede predecir la salida incorrecta si los datos de prueba son diferentes de los datos de entrenamiento.
 				\end{itemize}
+				
+				\color{red}
 			Cogido de:
 			
 -https://www.crehana.com/blog/transformacion-digital/tipos-de-machine-learning/
 -https://aprendeia.com/ventajas-y-desventajas-de-los-algoritmos-de-clasificacion-machine-learning/		
+				\color{black}
 			
 		\end{subsection}
 			
@@ -667,7 +680,8 @@ entornos.
 		 NOTA:
 		\begin{itemize}
 			\item Podr\'ia insertarse una foto de la matriz de contingencia(pagina 16 de classification.pdf)
-			\item citas correctas
+			\item Ver si hay alguna forma mejor de escribir los algoritmos que hasta ahora estan horribles. Quizas mediante el uso de fotos.
+			\item En clasificacion solo faltan las ventajas y desventajas que si no da tiempo se pone eso mismo que escribi ahi
 		\end{itemize}
 		\color{black}
 		
@@ -734,13 +748,15 @@ entornos.
 	
 	En la seguridad inform\'atica tambi\'en se evidencia la clasificaci\'on en acciones como detecci\'on de virus, enlaces maliciosos y fraude. Otras aplicaciones en que puede verse tambi\'en son el Internet de las cosas (IoT), los motores de recomendaci\'on y la fijaci\'on de precios din\'amicos de productos.
 
-Leer: https://futuroelectrico.com/aprendizaje-supervisado/
+\color{red} Leer: https://futuroelectrico.com/aprendizaje-supervisado/ \color{black}
 
-%\begin{thebibliography}
-%
-%\end{thebibliography}
-=======
 \section{Conclusiones}
+
+
+
+\begin{thebibliography}{20}
+	\bibitem{B1} Maning C. D.: \emph{An Introduction To Information Retrieval} (2009).
+\end{thebibliography}
 
 \end{document}
 
