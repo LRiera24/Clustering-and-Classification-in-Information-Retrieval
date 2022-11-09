@@ -370,6 +370,37 @@ Marcos Manuel Tirador del Riego
 		donde $S_k(d)$ es el conjunto de los $k$ puntos m\'as cercanos a $d$ e $I_c(d')$ es $1$ o $0$ en dependencia de si $d'$ pertenece a la clase $c$ o no. Finalmente se selecciona para $d$ la clase $c$ que m\'as alto aparezca en el ranking. En ocasiones esta variante presenta mayor exactitud que la anterior.
 		
 		
+		\begin{algorithm}{}
+			\caption{Train-kNN}
+			\begin{algorithmic}[1]
+				
+				% ENTRADA / SALIDA
+				\Require{Set of classes $\mathcal{C}$ and training set $D$.} 
+				%		 		\Ensure{Trained.}
+				\State{$ D' \leftarrow PreProcess(D)$}
+				\State{$ k \leftarrow Selectk(\mathcal{C}, D')$}
+				\State \textbf{\Return} $D', k$
+				
+			\end{algorithmic}
+		\end{algorithm}
+		
+		\begin{algorithm}{}
+			\caption{Apply-kNN}
+			\begin{algorithmic}[1]
+				
+				% ENTRADA / SALIDA
+				\Require{$\mathcal{C}$, $D'$, $k$, $d$}
+				%		 		\Ensure{Trained.}
+				\State{$ S_k \leftarrow ComputeNearestNeighbors(D',k,d)$}
+				\For{$c_j \in \mathcal{C}$}
+					\State{$ p_j \leftarrow | S_k \cap c_j | /k$ }
+				\EndFor
+				\State \textbf{\Return} $\argmax_j p_j$
+				
+			\end{algorithmic}
+		\end{algorithm}
+		
+		
 		\begin{subsection}{Evaluaci\'on de la clasificaci\'on}
 			
 			Una alta exactitud en la clasificaci\'on de los datos de entrenamiento no necesariamente se traduce en resultados correctos en los nuevos documentos introducidos. Puede sucede que el sistema resulte sobreentrenado (\emph{over-fitting}) o subentrenado (\emph{under-fitting}). El primero de los casos ocurre cuando el modelo se encuentra con muchos datos. En este caso el sistema aprende de los ruidos y de las entradas inexactas lo que provoca que el clasificador aprenda incorrectamente a clasificar los elementos de alguna clase. Por otro lado under-fitting ocurre cuando el sistema tiene informaci\'on muy vaga sobre la frontera entre clases lo que provoca cierta aleatoriedad en la clasificaci\'on.
@@ -436,11 +467,7 @@ Marcos Manuel Tirador del Riego
 		\color{red}
 		 NOTA:
 		\begin{itemize}
-			\item Ver lo de cuando estan hablando de clasificacion en dos clases y cuando no. 
 			\item Podr\'ia insertarse una foto de la matriz de contingencia(pagina 16 de classification.pdf)
-			\item Ver si agrego algo de clasificacion any-of
-			\item agregar el c\'odigo del algoritmo de KNN.
-			\item Ver lo de statistical classification que no me queda claro si toda lo que he escrito entra dentro de eso o no.
 			\item citas correctas
 		\end{itemize}
 		\color{black}
