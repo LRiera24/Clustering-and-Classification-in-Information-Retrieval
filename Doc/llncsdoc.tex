@@ -102,22 +102,26 @@ Los algoritmos de agrupamiento pueden ser clasificados seg\'un la pertenencia a 
 Tambi\'en pueden clasificarse seg\'un el tipo de estructura impuesta sobre los datos como \textit{agrupamiento particionado o plano} (flat clustering) o \textit{agrupamiento jer\'arquico} (hierarchical clustering).
 
 \subsection{Medidas de similitud \cite{B3}}
+
+Sean $ d_{i} $ el documento $ i $ del corpus y $ w_{ik} $ el peso del t\'ermino $ k $ de un total $ N $ en el documento $ i $ .
+
 \begin{itemize}
 	\item \textbf{Coeficiente de Dice:}
 	\begin{center}
-		$ S_{D_{i}, D_{j}} = \dfrac{2 \sum_{k=1}^{max} (w_{ik}w_{jk})}{\sum_{k=1}^{max}w_{ik}^{2} + \sum_{k=1}^{max}w_{jk}^{2}} $
+		$ S_{d_{i}, d_{j}} = \dfrac{2 \sum_{k=1}^{N} (w_{ik}w_{jk})}{\sum_{k=1}^{N}w_{ik}^{2} + \sum_{k=1}^{N}w_{jk}^{2}} $
 	\end{center}
 	\item \textbf{Coeficiente de Dice para documentos representados como vectores binarios:}
 	\begin{center}
-		$ S_{D_{i}, D_{j}} = \dfrac{2C}{A+B} $
+		$ S_{d_{i}, d_{j}} = \dfrac{2C}{A+B} $
 	\end{center}
+	donde C es la cantidad de t\'erminos que los documentos $ d_{i} $ y $ d_{j} $ tienen en com\'un, y A y B son la cantidad total de t\'erminos en $ d_{i} $ y $ d_{j} $ respectivamente.
 	\item \textbf{Coeficiente de Jaccard:}
 	\begin{center}
-		$ S_{D_{i}, D_{j}} = \dfrac{\sum_{k=1}^{max} (w_{ik}w_{jk})}{\sum_{k=1}^{max}w_{ik}^{2} + \sum_{k=1}^{max}w_{jk}^{2} - \sum_{k=1}^{max} (w_{ik}w_{jk})} $
+		$ S_{d_{i}, d_{j}} = \dfrac{\sum_{k=1}^{N} (w_{ik}w_{jk})}{\sum_{k=1}^{N}w_{ik}^{2} + \sum_{k=1}^{max}w_{jk}^{2} - \sum_{k=1}^{N} (w_{ik}w_{jk})} $
 	\end{center}
 	\item \textbf{Coeficiente del coseno:}
 	\begin{center}
-		$ S_{D_{i}, D_{j}} = \dfrac{\sum_{k=1}^{max} (w_{ik}w_{jk})}{\sqrt{\sum_{k=1}^{max}w_{ik}^{2} \sum_{k=1}^{max}w_{jk}^{2}}} $
+		$ S_{d_{i}, d_{j}} = \dfrac{\sum_{k=1}^{N} (w_{ik}w_{jk})}{\sqrt{\sum_{k=1}^{N}w_{ik}^{2} \sum_{k=1}^{N}w_{jk}^{2}}} $
 	\end{center}
 \end{itemize}
 
@@ -156,15 +160,11 @@ Tambi\'en pueden clasificarse seg\'un el tipo de estructura impuesta sobre los d
 		$ H(\Omega) = -\sum_{k}P(\omega_{k}) \log P(\omega_{k}) $
 	\end{center}
 	
-	$ I(\Omega, \mathbb{C})$ mide la cantidad de información por la cual nuestro conocimiento sobre las clases aumenta cuando se nos dice cu\'ales son los grupos. 
-	
-	El mínimo de $ I(\Omega, \mathbb{C})$ es 0 si el agrupamiento es aleatorio con respecto a pertenencia a clases. En ese caso, saber que un documento está en un determinado cl\'uster no nos da ninguna información nueva sobre cuál podría ser su clase.
-	
 	Se alcanza la máxima información mutua para un agrupamiento exacto que perfectamente recrea las clases pero también si los grupos se subdividen en cl\'usteres más pequeños. 
 	
-	En particular, en un agrupamiento con K = N los grupos de documentos tienen MI máximo. Entonces MI tiene el mismo problema que la pureza: no penaliza cardinalidades grandes y por lo tanto no formaliza nuestro sesgo que, en igualdad de condiciones, menos grupos son mejores.
+	En particular, en un agrupamiento con $ K = N $ los grupos de documentos tienen $ MI $ máximo. Entonces $ MI $ tiene el mismo problema que la pureza, no penaliza cardinalidades grandes.
 	
-	La normalización por el denominador $ [H(\Omega) + H(\mathbb{C})]/2 $ soluciona este problema ya que la entropía tiende a aumentar con el número de clusters, alcanzandi su log N máximo para K = N, lo que asegura que NMI es bajo para K = N.
+	La normalización por el denominador $ [H(\Omega) + H(\mathbb{C})]/2 $ soluciona este problema ya que la entropía tiende a aumentar con el número de cl\'usteres, alcanzando su $ log N $ máximo para $ K = N $, lo que asegura que $ NMI $ es bajo para una gran cantidad de cl\'usteres.
 	
 	\vspace{1em}
 	\item \textbf{\'Indice de Rand (Rand Index)}: Se asignan dos documentos al mismo clúster si y sólo si son similares. Una decisión positiva verdadera (TP) asigna
