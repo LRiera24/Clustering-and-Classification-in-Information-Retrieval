@@ -462,23 +462,7 @@ A continuaci\'on se describen con m\'as detalle algunas de las aplicaciones m\'a
 	
 	La definici\'on dada en \ref{Problema_de_clasificacion} implica que cada documento pertenece a una sola clase. Pero existe otro tipo de problemas que permiten que un documento pertenezca a m\'as de una clase. Por ahora enfocaremos nuestra atenci\'on en el tipo de una clase.
 	
-	\begin{subsection}{Problemas de la Recuperaci\'on de la Informaci\'on} \label{App_RI}
-		
-		El aprendizaje de m\'aquinas es ampliamente usado en la actualidad para resolver una variedad de problemas de muchas esferas. La clasificaci\'on, de conjunto con la regresi\'on, es una de las grandes tareas que tiene el aprendizaje de m\'aquinas supervisado. Algunos problemas interesantes que resuelve la clasificaci\'on se encuentran dentro del marco de los Sistemas de Recuperaci\'on de la informaci\'on. Anteriormente present\'abamos uno de ellos, que es la recuperaci\'on de consultas permanentes.
-		
-		La organizaci\'on del correo personal es otros de los ejemplos relacionados con RI que pueden ser resueltos mediante clasificaci\'on. En muchas ocasiones una persona tiene un n\'umero grande de correos en el buz\'on de entrada. A la hora de revisarlo ser\'ia deseable que pudiera dirigirse directamente a aquellos que son de inter\'es para \'el. Para ello la organizaci\'on autom\'atica del correo en carpetas podr\'ia ser una ventaja invaluable. Un ejemplo particular ser\'ia la carpeta de correo spam.
-		
-		Otro problema que se pudiera resolver ser\'ia la clasificaci\'on de valoraciones sobre algo en positivas o negativas. Esto tendr\'ia numerosas aplicaciones pr\'acticas como pudiera ser la selecci\'on de una pel\'icula. Un usuario podr\'ia revisar la cantidad de comentarios negativos, antes de lanzarse a disponer de dos horas de su tiempo viendo un material audiovisual que no resultar\'a muy placentero.
-		
-		El uso m\'as evidente que tiene la clasificaci\'on el la RI es la clasificaci\'on de documentos en t\'opicos. Esta clasificaci\'on facilitar\'ia la implementaci\'on de un motor de b\'usqueda vertical, que permita al usuario restringir su b\'usqueda al tema deseado. Un SRI con semejante caracter\'istica permite hacer una b\'usqueda m\'as precisa en las consultas m\'as especializadas por el usuario.
-		
-		En RI es muy \'util contar con un \'indice de los contenidos almacenados. En el proceso de creaci\'on del mencionado \'indice la clasificaci\'on puede jugar un importante papel. Por citar algunos ejemplos puede usarse para detectar el lenguaje de un documento, la segmentaci\'on y capitalizaci\'on de las palabras y el codificado del documento.
-		
-		%		\begin{itemize}
-		%			\item[$\bullet$]
-		%		\end{itemize}
-		
-	\end{subsection}
+
 
 	\subsection{Naive Bayes}
 
@@ -686,7 +670,7 @@ A continuaci\'on se describen con m\'as detalle algunas de las aplicaciones m\'a
 		\end{algorithm}
 		
 		
-		\subsection{Medidas de evaluaci\'on}
+	\subsection{Medidas de evaluaci\'on}
 			
 			Una alta exactitud en la clasificaci\'on de los datos de entrenamiento no necesariamente se traduce en resultados correctos en los nuevos documentos introducidos. Puede sucede que el sistema resulte sobreentrenado (\emph{over-fitting}) o subentrenado (\emph{under-fitting}). El primero de los casos ocurre cuando el modelo se encuentra con muchos datos. En este caso el sistema aprende de los ruidos y de las entradas inexactas lo que provoca que el clasificador aprenda incorrectamente a clasificar los elementos de alguna clase. Por otro lado under-fitting ocurre cuando el sistema tiene informaci\'on muy vaga sobre la frontera entre clases lo que provoca cierta aleatoriedad en la clasificaci\'on.
 			
@@ -722,7 +706,7 @@ A continuaci\'on se describen con m\'as detalle algunas de las aplicaciones m\'a
 			En el caso que la cantidad de clases sea mayor que dos, podemos computar promedios entre las m\'etricas anteriores viendo el clasificador como uno de dos clases aplicado a cada clase $c$ (y su complemento). Existen dos promedios que son los m\'as usados para esto. Macropromedio calcula simplemente la media entre las medidas anteriores para cada clasificador de dos clases. Microaverage primero adiciona las matrices de contingencia correspondientes a diferentes clases y luego aplica una de las m\'etricas anteriores sobre la matriz resultante. 
 			
 			
-		\subsection{Ventajas}
+	\subsection{Ventajas}
 				\begin{itemize}
 					\item Al usar el aprendizaje supervisado se puede tener una idea exacta sobre las clases de los documentos, dado que estas se crean basado en caracter\'isticas expl\'icitas de los mismos. 
 					\item La salida suele ser m\'as precisa que en el aprendizaje supervisado
@@ -731,7 +715,7 @@ A continuaci\'on se describen con m\'as detalle algunas de las aplicaciones m\'a
 					\item Se eval\'ua y recibe retroalimentaci\'on para comprobar la correctitud. 
 				\end{itemize}
 		
-		\subsection{Desventajas}
+	\subsection{Desventajas}
 				\begin{itemize}
 					\item Se necesita un especialista que determine cu\'ales ser\'an las clases en que se desea clasificar.
 					\item Se requiere de un conjunto de datos entrenantes.
@@ -740,6 +724,19 @@ A continuaci\'on se describen con m\'as detalle algunas de las aplicaciones m\'a
 					\item Suelen requerir mucho tiempo de entrenamiento.
 					\item Puede predecir la salida incorrecta si los datos de prueba son diferentes de los datos de entrenamiento.
 				\end{itemize}
+				
+	\subsection{Aplicaciones en la Recuperaci\'on de la Informaci\'on.} \label{App_RI}
+		
+		El aprendizaje de m\'aquinas es ampliamente usado en la actualidad para resolver una variedad de problemas de muchas esferas. La clasificaci\'on, de conjunto con la regresi\'on, son unas de las grandes tareas que tiene el aprendizaje de m\'aquinas supervisado. Algunos problemas interesantes que resuelve la clasificaci\'on se encuentran dentro del marco de la Web y los Sistemas de Recuperaci\'on de la informaci\'on. Anteriormente present\'abamos uno de ellos, que es la recuperaci\'on de consultas permanentes.
+		
+		La organizaci\'on del correo personal es otros de los ejemplos relacionados con la Web que pueden ser resueltos mediante clasificaci\'on. En muchas ocasiones una persona tiene un n\'umero grande de correos en el buz\'on de entrada. A la hora de revisarlo ser\'ia deseable que pudiera dirigirse directamente a aquellos que son de inter\'es para \'el. Para ello la organizaci\'on autom\'atica del correo en carpetas podr\'ia ser una ventaja invaluable. Un ejemplo particular ser\'ia la carpeta de correo spam.
+		
+		Otro problema que se pudiera resolver ser\'ia la clasificaci\'on de valoraciones sobre algo en positivas o negativas. Esto tendr\'ia numerosas aplicaciones pr\'acticas como pudiera ser la selecci\'on de una pel\'icula. Un usuario podr\'ia revisar la cantidad de comentarios negativos, antes de lanzarse a disponer de dos horas de su tiempo viendo un material audiovisual que no resultar\'a muy placentero.
+		
+		El uso m\'as evidente que tiene la clasificaci\'on el la RI es la clasificaci\'on de documentos en t\'opicos. Esta clasificaci\'on facilitar\'ia la implementaci\'on de un motor de b\'usqueda vertical, que permita al usuario restringir su b\'usqueda al tema deseado. Un SRI con semejante caracter\'istica permite hacer una b\'usqueda m\'as precisa en las consultas m\'as especializadas por el usuario.
+		
+		En RI es muy \'util contar con un \'indice de los contenidos almacenados. En el proceso de creaci\'on del mencionado \'indice la clasificaci\'on puede jugar un importante papel. Por citar algunos ejemplos puede usarse para detectar el lenguaje de un documento, la segmentaci\'on y capitalizaci\'on de las palabras y el codificado del documento.
+		
 
 	\subsection{Otros ejemplos de aplicaci\'on}
 
@@ -756,6 +753,15 @@ El mercado financiero es una de los espacios de la vida del hombre donde m\'as r
 En la seguridad inform\'atica tambi\'en se evidencia la clasificaci\'on en acciones como detecci\'on de virus, enlaces maliciosos y fraude. Otras aplicaciones en que puede verse tambi\'en son el Internet de las cosas (IoT), los motores de recomendaci\'on y la fijaci\'on de precios din\'amicos de productos.
 
 \section{Conclusiones}
+
+	La metodolog\'ia usada en la clasificaci\'on y el agrupamiento es diferente y por ende el resultado esperado de sus algoritmos difiere tambi\'en entre s\'i. Sin embargo, evidencian la creciente importancia que tiene la computaci\'on y en especial el aprendizaje de m\'aquina, en ambas variantes, supervisado y no supervisado, para ayudar a la humanidad en tareas esenciales que se evidenciaban en el mundo incluso antes de su existencia. Hemos analizado aqu\'i algunos de los algoritmos m\'as importantes de ambas metodolog\'ias. 
+	
+	Aunque el objetivo de la clasificaci\'on y agrupamiento sea similar, hemos visto que esencialmente se utilizan en diferentes situaciones.  Sus aplicaciones a la resoluci\'on de problemas se ven a menudo reflejados en la Recuperaci\'on de la Informaci\'on y en la Web. Aunque,  antes de aplicarlas en alg\'un problema, es siempre bueno estar conscientes de sus ventajas y desventajas, las cuales en ocasiones son opuestas.
+	
+	
+	
+
+	
 
 \begin{thebibliography}{20}
 	\bibitem{B1} Maning C. D.: \emph{An Introduction To Information Retrieval} (2009).
