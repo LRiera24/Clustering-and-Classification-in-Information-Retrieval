@@ -80,6 +80,11 @@ La clasificaci\'on y el agrupamiento son dos m\'etodos de aprendizaje de m\'aqui
 
 \section{Agrupamiento}
 
+\begin{flushright}
+	\scriptsize*(Tomado de \cite{B1})
+	\normalsize
+\end{flushright}
+
 Los algoritmos de agrupamiento, como su nombre lo indica, agrupan un conjunto de documentos en subconjuntos o clústeres. Son utilizados para generar una estructura de categorías que se ajuste a un conjunto de observaciones. 
 
 Los grupos formados deben tener un alto grado de asociación entre los documentos de un mismo grupo, es decir, deben ser lo m\'as similares posibles, y un bajo grado entre miembros de diferentes grupos. 
@@ -101,7 +106,12 @@ Los algoritmos de agrupamiento pueden ser clasificados seg\'un la pertenencia a 
 
 Tambi\'en pueden clasificarse seg\'un el tipo de estructura impuesta sobre los datos como \textit{agrupamiento particionado o plano} (flat clustering) o \textit{agrupamiento jer\'arquico} (hierarchical clustering).
 
-\subsection{Medidas de similitud \cite{B3}}
+\subsection{Medidas de similitud}
+
+\begin{flushright}
+	\scriptsize*(Tomado de \cite{B3})
+	\normalsize
+\end{flushright}
 
 Sean $ d_{i} $ el documento $ i $ del corpus y $ w_{ik} $ el peso del t\'ermino $ k $ de un total $ N $ en el documento $ i $ .
 
@@ -125,8 +135,12 @@ Sean $ d_{i} $ el documento $ i $ del corpus y $ w_{ik} $ el peso del t\'ermino 
 	\end{center}
 \end{itemize}
 
-\subsection{Medidas de evaluaci\'on \cite{B1}}
-\begin{itemize}
+\subsection{Medidas de evaluaci\'on} 
+	\begin{flushright}
+		\scriptsize*(Tomado de \cite{B1})
+	\end{flushright}
+	\normalsize
+	\begin{itemize}
 	\item \textbf{Pureza:} Para calcular la pureza, cada grupo se asigna a la clase que es más frecuente en el grupo, y luego se mide la precisión de esta asignación contando el número de documentos correctamente asignados y dividiendo por N.
 	
 	\begin{center}
@@ -194,7 +208,11 @@ Sean $ d_{i} $ el documento $ i $ del corpus y $ w_{ik} $ el peso del t\'ermino 
 El \textit{agrupamiento particionado} crea un conjunto  de clústeres sin ninguna estructura explícita que los relacione entre sí. 
 
 \vspace{1em}
-\textbf{Algoritmo K-means \cite{B1}}
+\textbf{Algoritmo K-means}
+\begin{flushright}
+	\scriptsize*(Tomado de \cite{B1})
+	\normalsize
+\end{flushright}
 \vspace{0.5em}
 
 	Es el algoritmo de agrupamiento plano más importante. Su \textit{objetivo} es minimizar la distancia euclidiana al cuadrado promedio entre los documentos y el centro de sus cl\'usteres. 
@@ -245,7 +263,11 @@ El \textit{agrupamiento particionado} crea un conjunto  de clústeres sin ningun
 
 El primer paso de esta implementaci\'on de K-means es seleccionar al azar como centros iniciales de los cl\'usteres a K documentos, estas son las semillas. Luego, el algoritmo mueve los centros de los grupos en el espacio para minimizar el RSS. Este proceso se repite de manera iterativa hasta que se cumpla un criterio de parada.
 
-Opciones para la \textit{elecci\'on de las semillas} \cite{B2}:
+Opciones para la \textit{elecci\'on de las semillas}:
+\begin{flushright}
+	\scriptsize*(Tomado de \cite{B2})
+	\normalsize
+\end{flushright}
 \begin{itemize}
 	\item Escoger al azar.
 	\item Calcular la media $ m $ de todos los datos y generar k centros iniciales agregando un pequeño vector aleatorio a la media ($ m \pm \varsigma $).
@@ -253,6 +275,10 @@ Opciones para la \textit{elecci\'on de las semillas} \cite{B2}:
 \end{itemize}
 
 Algunos \textit{criterios de parada}:
+\begin{flushright}
+	\scriptsize*(Tomado de \cite{B1})
+	\normalsize
+\end{flushright}
 \begin{itemize}
 	\item Cuando se ha completado un número fijo de iteraciones I. Esta condición limita el tiempo de ejecución del algoritmo de agrupamiento, pero en algunos casos la calidad de el agrupamiento será deficiente debido a un número insuficiente de iteraciones.
 	\item Cuando la asignación de documentos a grupos no cambia entre iteraciones. Excepto en los casos con un m\'inimo local malo, esto produce un buen agrupamiento, pero los tiempos de ejecución pueden ser demasiado largos.
@@ -277,6 +303,11 @@ Toman decisiones basadas en patrones locales sin tener inicialmente en cuenta la
 
 \vspace{1em}
 \textbf{Medidas de similitud para cl\'usteres en HAC}
+
+\begin{flushright}
+	\scriptsize*(Tomado de \cite{B1} y \cite{B3})
+	\normalsize
+\end{flushright}
 
 \begin{itemize}
 	\item \textbf{Agrupamiento por enlazamiento \'unico} (Single link clustering): La similitud entre dos cl\'usters es la similitud de los dos objetos más cercanos entre ellos (mayor similitud).
@@ -315,7 +346,11 @@ Toman decisiones basadas en patrones locales sin tener inicialmente en cuenta la
 \end{itemize}
 
 \vspace{1em}
-\textbf{Algoritmo HAC \cite{B1}}
+\textbf{Algoritmo HAC}
+\begin{flushright}
+	\scriptsize*(Tomado de \cite{B1})
+	\normalsize
+\end{flushright}
 
 Dado un conjunto de N elementos a agrupar, el proceso básico del agrupamiento jerárquico es:
 \begin{enumerate}
@@ -379,10 +414,14 @@ El agrupamiento jerárquico no requiere un número predeterminado de clústeres.
 \subsubsection{Agrupamiento jer\'arquico divisivo}
 
 \textcolor{white}{.}
+\begin{flushright}
+	\scriptsize*(Tomado de \cite{B1})
+	\normalsize
+\end{flushright}
 
 \vspace{0.5em}
 Los algoritmos de arriba hacia abajo comienzan con todos los documentos en un grupo. El clúster se divide utilizando un algoritmo de agrupamiento particionado. Este procedimiento se aplica recursivamente hasta que cada documento está en su
-propio clúster (singleton).
+propio clúster.
 
 A pesar de necesitar un segundo algoritmo de agrupamiento particionado como una subrutina, tiene la ventaja de ser más eficiente si no generamos una jerarquía completa hasta las hojas de documentos individuales. Para un número fijo de niveles, y utilizando un algoritmo particionado eficiente como K-means, los algoritmos divisivos son lineales en el número de documentos y clústeres.
 
@@ -409,7 +448,11 @@ Adem\'as se beneficia de la información completa sobre la distribución global 
 \subsection{Ejemplos de aplicaci\'on} 
 El agrupamiento es una técnica importante para descubrir subregiones o subespacios relativamente densos de una distribución de datos multidimensional. Se ha utilizado en la recuperación de información para muchos propósitos diferentes, como la expansión de consultas, la agrupación e indexación de documentos y la visualización de resultados de búsqueda. Permiten mejorar interfaz y experiencia de usuario y proporcionar una mayor eficacia o eficiencia del sistema de búsqueda. 
 
-A continuaci\'on se describen con m\'as detalle algunas de las aplicaciones m\'as importantes \cite{B1}: 
+A continuaci\'on se describen con m\'as detalle algunas de las aplicaciones m\'as importantes:
+\begin{flushright}
+	\scriptsize*(Tomado de \cite{B1})
+	\normalsize
+\end{flushright} 
 \begin{itemize}
 	\item Agrupamiento de resultados de búsqueda (Search result clustering): La presentación predeterminada de los resultados de búsqueda (documentos devueltos en respuesta a una consulta) en la recuperación de información es una lista sencilla. Los usuarios escanean la lista de arriba a abajo hasta que encuentran la información que buscan. 
 	
