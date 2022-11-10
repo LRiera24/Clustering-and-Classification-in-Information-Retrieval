@@ -9,7 +9,6 @@
 \usepackage{amsfonts}
 \usepackage[noend]{algpseudocode}
 
-
 \usepackage{amsmath}
 \DeclareMathOperator*{\argmax}{arg\,max}
 \DeclareMathOperator*{\argmin}{arg\,min}
@@ -23,7 +22,6 @@
 	\textbf{\textit{Palabras claves:}} #1
 }
 
-%
 \begin{document}
 \markboth{Sistemas de Recuperaci\'on de Informaci\'on}{Aplicaciones del agrupamiento y de la clasificación en la RI en la Web}
 \thispagestyle{empty}
@@ -118,32 +116,27 @@ Tambi\'en pueden clasificarse seg\'un el tipo de estructura impuesta sobre los d
 	\end{center}
 \end{itemize}
 
-\subsection{Agrupamiento particionado}
-
-El \textit{agrupamiento particionado} crea un conjunto  de clústeres sin ninguna estructura explícita que los relacione entre sí. 
-
-\subsubsection{Medidas de evaluaci\'on}
-
+\subsection{Medidas de evaluaci\'on}
 \begin{itemize}
 	\item \textbf{Pureza:} Para calcular la pureza, cada grupo se asigna a la clase que es más frecuente en el grupo, y luego se mide la precisión de esta asignación contando el número de documentos correctamente asignados y dividiendo por N.
-	
-	Formalmente
 	
 	\begin{center}
 		$purity(\Omega, \mathbb{C}) = \dfrac{1}{N} \sum_{k}max_{j} |\omega_{k} \cap c_{j}| $
 	\end{center}
+	
 	donde $ \Omega = \{\omega_{1}, \omega_{2}, ... , \omega_{K}\} $ es el conjunto de cl\'usters y $ C = \{c_{1}, c_{2}, ... , c_{J}\} $ es el conjunto de clases. Se interpreta $ \omega_{k} $ como el conjunto de documentos en el cl\'uster y $ c_{j} $ como el conjunto de documentos que pertenecen a esa clase.
 	
 	Malos agrupamientos tienen valores de pureza cercanos a 0, mientras que un agrupamiento perfecto tiene una pureza 1.
 	
 	La alta pureza es fácil de lograr cuando el número de grupos es grande, en particular, la pureza es 1 si cada documento tiene su propio grupo. Sin embargo en este caso tendr\'iamos la mayor cantidad de grupos posibles, por lo que nuestra soluci\'on no tendr\'ia calidad.
+	
 	\vspace{1em}
 	\item \textbf{Información mutua normalizada:} Una medida que nos permite hacer la compensaci\'on entre calidad y pureza es la información mutua normalizada o $ NMI $ por sus siglas en ingl\'es.
 	
-\begin{center}
+	\begin{center}
 		$ NMI(\Omega, \mathbb{C}) = \dfrac{I(\Omega, \mathbb{C})}{[H(\Omega) + H(\mathbb{C})]/2}
-	 $
-\end{center}
+		$
+	\end{center}
 	
 	I es la informaci\'on mutua:
 	\begin{center}
@@ -152,93 +145,66 @@ El \textit{agrupamiento particionado} crea un conjunto  de clústeres sin ningun
 	donde $ P(\omega_{k}) $, $ P(c_{j}) $ y $ P(\omega_{k} \cap c_{j}) $ son las probabilidades de que un documento sea del cl\'uster $ \omega_{k} $, clase $ c_{j} $, y est\'e la intersección de $ \omega_{k} $ y $ c_{j} $, respectivamente.
 	
 	\vspace{0.5em}
-	Para estimaciones de máxima verosimilitud
-	de las probabilidades (es decir, la estimación de cada probabilidad es la correspondiente frecuencia relativa):
-	\begin{center}
-		$ I(\Omega, \mathbb{C}) = \sum_{k}\sum_{j}|\omega_{k} \cap c_{j}|\log\frac{N|\omega_{k} \cap c_{j}|}{|\omega_{k}||c_{j}|} $
-	\end{center}
-	
-	H es la entropía tal como se define en el Capítulo 5 (página 99):
-	La característica de una distribución de probabilidad discreta3 P que determina
-	sus propiedades de codificación (incluyendo si un código es óptimo)
+	H es la entropía (mide la incertidumbre de una fuente de información)
 	
 	\begin{center}
-		$ H(\Omega) = -\sum_{k}P(\omega_{k} \log P(\omega_{k} $
+		$ H(\Omega) = -\sum_{k}P(\omega_{k}) \log P(\omega_{k}) $
 	\end{center}
-
-
-	donde, de nuevo, la segunda ecuación se basa en estimaciones de máxima verosimilitud
-	de las probabilidades
 	
 	$ I(\Omega, \mathbb{C})$ mide la cantidad de información por la cual nuestro conocimiento sobre las clases aumenta cuando se nos dice cu\'ales son los grupos. 
 	
-	El mínimo de $ I(\Omega, \mathbb{C})$ es 0 si el agrupamiento es aleatorio con respecto a pertenencia a clases. En ese caso, sabiendo que un documento está en un determinado
-	cluster no nos da ninguna información nueva sobre cuál podría ser su clase.
+	El mínimo de $ I(\Omega, \mathbb{C})$ es 0 si el agrupamiento es aleatorio con respecto a pertenencia a clases. En ese caso, sabiendo que un documento está en un determinado cluster no nos da ninguna información nueva sobre cuál podría ser su clase.
 	
-	Se alcanza la máxima información mutua para un agrupamiento exacto que perfectamente
-	recrea las clases, pero también si los grupos en exact se subdividen en conglomerados más pequeños. En particular, un agrupamiento con K = N los grupos de documentos tienen MI máximo. Entonces MI tiene el mismo problema que la pureza: no penaliza cardinalidades grandes y por lo tanto no formaliza nuestro sesgo
-	que, en igualdad de condiciones, menos grupos son mejores.
+	Se alcanza la máxima información mutua para un agrupamiento exacto que perfectamente recrea las clases pero también si los grupos se subdividen en cl\'usteres más pequeños. 
 	
-	La normalización por el denominador $ [H(\Omega) + H(\mathbb{C})]/2 $ soluciona este problema ya que la entropía tiende a aumentar con el número de clusters. Por ejemplo, $ H(\Omega) $ alcanza su log N máximo para K = N, lo que asegura que NMI es bajo para K = N. Debido a que NMI está normalizado, podemos usar para comparar agrupaciones con diferentes números de agrupaciones. Lo particular
-	Se elige la forma del denominador porque $ [H(\Omega) + H(\mathbb{C})]/2 $ es una parte superior estrecha atado en $ I(\Omega, \mathbb{C})$. Por lo tanto, NMI es siempre un número entre 0 y 1.
+	En particular, un agrupamiento con K = N los grupos de documentos tienen MI máximo. Entonces MI tiene el mismo problema que la pureza: no penaliza cardinalidades grandes y por lo tanto no formaliza nuestro sesgo que, en igualdad de condiciones, menos grupos son mejores.
+	
+	La normalización por el denominador $ [H(\Omega) + H(\mathbb{C})]/2 $ soluciona este problema ya que la entropía tiende a aumentar con el número de clusters, alcanzandi su log N máximo para K = N, lo que asegura que NMI es bajo para K = N.
 	
 	\vspace{1em}
-	\item \textbf{\'Indice de frontera (Rand Index)}: Una alternativa a esta interpretación teórica de la información del agrupamiento es
-	para verlo como una serie de decisiones, una para cada uno de los $ N(N - 1)/2 $ pares de
-	documentos de la colección. Queremos asignar dos documentos al mismo
-	clúster si y sólo si son similares. Una decisión positiva verdadera (TP) asigna
-	dos documentos similares al mismo grupo, una verdadera decisión negativa (TN) as-
-	firma dos documentos diferentes a diferentes grupos. Hay dos tipos
-	de errores que podemos cometer. Una decisión de falso positivo (FP) asigna dos disim-
-	documentos ilar al mismo clúster. Una decisión de falso negativo (FN) asigna
-	dos documentos similares a diferentes agrupaciones. El índice de Rand (IR) mide
-	ÍNDICE ALEATORIO
-	Rhode Island
-	el porcentaje de decisiones que son correctas. Es decir, es simplemente precisión.
+	\item \textbf{\'Indice de Rand (Rand Index)}: Se asignan dos documentos al mismo clúster si y sólo si son similares. Una decisión positiva verdadera (TP) asigna
+	dos documentos similares al mismo grupo, una decisión negativa verdadera (TN) asigna dos documentos diferentes a diferentes grupos. Hay dos tipos
+	de errores que podemos cometer. Una decisión de falso positivo (FP) asigna dos documentos no similarres al mismo clúster. Una decisión de falso negativo (FN) asigna
+	dos documentos similares a diferentes agrupaciones. El índice de Rand (IR) mide el porcentaje de decisiones que son correctas (precisión).
 	
 	\begin{center}
 		$ RI = \dfrac{TP + TN}{TP + FP + FN + TN} $
 	\end{center}
-
-	El índice de Rand otorga el mismo peso a los falsos positivos y falsos negativos.
-	Separar documentos similares a veces es peor que poner pares de dis-
-	documentos similares en el mismo grupo.
+	
+	El índice de Rand otorga el mismo peso a los falsos positivos y falsos negativos. Separar documentos similares a veces es peor que poner pares de dos documentos no similares en el mismo grupo.
 	
 	\vspace{1em}
-	\item \textbf{Medida F:} Podemos usar la medida F, vista anteriormente en conferencia, para penalizar los falsos negativos más fuertemente que los falsos positivos seleccionando un valor $ \beta > 1 $, dando así más peso a la recuperación.
+	\item \textbf{Medida F:} Podemos usar la medida F, vista anteriormente en conferencia, para penalizar los falsos negativos más fuertemente que los falsos positivos seleccionando un valor $ \beta > 1 $, dando así más peso al recobrado.
 	\begin{center}
-	$ P = \dfrac{TP}{TP + FP}  $ \hspace{2em}
-	$ R = \dfrac{TP}{TP + FN} $
-	
-	\vspace{1em}
-	$ F_{\beta} = \dfrac{(\beta^{2} + 1)PR}{\beta^{2}P + R} $
+		$ P = \dfrac{TP}{TP + FP}  $ \hspace{2em}
+		$ R = \dfrac{TP}{TP + FN} $
+		
+		\vspace{1em}
+		$ F_{\beta} = \dfrac{(\beta^{2} + 1)PR}{\beta^{2}P + R} $
 	\end{center}
 \end{itemize}
 
-\subsubsection{Algoritmos}
-\begin{itemize}
-	\item \textbf{K-means}
-	
+\subsection{Agrupamiento particionado}
+
+El \textit{agrupamiento particionado} crea un conjunto  de clústeres sin ninguna estructura explícita que los relacione entre sí. 
+
+\vspace{1em}
+\textbf{Algoritmo K-means}
+\vspace{0.5em}
+
 	Es el algoritmo de agrupamiento plano más importante. 
 	
-	Su \textit{objetivo} es minimizar la distancia euclidiana al cuadrado promedio de documentos de sus centros de conglomerados donde un centro de conglomerados se define como la media o centroide $\mu$ de los documentos en un grupo $\omega$:
+	Su \textit{objetivo} es minimizar la distancia euclidiana al cuadrado promedio entre los documentos y el centro de sus cl\'usteres. 
+	
+	El centro de un cl\'uster se define como la media o centroide $\mu$ de los documentos en un grupo $\omega$:
 	
 	\begin{center}
 		$ \overrightarrow{\mu}(\omega) \leftarrow \dfrac{1}{|\omega_{k}|} \sum_{\overrightarrow{x} \in \omega_{k}} \overrightarrow{x} $
 	\end{center}
 	
-	Se asume que los documentos se representan como de longitud normalizada vectores en un espacio de valor real de la manera habitual. 
+	Se asume que los documentos se representan como de longitud normalizada vectores en un espacio de valor real de la manera habitual.  
 	
-	Usamos centroides para Rocchio clasificación Aquí juegan un papel similar.
-
-	El grupo ideal en K-means es una esfera con el baricentro como su centro de gravedad. Idealmente, los grupos no deberían superponerse. 
-	
-	Nuestro desiderata para las clases en la clasificación de Rocchio fueron los mismos. 
-	
-	La diferencia es que no tenemos el conjunto de entrenamiento de beled en agrupamiento para el cual sabemos qué documentos deben
-	estar en el mismo grupo.
-	
-	Una medida de qué tan bien los centroides representan a los miembros de su grupo es la suma residual de cuadrados o RSS, la distancia al cuadrado de cada vector desde su centroide sumado sobre todos los vectores:
+	Una medida de qué tan bien los centroides representan a los miembros de su cl\'uster es la suma residual de cuadrados o RSS, que es la distancia al cuadrado de cada vector desde su centroide sumado sobre todos los vectores:
 	
 	\begin{center}
 		$ RSS_{k} = \sum_{\overrightarrow{x} \in \omega_{k}}|\overrightarrow{x} - \overrightarrow{\mu}(\omega_{k})|^2$
@@ -247,7 +213,7 @@ El \textit{agrupamiento particionado} crea un conjunto  de clústeres sin ningun
 	$ RSS = \sum_{k=1}^{K} RSS_{k} $
 	\end{center}
 
-	RSS es la \textit{función objetivo} en K-means y nuestro objetivo es minimizarla. Ya que N es fijo, minimizar RSS es equivalente a minimizar el promedio al cuadrado distancia, una medida de qué tan bien los centroides representan sus documentos.
+	RSS es entonces la \textit{función objetivo} en K-means y nuestro objetivo es minimizarla.
 	
 	\begin{algorithm}
 		\caption{K-Means}
@@ -273,56 +239,159 @@ El \textit{agrupamiento particionado} crea un conjunto  de clústeres sin ningun
 			\State{\Return {$\{\overrightarrow{\mu_{1}}, ... , \overrightarrow{\mu_{N}}\}$}}
 		\end{algorithmic}
 	\end{algorithm}
+
+El primer paso de esta implementaci\'on de K-means es seleccionar al azar como centros iniciales de los cl\'usteres a K documentos, estas son las semillas. Luego, el algoritmo mueve los centros de los grupos en el espacio para minimizar el RSS. Este proceso se repite de manera iterativa hasta que se cumpla un criterio de parada.
+
+Opciones para la \textit{elecci\'on de las semillas}:
+\begin{itemize}
+	\item Escoger al azar.
+	\item Calcular la media $ m $ de todos los datos y generar k centros iniciales agregando un pequeño vector aleatorio a la media ($ m \pm \varsigma $).
+	\item Utilizar otro método como un algoritmo de agrupamiento jerárquico en un subconjunto de los objetos.
 \end{itemize}
 
-\newpage
-El primer paso de K-means es seleccionar como centros de conglomerados iniciales K al azar documentos seleccionados, las semillas. Luego, el algoritmo mueve los centros de los grupos
-en el espacio para minimizar el RSS. esto es
-iterativamente repitiendo dos pasos hasta que se cumpla un criterio de parada: 
-
-firma de documentos al clúster con el centroide más cercano; y recalculando cada centroide basado en los miembros actuales de su grupo. 
-
-Criterios de parada:
+Algunos \textit{criterios de parada}:
 \begin{itemize}
-	\item Se ha completado un número fijo de iteraciones I. Esta condición limita el tiempo de ejecución del algoritmo de agrupamiento, pero en algunos casos la calidad de el agrupamiento será deficiente debido a un número insuficiente de iteraciones.
-	\item La asignación de documentos a grupos (la función de partición $\gamma$) no
-	no cambia entre iteraciones. Excepto en los casos con un mini local mal mamá, esto produce un buen agrupamiento, pero los tiempos de ejecución pueden ser inaceptablemente
-	largo.
-	\item Los centroides no cambian entre iteraciones. Esto es equivalente a $\gamma$ no cambiando.
-	\item Terminar cuando RSS cae por debajo de un umbral. Este criterio asegura que el agrupamiento tiene la calidad deseada después de la terminación. En la práctica, nosotros necesita combinarlo con un límite en el número de iteraciones para garantizar terminación. 
-	\item Terminar cuando la disminución de RSS cae por debajo de un umbral $\zeta$. Para $\zeta$ pequeño, esto indica que estamos cerca de la convergencia. Una vez más, tenemos que combinar con un límite en el número de iteraciones para evitar tiempos de ejecución muy largos.
+	\item Cuando se ha completado un número fijo de iteraciones I. Esta condición limita el tiempo de ejecución del algoritmo de agrupamiento, pero en algunos casos la calidad de el agrupamiento será deficiente debido a un número insuficiente de iteraciones.
+	\item Cuando la asignación de documentos a grupos no cambia entre iteraciones. Excepto en los casos con un m\'inimo local malo, esto produce un buen agrupamiento, pero los tiempos de ejecución pueden ser demasiado largos.
+	\item Cuando los centroides no cambian entre iteraciones.
+	\item Cuando RSS cae por debajo de un umbral. Este criterio asegura que el agrupamiento tiene la calidad deseada después de la terminación. En la práctica, es necesario con un límite en el número de iteraciones para garantizar terminación.
 \end{itemize}
 
 \subsection{Agrupamiento jer\'arquico}
 
-\begin{itemize}
-\item Hierarchical agglomerative clustering
+El \textit{agrupamiento jerárquico} produce una jerarquía, una estructura que es más informativa que el conjunto no estructurado de clústeres devuelto por el agrupamiento particionado, no requiere que especifiquemos previamente el número de grupos y la mayoría son deterministas, sin embargo son m\'as ineficientes que los particionados. En una representación gráfica los elementos quedan anidados en jerarquías con forma de árbol.
 
-\item Medidas de similitud:
+Los algoritmos de agrupamiento jerárquico pueden tener dos enfoques: de arriba hacia abajo (top-down) llamados de \textit{agrupamiento jer\'arquico aglomerativo} o de abajo hacia arriba (bottom-up) conocidos como de \textit{agrupamiento jer\'arquico divisivo}. 
+
+\subsubsection{Agrupamiento jer\'arquico aglomerativo}
+\textcolor{white}{.}
+
+\vspace{0.5em}
+Los algoritmos de abajo hacia arriba tratan cada documento como un clúster único desde el principio y luego fusionan (o aglomeran) sucesivamente pares de grupos hasta que todos los grupos se han fusionado en uno solo que contiene todos los documentos. 
+Es por esto que se denomina agrupamiento jerárquico aglomerativo o HAC por sus siglas en ingl\'es. 
+
+Toman decisiones basadas en patrones locales sin tener inicialmente en cuenta la distribución global. Estas decisiones tempranas no se pueden deshacer.
+
+\vspace{1em}
+\textbf{Medidas de similitud para cl\'usteres en HAC}
+
 \begin{itemize}
-	\item Single link clustering
-	\item Complete link clustering
-	\item Centroid clustering
+	\item \textbf{Agrupamiento por enlazamiento \'unico} (Single link clustering): La similitud entre dos cl\'usters es la similitud de los dos objetos más cercanos entre ellos (mayor similitud).
+	
+	\begin{center}
+		$ sim(\omega_{i}, \omega_{j}) = max_{\overrightarrow{x} \in \omega_{i}, \overrightarrow{y} \in \omega_{j}} SIM(\overrightarrow{x}, \overrightarrow{y})$
+	\end{center}
+	
+	\vspace{1em}
+	\item \textbf{Agrupamiento por enlazamiento completo} (complete link clustering): La similitud entre dos cl\'usters es la similitud de los dos objetos más alejados entre ellos (menor similitud). 
+	
+	\begin{center}
+		$ sim(\omega_{i}, \omega_{j}) = min_{\overrightarrow{x} \in \omega_{i}, \overrightarrow{y} \in \omega_{j}} SIM(\overrightarrow{x}, \overrightarrow{y})$
+	\end{center}
+	
+	\vspace{1em}
+	\item \textbf{Agrupamiento aglomerativo por promedio de grupo} (group-average agglomerative clustering): El agrupamiento aglomerativo por promedio de grupo o GAAC por sus siglas en ingl\'es, calcula la similitud promedio SIM-GA de todos los pares de documentos, incluidos los pares del mismo grupo (las auto-similitudes no están incluidas en el promedio).
+	
+	\begin{center}
+	\footnotesize
+	$ SIM-GA(\omega_{i}, \omega_{j}) = \dfrac{1}{(N_{i} + N_{j})(N_{i} + N_{j} - 1)} \sum_{\overrightarrow{x} \in \omega_{i} \cup \omega_{j}} \sum_{\overrightarrow{y} \in \omega_{i} \cup \omega_{j}, \overrightarrow{x} \neq \overrightarrow{y}} \overrightarrow{x} \cdot \overrightarrow{y} $
+	\end{center}
+	
+	Este evalúa la calidad de un clúster basada en todas las similitudes entre documentos, evitando así castigar valores extremos como en los criterios de enlace único y enlace completo, que establecen la similitud del cl\'uster con la similitud de un solo par de documentos.
+	
+	\vspace{1em}
+	\item \textbf{Agrupamiento por centroide} (centroid clustering): La similitud de dos cl\'usters est\'a definida como la similitud de sus centroides
+
+		\begin{align}
+			sim(\omega_{i}, \omega_{j}) &= \mu(\omega_{i})\cdot\mu(\omega_{j}) \nonumber\\
+			&= \left(\dfrac{1}{N_{i}}\sum_{\overrightarrow{x} \in \omega_{i}}\overrightarrow{x}\right) \cdot \left(\dfrac{1}{N_{j}}\sum_{\overrightarrow{y} \in \omega_{i}}\overrightarrow{y}\right) \nonumber\\
+			& = \dfrac{1}{N_{i}N_{j}} \sum_{\overrightarrow{x} \in \omega_{i}}\sum_{\overrightarrow{y} \in \omega_{j}}\overrightarrow{x}\cdot\overrightarrow{y} \nonumber
+		\end{align}
+	
+	A diferencia de GAAC, el agrupamiento por centroide excluye el c\'alculo de pares del mismo cl\'uster.
 \end{itemize}
 
-\item Evaluaci\'on de calidad:
+\vspace{1em}
+\textbf{Algoritmo HAC}
+
+Dado un conjunto de N elementos a agrupar, el proceso básico del agrupamiento jerárquico es:
+\begin{enumerate}
+	\item Se comienza con N cl\'usteres, resultado de asignar cada elemento al suyo propio. Se computa la matriz C de similitud de N×N.
+	
+	\item Se halla la similitud entre los pares de cl\'usteres con la medida deseada.
+	
+	\item Se toma el par más similar de clústeres y se combinan en un único clúster.
+	
+	\item Se calculan las similitudes entre el nuevo clúster y cada uno de los cl\'usteres antiguos.
+	
+	\item Se repiten los pasos 3 y 4 hasta que todos los elementos estén agrupados en un solo grupo de tamaño N.
+\end{enumerate}
+
+\begin{algorithm}
+	\caption{HAC}
+	\begin{algorithmic}[1]
+		\Require{$\{d_{1}, ... , d_{N}\} $} 
+		%		 			\Ensure{Trained.}
+		\For{$n \leftarrow 1$ \textbf{to} $N$}
+		\For{$i \leftarrow 1$ \textbf{to} $N$}
+		\State{$ C[n][i] \leftarrow SIM(d_{n}, d_{i}) $}
+		\State{$ I[n] \leftarrow 1 $ (keeps track of active clusters)}
+		\EndFor
+		\State{$ A \leftarrow [] $ (assembles clustering as a sequence of merges)}
+		\EndFor
+		\For{$k \leftarrow 1$ \textbf{to} $N-1$}
+		\State{$ <i,m> \leftarrow \argmax_{<i,m>:i \neq \wedge I[i] = 1 \wedge I[m] = 1} C[i][m] $}
+		\State{$ A.APPEND(<i,m>) $ (store merge)}
+		\For{$j \leftarrow 1$ \textbf{to} $N$}
+		\State{$ C[i][j] \leftarrow SIM(i,m,j)$}
+		\State{$ C[j][i] \leftarrow SIM(i,m,j)$}
+		\EndFor
+		\State{$ I[m] \leftarrow 0 $ (deactivate cluster)}
+		\EndFor
+		\State{\Return {A}}
+	\end{algorithmic}
+\end{algorithm}
+
+Notas: 
 \begin{itemize}
-\item Group average link
-\item M\'etodo de Ward
+	\item En cada iteración, los dos clústeres m\'as similares se fusionan y las filas y columnas del clúster fusionado i en C se actualizan.
+	\item El agrupamiento se almacena como una lista de fusiones en A.
+	\item I indica qué clústeres aún están disponibles para fusionarse. 
+	\item La función SIM(i, m, j) calcula la similitud del grupo j con la fusión de los grupos i y M.
 \end{itemize}
 
-\item Divisive clustering
+Una suposición fundamental en HAC es que la operación de fusión es mon\'otona, es decir si $ s_{1}, s_{2}, . . . , s_{K-1}$ son las similitudes de combinación de las fusiones sucesivas de un HAC, entonces se cumple $ s_{1} \geq s_{2} \geq . . . \geq s_{K-1}$.
 
-\item Cluster labeling
-
-\item Algoritmos:
+El agrupamiento jerárquico no requiere un número predeterminado de clústeres. Sin embargo, en algunas aplicaciones queremos una partición de clústeres disjuntos como en el agrupamiento particionado. En esos casos, la jerarquía debe cortarse en algún momento. Se pueden utilizar varios criterios para determinar el punto de corte:
 \begin{itemize}
-	\item Algoritmo HAC
-	\item Divisive Clustering
-\end{itemize}
+	\item Cortar a un nivel de similitud preespecificado.
+	\item  Aplicar la ecuación:
+	\begin{center}
+		$K = \argmin_{K'}[RSS(K') + \lambda K'] $
+	\end{center}
+	donde $ K' $ se refiere al corte de la jerarquía que resulta en $ K' $ clusters, $ RSS $ es la suma residual de cuadrados y $\lambda$ es una penalización por cada grupo adicional.
+	\item Al igual que en el agrupamiento particionado, también se puede preespecificar el número de agrupamientos $ K $ y seleccionar el punto de corte que produce $ K $ cl\'usteres.
 \end{itemize}
 
-\subsection{Aplicaciones a la RI} 
+\subsubsection{Agrupamiento jer\'arquico divisivo}
+
+\textcolor{white}{.}
+
+\vspace{0.5em}
+Los algoritmos de arriba hacia abajo comienzan con todos los documentos en un grupo. El clúster se divide utilizando un algoritmo de agrupamiento particionado. Este procedimiento se aplica recursivamente hasta que cada documento está en su
+propio clúster (singleton).
+
+A pesar de necesitar un segundo algoritmo de agrupamiento particionado como una subrutina, tiene la ventaja de ser más eficiente si no generamos una jerarquía completa hasta las hojas de documentos individuales. Para un número fijo de niveles, y utilizando un algoritmo particionado eficiente como K-means, los algoritmos divisivos son lineales en el número de documentos y clústeres.
+
+Adem\'as se beneficia de la información completa sobre la distribución global al tomar decisiones de partición de alto nivel.
+
+\subsection{Ejemplos de aplicaci\'on} 
+%potencial para mejorar la eficiencia de la recuperación, para mejorar la eficacia de la recuperación
+%proporciona una alternativa a la recuperación booleana o de mejor coincidencia. 
+%
+%
+%Clustering is an important technique for discovering relatively dense sub-regions or sub-spaces of a multi-dimension data distribution. Clus­ tering has been used in information retrieval for many different purposes, such as query expansion, document grouping, document indexing, and visualization of search results. 
+
 \begin{itemize}
 	\item Search result clustering
 	
@@ -337,19 +406,23 @@ Criterios de parada:
 
 \subsection{Ventajas} 
 
-Debido a que no es necesario identificar las clases antes del procesamiento, el análisis de conglomerados es útil para proporcionar
-estructura en grandes conjuntos de datos multivariados. Se ha descrito como una herramienta de descubrimiento porque tiene el potencial
-para revelar relaciones previamente no detectadas basadas en datos complejos
+\begin{itemize}
+	\item No es necesario identificar las clases antes del procesamiento por lo que no se debe contar con expertos para este fin.
+	
+	\item Es útil para proporcionar estructura en grandes conjuntos de datos multivariados.
+	
+	\item Se ha descrito como una herramienta de descubrimiento porque tiene el potencial para revelar relaciones previamente no detectadas basadas en datos complejos.
+	
+	\item Debido a su amplia aplicación en dis\'imiles campos, cuenta el apoyo de una serie de paquetes de software, a menudo disponibles en la informática académica y otros entornos, por lo que se facilita su utilizaci\'on.
+\end{itemize}
 
-Debido a que el análisis de conglomerados es una técnica de análisis multivariado que tiene aplicación en muchos campos, es
-con el apoyo de una serie de paquetes de software que a menudo están disponibles en la informática académica y otros
-21/03/2021
-Recuperación de información: CAPÍTULO 16: ALGORITMOS DE CLÚSTER
-orion.lcg.ufrj.br/Dr.Dobbs/books/book5/chap16.htm
-21/2
-entornos.
 \subsection{Desventajas} 
-
+	\begin{itemize}
+		\item Generalmente los algoritmos de agrupamiento poseen una alta complejidad temporal. 
+		\item No se tiene una idea exacta de las clases creadas.
+		\item No recibe retroalimentaci\'on.
+		
+	\end{itemize}
 \section{Clasificaci\'on}
 
 	El problema de clasificaci\'on en sentido general consiste en determinar dentro un conjunto de clases a cu\'al de ellas pertenece un objeto dado. En el marco de este documento estamos interesados en estudiar la clasificaci\'on de textos. 
@@ -385,7 +458,7 @@ entornos.
 	La definici\'on dada en \ref{Problema_de_clasificacion} implica que cada documento pertenece a una sola clase. Pero existe otro tipo de problemas que permiten que un documento pertenezca a m\'as de una clase. Por ahora enfocaremos nuestra atenci\'on en el tipo de una clase.
 	
 	\begin{subsection}{Problemas de la Recuperaci\'on de la Informaci\'on} \label{App_RI}
-	
+		
 		El aprendizaje de m\'aquinas es ampliamente usado en la actualidad para resolver una variedad de problemas de muchas esferas. La clasificaci\'on, de conjunto con la regresi\'on, es una de las grandes tareas que tiene el aprendizaje de m\'aquinas supervisado. Algunos problemas interesantes que resuelven la clasificaci\'on se encuentran dentro del marco de los Sistemas de Recuperaci\'on de la informaci\'on. Anteriormente presentábamos uno de ellos, que es la recuperaci\'on de consultas permanentes.
 		
 		La organizaci\'on del correo personal es otros de los ejemplos relacionados con RI que pueden ser resueltos mediante clasificaci\'on. En muchas ocasiones una persona tiene un n\'umero grande de correos en el buz\'on de entrada. A la hora de revisarlo ser\'ia deseable que pudiera dirigirse directamente a aquellos que son de inter\'es para \'el. Para ello la organizaci\'on autom\'atica del correo en carpetas podr\'ia ser una ventaja invaluable. Un ejemplo particular ser\'ia la carpeta de correo spam.
@@ -395,14 +468,14 @@ entornos.
 		El uso m\'as evidente que tiene la clasificaci\'on el la RI es la clasificaci\'on de documentos en t\'opicos. Esta clasificaci\'on facilitar\'ia la implementaci\'on de un motor de b\'usqueda vertical, que permita al usuario restringir su b\'usqueda al tema deseado. Un SRI con semejante caracter\'istica permite hacer una b\'usqueda m\'as precisa en las consultas m\'as especializadas por el usuario.
 		
 		En RI es muy \'util contar con un \'indice de los contenidos almacenados. En el proceso de creaci\'on del mencionado \'indice la clasificaci\'on puede jugar un importante papel. Por citar algunos ejemplos puede usarse para detectar el lenguaje de un documento, la segmentaci\'on y capitalizaci\'on de las palabras y el codificado del documento.
-
-%		\begin{itemize}
-%			\item[$\bullet$]
-%		\end{itemize}
+		
+		%		\begin{itemize}
+		%			\item[$\bullet$]
+		%		\end{itemize}
 		
 	\end{subsection}
-		
-	\begin{subsection}{Naive Bayes}
+
+	\subsection{Naive Bayes}
 
 		Uno de los m\'etodos m\'as comunes de aprendizaje supervisado es el conocido como \emph{Naive Bayes} (NB). Este es un m\'etodo de aprendizaje probabil\'istico. La probabilidad de un documento $d$ de pertenecer a una clase $c$ se puede expresar como $P(c\mid d)$. La tarea del algoritmo es encontrar la mejor clase para cada documento $d$. Para ello NB establece que la clase m\'as apropiada para un documento es la m\'as probable, o sea
 		
@@ -497,10 +570,9 @@ entornos.
 		 \end{algorithm}
 		 
 		Podemos deducir de los algoritmos que la complejidad de ambos es linear en el tiempo que toma escanear la informaci\'on. Dado que esto hay que hacerlo al menos una vez, se puede decir que este m\'etodo tiene complejidad temporal \'optima. Dicha eficiencia hace que NB sea un m\'etodo de clasificaci\'on tan usado.
-	\end{subsection}
 	
 	
-	\begin{subsection}{Feature Selection}
+	\subsection{Feature Selection}
 		Un t\'ermino con ruido (\emph{noise feature}) es aquel que al pertenecer a la representaci\'on de los documentos, provoca un aumento del error de clasificaci\'on de los datos. Por ejemplo, supongamos que tenemos una palabra que ocurre rara vez, pero que en el conjunto de entrenamiento ocurre siempre en la misma clase $c$. Entonces al clasificar un documento nuevo que contiene esta palabra, la misma provocar\'a que el clasificador se incline en cierta medida por seleccionar esta a $c$ como respuesta. Sin embargo, dado que la ocurrencia de esta palabra \'unicamente en $c$ es accidental, claramente no aporta informaci\'on suficiente para la clasificaci\'on y por tanto, al considerar lo contrario, aumenta el error.
 		
 		Este es uno de los prop\'positos que tiene la selecci\'on de t\'erminos (\emph{feature selection} (FS)). Esta consiste en reducir el vocabulario, considerado en la clasificaci\'on de textos solo un subconjunto del que aparece en el conjunto de entrenamiento. N\'otese que al disminuir el tama\~no del vocabulario aumenta la eficiencia de los m\'etodos de entrenamiento y clasificaci\'on (aunque no es el caso de NB).
@@ -548,7 +620,6 @@ entornos.
 			Cuando son seleccionados varios miles de t\'erminos, entonces esta medida es bastante buena. Esta es preferible a otros m\'etodos m\'as complejos cuando se aceptan soluciones sub\'optimas.
 			
 		\end{itemize}
-	\end{subsection}
 	
 	\subsection{K Nearest Neighbor}
 	
@@ -610,7 +681,7 @@ entornos.
 		\end{algorithm}
 		
 		
-		\begin{subsection}{Evaluaci\'on de la clasificaci\'on}
+		\subsection{Medidas de evaluaci\'on}
 			
 			Una alta exactitud en la clasificaci\'on de los datos de entrenamiento no necesariamente se traduce en resultados correctos en los nuevos documentos introducidos. Puede sucede que el sistema resulte sobreentrenado (\emph{over-fitting}) o subentrenado (\emph{under-fitting}). El primero de los casos ocurre cuando el modelo se encuentra con muchos datos. En este caso el sistema aprende de los ruidos y de las entradas inexactas lo que provoca que el clasificador aprenda incorrectamente a clasificar los elementos de alguna clase. Por otro lado under-fitting ocurre cuando el sistema tiene informaci\'on muy vaga sobre la frontera entre clases lo que provoca cierta aleatoriedad en la clasificaci\'on.
 			
@@ -645,11 +716,8 @@ entornos.
 			
 			En el caso que la cantidad de clases sea mayor que dos, podemos computar promedios entre las m\'etricas anteriores viendo el clasificador como uno de dos clases aplicado a cada clase $c$ (y su complemento). Existen dos promedios que son los m\'as usados para esto. Macropromedio calcula simplemente la media entre las medidas anteriores para cada clasificador de dos clases. Microaverage primero adiciona las matrices de contingencia correspondientes a diferentes clases y luego aplica una de las m\'etricas anteriores sobre la matriz resultante. 
 			
-		\end{subsection}
 			
-		\begin{subsection}{Ventajas y Desventajas}
-			
-			Ventajas:
+		\subsection{Ventajas}
 				\begin{itemize}
 					\item Al usar el aprendizaje supervisado se puede tener una idea exacta sobre las clases de los documentos, dado que estas se crean basado en caracter\'isticas expl\'icitas de los mismos. 
 					\item La salida suele ser m\'as precisa que en el aprendizaje supervisado
@@ -657,7 +725,8 @@ entornos.
 					\item Es m\'as facil de trabajar con el aprendizaje supervisado que con el no supervisado. 
 					\item Se eval\'ua y recibe retroalimentaci\'on para comprobar la correctitud. 
 				\end{itemize}
-			Desventajas:
+		
+		\subsection{Desventajas}
 				\begin{itemize}
 					\item Se necesita un especialista que determine cu\'ales ser\'an las clases en que se desea clasificar.
 					\item Se requiere de un conjunto de datos entrenantes.
@@ -666,96 +735,34 @@ entornos.
 					\item Suelen requerir mucho tiempo de entrenamiento.
 					\item Puede predecir la salida incorrecta si los datos de prueba son diferentes de los datos de entrenamiento.
 				\end{itemize}
-				
-				\color{red}
-			Cogido de:
-			
--https://www.crehana.com/blog/transformacion-digital/tipos-de-machine-learning/
--https://aprendeia.com/ventajas-y-desventajas-de-los-algoritmos-de-clasificacion-machine-learning/		
-				\color{black}
-			
-		\end{subsection}
-			
-		
-		\color{red}
-		 NOTA:
-		\begin{itemize}
-			\item Podr\'ia insertarse una foto de la matriz de contingencia(pagina 16 de classification.pdf)
-			\item Ver si hay alguna forma mejor de escribir los algoritmos que hasta ahora estan horribles. Quizas mediante el uso de fotos.
-		\end{itemize}
-		\color{black}
-		
-		
-		
-		 
-		 
-		 
-	
-\begin{itemize}
-	\item Aprendizaje supervisado
-	
-	\item Problema que resuelve
-\end{itemize}
 
-\begin{itemize}
-\item Rule-based classification
+	\subsection{Ejemplos de aplicaci\'on}
 
-\item Statistical classification
+Ya hablamos en la ep\'igrafe \ref{App_RI} acerca de la importancia de la clasificaci\'on en numerosos problemas de la sociedad. En especial nos centramos en ejemplificar algunos de los problemas espec\'ificos de la Recuperaci\'on de la Informaci\'on en que es aplicable la clasificaci\'on. Trataremos en esta secci\'on de ver la importancia de la clasificaci\'on en problemas m\'as generales de la humanidad.
 
-\item Feature selection
+La bioinform\'atica es una rama cient\'ifica que ha adquirido un desarrollo impresionante en los \'ultimos an\~os. Esta se dedica al desarrollo de herramientas inform\'aticas para aplicarlas en la gesti\'on y an\'alisis de datos biol\'ogicos. Algunas  de las aplicaciones m\'as importantes que tiene la clasificaci\'on, y en general, el aprendizaje autom\'atico, es precisamente en esta rama de la ciencia. Con el uso de sus algoritmos se permite automatizar la b\'usqueda de patrones en conjuntos de datos, que puedan ayudar a entender diferentes procesos biol\'ogicos que se manifiestan en los mismos. Debido a los grandes vol\'umenes de datos que se tienen ha crecido mucho en los \'ultimos a\~nos la aplicaci\'on de la clasificaci\'on en esta disciplina.
 
-\item Medidas de evaluaci\'on:
-\begin{itemize}
-	\item Fitting
-	\item Precisi\'on
-	\item Recobrado
-	\item Medida F (balanceada)
-	\item Classification accuracy
-\end{itemize}
+Una de estas aplicaciones biol\'ogicas de las que hablabamos es la predicci\'on de gen. Esta consiste en determinar que fracciones de una secuencia de ADN codifican prote\'inas. Tambi\'en se ve aplicado en la investigaci\'on de comunidades de microbios en nichos ecol\'ogicos. As\'i se puede obtener informaci\'on taxon\'omica y metab\'olica de las comunidades estudiadas. Existen otras muchas aplicaciones en esta ciencia entre las que podemos mencionar la prote\'omica, los microarrays y la biolog\'ia de sistemas.
 
-\item Algoritmos:
-\begin{itemize}
-	\item Naive Bayes
-	
-	
-	\item K-Nearest Neighbours
-\end{itemize}
-\end{itemize}
+Sali\'endonos un tanto del marco de la bioinform\'atica, pero no del todo lejos de la biolog\'ia, encontramos algunas otras aplicaciones interesantes. Nos referimos al reconocimiento de algunos rasgos distintivos de una persona, como pueden ser, reconocimiento de rostros, huellas o voz. Este \'ultimo lo tenemos al alcance de nuestras manos en asistentes virtuales como Siri o  Google. Estas aplicaciones se entrenan para reconocer caracter\'isticas distintivas de tu voz, mediante un proceso de aprendizaje supervisado, para luego poder diferencias c\'uando eres t\'u quien les est\'a hablando.
 
-\subsection{Aplicaciones a la RI}
+El mercado financiero es una de los espacios de la vida del hombre donde m\'as repercute la clasificaci\'on. Se puede emplear en mejorar el mercado digital, las ventas en l\'inea, identificar el valor de vida \'util de un cliente, la tasa de abandono, recomendaciones de productos y an\'alisis de impacto de campa\~nas de mercado.
+
+En la seguridad inform\'atica tambi\'en se evidencia la clasificaci\'on en acciones como detecci\'on de virus, enlaces maliciosos y fraude. Otras aplicaciones en que puede verse tambi\'en son el Internet de las cosas (IoT), los motores de recomendaci\'on y la fijaci\'on de precios din\'amicos de productos.
+
+\color{black}
+
 \begin{itemize}
 	\item Standing queries
 	\item Spam filtering
 \end{itemize}
 
-\subsection{Ventajas} 
-
-\subsection{Desventajas}
-
-\section{Agrupamiento vs. Clasificaci\'on}
-
-\section{Ejemplos de aplicaci\'on}
-
-	Ya hablamos en la ep\'igrafe \ref{App_RI} acerca de la importancia de la clasificaci\'on en numerosos problemas de la sociedad. En especial nos centramos en ejemplificar algunos de los problemas espec\'ificos de la Recuperaci\'on de la Informaci\'on en que es aplicable la clasificaci\'on. Trataremos en esta secci\'on de ver la importancia de la clasificaci\'on en problemas m\'as generales de la humanidad.
-	
-	La bioinform\'atica es una rama cient\'ifica que ha adquirido un desarrollo impresionante en los \'ultimos an\~os. Esta se dedica al desarrollo de herramientas inform\'aticas para aplicarlas en la gesti\'on y an\'alisis de datos biol\'ogicos. Algunas  de las aplicaciones m\'as importantes que tiene la clasificaci\'on, y en general, el aprendizaje autom\'atico, es precisamente en esta rama de la ciencia. Con el uso de sus algoritmos se permite automatizar la b\'usqueda de patrones en conjuntos de datos, que puedan ayudar a entender diferentes procesos biol\'ogicos que se manifiestan en los mismos. Debido a los grandes vol\'umenes de datos que se tienen ha crecido mucho en los \'ultimos a\~nos la aplicaci\'on de la clasificaci\'on en esta disciplina.
-	
-	Una de estas aplicaciones biol\'ogicas de las que hablabamos es la predicci\'on de gen. Esta consiste en determinar que fracciones de una secuencia de ADN codifican prote\'inas. Tambi\'en se ve aplicado en la investigaci\'on de comunidades de microbios en nichos ecol\'ogicos. As\'i se puede obtener informaci\'on taxon\'omica y metab\'olica de las comunidades estudiadas. Existen otras muchas aplicaciones en esta ciencia entre las que podemos mencionar la prote\'omica, los microarrays y la biolog\'ia de sistemas.
-	
-	Sali\'endonos un tanto del marco de la bioinform\'atica, pero no del todo lejos de la biolog\'ia, encontramos algunas otras aplicaciones interesantes. Nos referimos al reconocimiento de algunos rasgos distintivos de una persona, como pueden ser, reconocimiento de rostros, huellas o voz. Este \'ultimo lo tenemos al alcance de nuestras manos en asistentes virtuales como Siri o  Google. Estas aplicaciones se entrenan para reconocer caracter\'isticas distintivas de tu voz, mediante un proceso de aprendizaje supervisado, para luego poder diferencias c\'uando eres t\'u quien les est\'a hablando.
-	
-	El mercado financiero es una de los espacios de la vida del hombre donde m\'as repercute la clasificaci\'on. Se puede emplear en mejorar el mercado digital, las ventas en l\'inea, identificar el valor de vida \'util de un cliente, la tasa de abandono, recomendaciones de productos y an\'alisis de impacto de campa\~nas de mercado.
-	
-	En la seguridad inform\'atica tambi\'en se evidencia la clasificaci\'on en acciones como detecci\'on de virus, enlaces maliciosos y fraude. Otras aplicaciones en que puede verse tambi\'en son el Internet de las cosas (IoT), los motores de recomendaci\'on y la fijaci\'on de precios din\'amicos de productos.
-
-\color{red} Leer: https://futuroelectrico.com/aprendizaje-supervisado/ \color{black}
-
 \section{Conclusiones}
-
-
 
 \begin{thebibliography}{20}
 	\bibitem{B1} Maning C. D.: \emph{An Introduction To Information Retrieval} (2009).
+	\bibitem{B2} Berlin Chen: \emph{Clustering Techniques for
+		Information Retrieval}.
 \end{thebibliography}
 
 \end{document}
