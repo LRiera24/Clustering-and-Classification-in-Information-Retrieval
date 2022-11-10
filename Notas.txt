@@ -1,0 +1,6 @@
+-poner coma despues de una formula (pureza, Informacion mutua norma)
+-no empezar oracion directo con formula (pureza ,IMN)
+- en INM cuando defines la entropia no hay un punto ahi ni una coma para determinar ideas.
+- En criterios de parada de K-means dices ahi Cuando se ha completado ... itaraciones I. 
+No se que significa la I.
+- Parece que esa I significa algo poque la volviste a usar en algoritmo HAC -> Notas -> 3er punto

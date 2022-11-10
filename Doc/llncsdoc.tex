@@ -73,6 +73,10 @@ Marcos Manuel Tirador del Riego
 
 \section{Introducci\'on}
 
+La categorizaci\'on es uno de los procesos fundamentales en la ciencia. Es importante reconocer que la categorizaci\'on trasciende el intelecto humano y es una propiedad fundamental de los organismos vivos. Los intentos de desarrollar t\'ecnicas para separar observaciones de forma autom\'atica en grupos o clases requiere de la cuantificaci\'on de la similitud. Es por ello que la habilidad de reconocer dos objetos como m\'as similares entre ellos que a un tercero de seguro debe haber estado en los ancestros de la raza humana. En muchos trabajos clasificatorios manuales es poco pr\'actico estimar similutudes taxon\'omicas entre objetos de una muestra.
+
+La clasificaci\'on y el agrupamiento son dos m\'etodos de aprendizaje de m\'aquinas usados para categorizar colecciones de datos. Ambos m\'etodos tienen como objetivo separar las observaciones en grupos que compartan caracter\'isticas similares mientras se maximice la separaci\'on entre grupos que se diferencien mucho entre s\'i. Debido a que comparten un objetivo estos dos m\'etodos suelen confundirse, sin embargo se diferencian en la filosof\'ia utilizada para la clasificaci\'on de los objetos. En clasificaci\'on los objetos se asignan a clases prefijadas de antemano de acuerdo a caracter\'isticas perceptibles de los objetos. En cambio en agrupamiento la separaci\'on en grupos ocurre de forma natural de acuerdo a similitudes entre los objetos que muchas veces el humano no es capaz de interpretar. Debido a la necesidad de un experto humano la clasificaci\'on entra dentro de la rama del aprendizaje supervisado, mientras que los algoritmos de agrupamiento son no supervisados.
+
 \section{Agrupamiento}
 
 Los algoritmos de agrupamiento, como su nombre lo indica, agrupan un conjunto de documentos en subconjuntos o clústeres. Son utilizados para generar una estructura de categorías que se ajuste a un conjunto de observaciones. 
@@ -81,7 +85,7 @@ Los grupos formados deben tener un alto grado de asociación entre los documento
 
 Es la forma más común de \textit{aprendizaje no supervisado}, es decir no hay ningún experto humano que haya asignado documentos a clases. Es la distribución y composición de los datos lo que determinará la pertenencia al clúster. 
 
-Si bien el agrupamiento a veces es denominada clasificación automática, esto no es estrictamente exacto ya que las clases formadas no se conocen antes de tratamiento, como implica la clasificación, sino que se definen por los elementos que se les asignan.
+Si bien el agrupamiento a veces es denominado clasificación automática, esto no es estrictamente exacto ya que las clases formadas no se conocen antes de tratamiento, como implica la clasificación, sino que se definen por los elementos que se les asignan.
 
 La entrada clave para un algoritmo de agrupamiento es la medida de distancia. Diferentes medidas de distancia dan lugar a diferentes agrupamientos. En el agrupamiento de documentos, la medida de distancia es a menudo también la distancia euclidiana. 
 
@@ -142,7 +146,7 @@ Tambi\'en pueden clasificarse seg\'un el tipo de estructura impuesta sobre los d
 	\begin{center}
 		$ I(\Omega, \mathbb{C}) = \sum_{k}\sum_{j}P(\omega_{k} \cap c_{j})\log\frac{P(\omega_{k} \cap c_{j})}{P(\omega_{k})P(c_{j})} $
 	\end{center}
-	donde $ P(\omega_{k}) $, $ P(c_{j}) $ y $ P(\omega_{k} \cap c_{j}) $ son las probabilidades de que un documento sea del cl\'uster $ \omega_{k} $, clase $ c_{j} $, y est\'e la intersección de $ \omega_{k} $ y $ c_{j} $, respectivamente.
+	donde $ P(\omega_{k}) $, $ P(c_{j}) $ y $ P(\omega_{k} \cap c_{j}) $ son las probabilidades de que un documento sea del cl\'uster $ \omega_{k} $, clase $ c_{j} $, y est\'e en la intersección de $ \omega_{k} $ y $ c_{j} $, respectivamente.
 	
 	\vspace{0.5em}
 	H es la entropía (mide la incertidumbre de una fuente de información)
@@ -153,11 +157,11 @@ Tambi\'en pueden clasificarse seg\'un el tipo de estructura impuesta sobre los d
 	
 	$ I(\Omega, \mathbb{C})$ mide la cantidad de información por la cual nuestro conocimiento sobre las clases aumenta cuando se nos dice cu\'ales son los grupos. 
 	
-	El mínimo de $ I(\Omega, \mathbb{C})$ es 0 si el agrupamiento es aleatorio con respecto a pertenencia a clases. En ese caso, sabiendo que un documento está en un determinado cluster no nos da ninguna información nueva sobre cuál podría ser su clase.
+	El mínimo de $ I(\Omega, \mathbb{C})$ es 0 si el agrupamiento es aleatorio con respecto a pertenencia a clases. En ese caso, saber que un documento está en un determinado cl\'uster no nos da ninguna información nueva sobre cuál podría ser su clase.
 	
 	Se alcanza la máxima información mutua para un agrupamiento exacto que perfectamente recrea las clases pero también si los grupos se subdividen en cl\'usteres más pequeños. 
 	
-	En particular, un agrupamiento con K = N los grupos de documentos tienen MI máximo. Entonces MI tiene el mismo problema que la pureza: no penaliza cardinalidades grandes y por lo tanto no formaliza nuestro sesgo que, en igualdad de condiciones, menos grupos son mejores.
+	En particular, en un agrupamiento con K = N los grupos de documentos tienen MI máximo. Entonces MI tiene el mismo problema que la pureza: no penaliza cardinalidades grandes y por lo tanto no formaliza nuestro sesgo que, en igualdad de condiciones, menos grupos son mejores.
 	
 	La normalización por el denominador $ [H(\Omega) + H(\mathbb{C})]/2 $ soluciona este problema ya que la entropía tiende a aumentar con el número de clusters, alcanzandi su log N máximo para K = N, lo que asegura que NMI es bajo para K = N.
 	
@@ -202,7 +206,7 @@ El \textit{agrupamiento particionado} crea un conjunto  de clústeres sin ningun
 		$ \overrightarrow{\mu}(\omega) \leftarrow \dfrac{1}{|\omega_{k}|} \sum_{\overrightarrow{x} \in \omega_{k}} \overrightarrow{x} $
 	\end{center}
 	
-	Se asume que los documentos se representan como de longitud normalizada vectores en un espacio de valor real de la manera habitual.  
+	Se asume que los documentos se representan como vectores de longitud normalizada  en un espacio de valor real de la manera habitual.  
 	
 	Una medida de qué tan bien los centroides representan a los miembros de su cl\'uster es la suma residual de cuadrados o RSS, que es la distancia al cuadrado de cada vector desde su centroide sumado sobre todos los vectores:
 	
@@ -254,7 +258,7 @@ Algunos \textit{criterios de parada}:
 	\item Cuando se ha completado un número fijo de iteraciones I. Esta condición limita el tiempo de ejecución del algoritmo de agrupamiento, pero en algunos casos la calidad de el agrupamiento será deficiente debido a un número insuficiente de iteraciones.
 	\item Cuando la asignación de documentos a grupos no cambia entre iteraciones. Excepto en los casos con un m\'inimo local malo, esto produce un buen agrupamiento, pero los tiempos de ejecución pueden ser demasiado largos.
 	\item Cuando los centroides no cambian entre iteraciones.
-	\item Cuando RSS cae por debajo de un umbral. Este criterio asegura que el agrupamiento tiene la calidad deseada después de la terminación. En la práctica, es necesario con un límite en el número de iteraciones para garantizar terminación.
+	\item Cuando RSS cae por debajo de un umbral. Este criterio asegura que el agrupamiento tiene la calidad deseada después de la terminación. En la práctica, es necesario tener adem\'as un límite en el número de iteraciones para garantizar terminación.
 \end{itemize}
 
 \subsection{Agrupamiento jer\'arquico}
@@ -459,7 +463,7 @@ Adem\'as se beneficia de la información completa sobre la distribución global 
 	
 	\begin{subsection}{Problemas de la Recuperaci\'on de la Informaci\'on} \label{App_RI}
 		
-		El aprendizaje de m\'aquinas es ampliamente usado en la actualidad para resolver una variedad de problemas de muchas esferas. La clasificaci\'on, de conjunto con la regresi\'on, es una de las grandes tareas que tiene el aprendizaje de m\'aquinas supervisado. Algunos problemas interesantes que resuelven la clasificaci\'on se encuentran dentro del marco de los Sistemas de Recuperaci\'on de la informaci\'on. Anteriormente presentábamos uno de ellos, que es la recuperaci\'on de consultas permanentes.
+		El aprendizaje de m\'aquinas es ampliamente usado en la actualidad para resolver una variedad de problemas de muchas esferas. La clasificaci\'on, de conjunto con la regresi\'on, es una de las grandes tareas que tiene el aprendizaje de m\'aquinas supervisado. Algunos problemas interesantes que resuelve la clasificaci\'on se encuentran dentro del marco de los Sistemas de Recuperaci\'on de la informaci\'on. Anteriormente present\'abamos uno de ellos, que es la recuperaci\'on de consultas permanentes.
 		
 		La organizaci\'on del correo personal es otros de los ejemplos relacionados con RI que pueden ser resueltos mediante clasificaci\'on. En muchas ocasiones una persona tiene un n\'umero grande de correos en el buz\'on de entrada. A la hora de revisarlo ser\'ia deseable que pudiera dirigirse directamente a aquellos que son de inter\'es para \'el. Para ello la organizaci\'on autom\'atica del correo en carpetas podr\'ia ser una ventaja invaluable. Un ejemplo particular ser\'ia la carpeta de correo spam.
 		
@@ -736,7 +740,7 @@ Adem\'as se beneficia de la información completa sobre la distribución global 
 					\item Puede predecir la salida incorrecta si los datos de prueba son diferentes de los datos de entrenamiento.
 				\end{itemize}
 
-	\subsection{Ejemplos de aplicaci\'on}
+	\subsection{Otros ejemplos de aplicaci\'on}
 
 Ya hablamos en la ep\'igrafe \ref{App_RI} acerca de la importancia de la clasificaci\'on en numerosos problemas de la sociedad. En especial nos centramos en ejemplificar algunos de los problemas espec\'ificos de la Recuperaci\'on de la Informaci\'on en que es aplicable la clasificaci\'on. Trataremos en esta secci\'on de ver la importancia de la clasificaci\'on en problemas m\'as generales de la humanidad.
 
