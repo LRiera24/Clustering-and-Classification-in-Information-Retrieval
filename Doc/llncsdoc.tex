@@ -385,25 +385,6 @@ A pesar de necesitar un segundo algoritmo de agrupamiento particionado como una 
 
 Adem\'as se beneficia de la información completa sobre la distribución global al tomar decisiones de partición de alto nivel.
 
-\subsection{Ejemplos de aplicaci\'on} 
-%potencial para mejorar la eficiencia de la recuperación, para mejorar la eficacia de la recuperación
-%proporciona una alternativa a la recuperación booleana o de mejor coincidencia. 
-%
-%
-%Clustering is an important technique for discovering relatively dense sub-regions or sub-spaces of a multi-dimension data distribution. Clus­ tering has been used in information retrieval for many different purposes, such as query expansion, document grouping, document indexing, and visualization of search results. 
-
-\begin{itemize}
-	\item Search result clustering
-	
-	\item Scatter-Gather
-	
-	\item Collection clustering
-	
-	\item Language modeling
-	
-	\item Cluster-based retrieval
-\end{itemize}
-
 \subsection{Ventajas} 
 
 \begin{itemize}
@@ -418,11 +399,57 @@ Adem\'as se beneficia de la información completa sobre la distribución global 
 
 \subsection{Desventajas} 
 	\begin{itemize}
-		\item Generalmente los algoritmos de agrupamiento poseen una alta complejidad temporal. 
 		\item No se tiene una idea exacta de las clases creadas.
 		\item No recibe retroalimentaci\'on.
-		
 	\end{itemize}
+
+\subsection{Ejemplos de aplicaci\'on} 
+El agrupamiento en clústeres es una técnica importante para descubrir subregiones o subespacios relativamente densos de una distribución de datos multidimensional. Se ha utilizado en la recuperación de información para muchos propósitos diferentes, como la expansión de consultas, la agrupación e indexación de documentos y la visualización de resultados de búsqueda. Permiten mejorar interfaz y experiencia de usuario y proporcionar una mayor eficacia o eficiencia del sistema de búsqueda. 
+
+A continuaci\'on se describen con m\'as detalle algunas de las aplicaciones m\'as importantes:
+\begin{itemize}
+	\item Agrupamiento de resultados de búsqueda (documentos devueltos en respuesta a una consulta)
+	
+	La presentación predeterminada de los resultados de búsqueda en la recuperación de información es una lista sencilla. Los usuarios escanean la lista de arriba a abajo hasta que encuentran la información que buscan. 
+	
+	En su lugar, en la agrupación en clústeres de resultados de búsqueda los documentos similares aparecen juntos, siendo más fácil escanear algunos grupos coherentes que muchos documentos individuales. Esto es particularmente útil si un término de búsqueda tiene diferentes sentidos de palabra.
+	
+	\item Scatter-Gather
+	
+	Una mejor interfaz de usuario es también el objetivo de Scatter-Gather. Este agrupa toda la colección para obtener grupos de documentos que el usuario puede seleccionar o reunir. Los grupos seleccionados
+	se fusionan y el conjunto resultante se vuelve a agrupar. Este proceso se repite hasta que se encuentre un grupo de interés.
+	
+	La navegación basada en la agrupaci\'on de clústeres es una alternativa interesante a la búsqueda de palabras clave a la información estándar paradigma de recuperación de información. Esto es especialmente cierto en escenarios donde los usuarios prefieren navegar en lugar de buscar porque no están seguros de qué búsqueda términos a utilizar.
+	
+	\item Collection clustering
+	
+	Como alternativa al agrupamiento iterativo mediado por el usuario en Scatter-Gather, también podemos calcular una agrupación jerárquica estática de una colección que es no influenciado por las interacciones del usuario.
+	
+	En el caso de las noticias, necesitamos recomendar con frecuencia Ponga el agrupamiento para asegurarse de que los usuarios puedan acceder a las últimas novedades. cuentos. La agrupación en clústeres es adecuada para acceder a una colección de noticias. ya que la lectura de noticias no es realmente una búsqueda, sino más bien un proceso de selección de un subconjunto de historias sobre eventos recientes.
+	
+	\item Language modeling
+	
+	Explota directamente la hipótesis del agrupamiento para mejorar los resultados de búsqueda, basado en una agrupación de toda la colección.
+	
+	Usamos un índice invertido estándar para identificar un conjunto inicial de documentos que coincide con la consulta, pero luego agregamos otros documentos de los mismos grupos incluso si tienen poca similitud con la consulta. 
+	
+	Por ejemplo, si la consulta es coche
+	y varios documentos de automóviles se toman de un grupo de documentos de automóviles,
+	entonces podemos agregar documentos de este grupo que usen términos que no sean coche
+	(automóvil, vehículo, etc.). Esto puede aumentar el recobrado ya que un grupo de documentos
+	con una gran similitud mutua suele ser relevante como un todo.
+	
+	Esta idea se ha utilizado para modelar el lenguaje.  para evitar problemas de datos escasos en el lenguaje modeling enfoque a IR, el modelo de documento d se puede interpolar con un modelo de colección. Pero la colección contiene muchos documentos con términos atípico de d. Al reemplazar el modelo de colección con un modelo derivado de grupo de d, obtenemos estimaciones más precisas de las probabilidades de ocurrencia de términos en d.
+	
+	\item Cluster-based retrieval
+	
+	La agrupación también puede acelerar la búsqueda. 
+	
+	la búsqueda en el modelo de espacio vectorial equivale a encontrar los vecinos más cercanos a la consulta El índice invertido admite la búsqueda rápida del vecino más cercano para la configuración estándar de IR. Sin embargo, a veces es posible que no podamos usar un índice invertido de manera eficiente, por ejemplo, en la indexación semántica latente (Capítulo 18). En tales casos, podríamos calcular la similitud de la consulta con cada documento, pero esto es lento. La hipótesis del conglomerado ofrece una alternativa: encontrar el conglomerado ters que están más cerca de la consulta y sólo considerar los documentos de estos racimos Dentro de este conjunto mucho más pequeño, podemos calcular similitudes de forma exhaustiva. tivamente y clasifique los documentos de la forma habitual. Como hay muchos menos clústeres que documentos, encontrar el clúster más cercano es rápido; y desde el doc-
+
+	Los elementos que coinciden con una consulta son similares entre sí, tienden a estar en los mismos racimos. Si bien este algoritmo es inexacto, la disminución esperada en	la calidad de la búsqueda es pequeña. 
+\end{itemize}
+
 \section{Clasificaci\'on}
 
 	El problema de clasificaci\'on en sentido general consiste en determinar dentro un conjunto de clases a cu\'al de ellas pertenece un objeto dado. En el marco de este documento estamos interesados en estudiar la clasificaci\'on de textos. 
