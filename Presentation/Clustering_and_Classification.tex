@@ -1,0 +1,258 @@
+\documentclass[t,compress,10pt,xcolor=dvipsnames]{beamer}
+
+\usepackage{lmodern}
+\usepackage[labelformat=empty,labelsep=none]{subfig}
+\usepackage{caption}
+\usepackage{float}
+\usepackage{wrapfig}
+
+\newcommand*\oldmacro{}%
+\let\oldmacro\insertshorttitle% 
+\renewcommand*\insertshorttitle{%
+\oldmacro\hfill%
+\insertframenumber\,/\,\inserttotalframenumber}
+
+\definecolor{UniDunkel}{RGB}{73,142,137}
+\definecolor{UniHell}{RGB}{142,184,182}
+
+\setbeamertemplate{blocks}[rounded][shadow=true]
+\setbeamercolor{structure}{fg=UniDunkel}
+
+\setbeamercolor{block body}{parent=normal text,use=block title,bg=block title.bg!10!bg}
+\setbeamercolor{block body alerted}{parent=normal text,use=block title alerted,bg=block title alerted.bg!10!bg}
+\setbeamercolor{block body example}{parent=normal text,use=block title example,bg=block title example.bg!10!bg}
+
+\setbeamercolor*{palette primary}{use=structure,fg=white,bg=UniDunkel!115}
+\setbeamercolor*{palette secondary}{use=structure, fg=UniHell,  bg=UniHell}
+\setbeamercolor*{palette tertiary}{use=structure,fg=white,bg=UniDunkel!115}
+\setbeamercolor*{palette quaternary}{fg=Orange}
+
+\setbeamercolor*{sidebar}{use=structure,bg=structure.fg}
+\setbeamercolor*{palette sidebar primary}{use=structure,fg=structure.fg!10}
+\setbeamercolor*{palette sidebar secondary}{fg=white}
+\setbeamercolor*{palette sidebar quaternary}{fg=white}
+\setbeamercolor*{titlelike}{parent=palette primary}
+
+\setbeamercolor*{fine separation line}{}
+
+\setbeamercolor{block title}{use=structure,fg=white,bg=structure.fg!0!red}
+\setbeamercolor{block title alerted}{use=alerted text,fg=white,bg=alerted text.fg!0!white}
+\setbeamercolor{block title example}{use=example text,fg=white,bg=example text.fg!0!white}
+
+\useoutertheme{miniframes}
+\useinnertheme{circles}
+\setbeamertemplate{footline}[frame number]
+
+\beamertemplatenavigationsymbolsempty
+
+\usepackage{textpos} 
+\usepackage{mathptmx}
+\usepackage{anyfontsize}
+\usepackage{t1enc}
+\usepackage{multicol}
+\usepackage{lmodern}
+
+%\addtobeamertemplate{frametitle}{}{%
+%\begin{textblock*}{100mm}(11cm,-1cm)
+%	\includegraphics[height=1cm]{logo.png}
+%\end{textblock*}}
+
+%\titlegraphic{
+%	\includegraphics[width=5cm]{backg}
+%}
+
+\title{\textbf{Agrupamiento y clasificaci\'on en la recuperaci\'on de informaci\'on en la web}}
+
+%\author{Integrantes:\\
+%	Marcos Manuel Tirador del Riego\\ 
+%	Laura Victoria Riera P\'erez\\
+%	Leandro Rodr\'iguez Llosa}
+%\institute{Ciencias de la computaci\'on}
+\date{}
+
+%\usepackage{tikz}
+%\titlegraphic { 
+%	\begin{tikzpicture}[remember picture]
+%		\node[left=0.2cm] at (current page.30){
+%			\includegraphics[width=10cm]{backg}
+%		};
+%	\end{tikzpicture}
+%}
+
+\setbeamercolor{block body}{bg=Emerald,fg=Emerald}
+
+
+
+\begin{document}
+	
+	\begin{frame}
+		\begin{center}
+			\begin{block}{}
+				\centering
+				\Large\textcolor{white}{\textbf{Agrupamiento y clasificaci\'on en la recuperaci\'on de informaci\'on en la web}}
+			\end{block}
+		
+		\vspace{0.5em}
+		\includegraphics[width=3cm]{clustering.jpg}
+		
+		\vspace{0.5em}
+		\footnotesize
+		Integrantes:\\
+			Marcos Manuel Tirador del Riego\\ 
+			Laura Victoria Riera P\'erez
+		
+		\vspace{0.7em}
+		\tiny	
+		Tercer año. Ciencias de la computaci\'on. Universidad de La Habana. Cuba.
+		
+		\vspace{0.7em}
+		\scriptsize
+		Noviembre, 2022
+		\end{center}
+	\end{frame}
+
+	\begin{frame}[allowframebreaks]{\'Indice general}
+		\tableofcontents[sections={1}]
+		\framebreak
+		\tableofcontents[sections={2-4}]
+	\end{frame}
+
+
+	\section{Agrupamiento}
+	\frame
+	{
+		\frametitle{Agrupamiento}
+	}
+	
+	\subsection{Medidas de similitud}
+	\frame{
+		\frametitle{Medidas de similitud}
+	}
+	
+	\subsection{Medidas de evaluaci\'on}
+	\frame
+	{
+		\frametitle{Medidas de evaluaci\'on}	
+	}
+
+	\subsection{Agrupamiento particionado}
+	\frame
+	{
+		\frametitle{Agrupamiento particionado}
+	}
+	
+	\frame
+	{
+		\frametitle{K-means}
+	}
+
+	\subsection{Agrupamiento jer\'arquico}
+	\frame
+	{
+		\frametitle{Agrupamiento jer\'arquico}
+	}
+	
+	
+	\subsubsection{Agrupamiento jer\'arquico aglomerativo}
+	\frame
+	{
+		\frametitle{Agrupamiento jer\'arquico aglomerativo}
+	}
+
+	\frame
+	{
+		\frametitle{Medidas de similitud para cl\'usteres en HAC}
+	}	
+	
+	\frame
+	{
+		\frametitle{Algoritmo HAC}
+	}	
+
+	\subsubsection{Agrupamiento jer\'arquico divisivo}
+	\frame
+	{
+		\frametitle{Agrupamiento jer\'arquico divisivo}
+	}
+
+	\subsection{Ventajas}
+	\frame
+	{
+		\frametitle{Ventajas}
+	}
+
+	\subsection{Desventajas}
+	\frame
+	{
+		\frametitle{Desventajas}
+	}
+
+	\subsection{Ejemplos de aplicaci\'on}
+	\frame
+	{
+		\frametitle{Ejemplos de aplicaci\'on}
+	}
+
+	\section{Clasificaci\'on}
+	\frame
+	{
+		\frametitle{Clasificaci\'on}
+	}
+	
+	\subsection{Naive Bayes}
+	\frame{
+		\frametitle{Naive Bayes}
+	}
+
+	\subsection{Feature Selection}
+	\frame{
+		\frametitle{Feature Selection}
+	}
+
+	\subsection{K Nearest Neighbor}
+	\frame{
+		\frametitle{K Nearest Neighbor}
+	}
+	
+	\subsection{Medidas de evaluaci\'on}
+	\frame
+	{
+		\frametitle{Medidas de evaluaci\'on}	
+	}
+	
+	\subsection{Ventajas}
+	\frame
+	{
+		\frametitle{Ventajas}
+	}
+	
+	\subsection{Desventajas}
+	\frame
+	{
+		\frametitle{Desventajas}
+	}
+	
+	\subsection{Aplicaciones en la Recuperaci\'on de la Informaci\'on}
+	\frame
+	{
+		\frametitle{Aplicaciones en la Recuperaci\'on de la Informaci\'on}
+	}
+	
+	\subsection{Otros ejemplos de aplicaci\'on}
+	\frame
+	{
+		\frametitle{Otros ejemplos de aplicaci\'on}
+	}
+
+	\section{Conclusiones}
+	\frame
+	{
+		\frametitle{Conclusiones}
+	}
+
+	\section{Referencias}
+	\frame
+	{
+		\frametitle{Referencias}
+	}
+\end{document} 
