@@ -4,6 +4,10 @@
 *.log
 *.lot
 *.fls
+*.sty
+*.eps
+*.cls
+*.bst
 *.out
 *.toc
 *.fmt
