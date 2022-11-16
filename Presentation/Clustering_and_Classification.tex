@@ -170,6 +170,18 @@
 		\vspace{2em}
 		La hipótesis establece que si hay un documento de un grupo que es relevante a una solicitud de búsqueda, entonces es probable que otros documentos del mismo clúster también sean relevantes. 
 	}
+	
+	\frame{
+		\frametitle{Clasificaci\'on de los algoritmos de agrupamiento}
+		
+		\vspace{5em}
+		Seg\'un el tipo de estructura impuesta sobre los datos:
+		\begin{itemize}
+			\item \textit{agrupamiento particionado o plano} (flat clustering)
+			\item \textit{agrupamiento jer\'arquico} (hierarchical clustering).
+		\end{itemize}
+
+	}
 
 %	\frame{
 %		\frametitle{Clasificaci\'on de los algoritmos de agrupamiento}
@@ -189,32 +201,32 @@
 %		\end{itemize}
 %	}
 
-	\subsection{Medidas de similitud entre documentos}
-	\frame{
-		\frametitle{Medidas de similitud}
-		Sean $ d_{i} $ el $ i $-ésimo documento del corpus y $ w_{ik} $ el peso del t\'ermino $ k $ de un total $ N $ $ (N>0) $ en este documento.
-		
-		\begin{itemize}
-			\vspace{0.5em}
-			\item \textbf{Coeficiente de Dice:}
-			\begin{center}
-				$ S_{d_{i}, d_{j}} = \dfrac{2 \sum_{k=1}^{N} (w_{ik}w_{jk})}{\sum_{k=1}^{N}w_{ik}^{2} + \sum_{k=1}^{N}w_{jk}^{2}} $
-			\end{center}
-			
-			\vspace{0.5em}
-			\item \textbf{Coeficiente de Jaccard:}
-			\begin{center}
-				$ S_{d_{i}, d_{j}} = \dfrac{\sum_{k=1}^{N} (w_{ik}w_{jk})}{\sum_{k=1}^{N}w_{ik}^{2} + \sum_{k=1}^{max}w_{jk}^{2} - \sum_{k=1}^{N} (w_{ik}w_{jk})} $
-			\end{center}
-		
-			\vspace{0.5em}
-			\item \textbf{Coeficiente del coseno:}
-			\begin{center}
-				$ S_{d_{i}, d_{j}} = \dfrac{\sum_{k=1}^{N} (w_{ik}w_{jk})}{\sqrt{\sum_{k=1}^{N}w_{ik}^{2} \sum_{k=1}^{N}w_{jk}^{2}}} $
-			\end{center}
-		\end{itemize}
-	
-	}
+%	\subsection{Medidas de similitud entre documentos}
+%	\frame{
+%		\frametitle{Medidas de similitud}
+%		Sean $ d_{i} $ el $ i $-ésimo documento del corpus y $ w_{ik} $ el peso del t\'ermino $ k $ de un total $ N $ $ (N>0) $ en este documento.
+%		
+%		\begin{itemize}
+%			\vspace{0.5em}
+%			\item \textbf{Coeficiente de Dice:}
+%			\begin{center}
+%				$ S_{d_{i}, d_{j}} = \dfrac{2 \sum_{k=1}^{N} (w_{ik}w_{jk})}{\sum_{k=1}^{N}w_{ik}^{2} + \sum_{k=1}^{N}w_{jk}^{2}} $
+%			\end{center}
+%			
+%			\vspace{0.5em}
+%			\item \textbf{Coeficiente de Jaccard:}
+%			\begin{center}
+%				$ S_{d_{i}, d_{j}} = \dfrac{\sum_{k=1}^{N} (w_{ik}w_{jk})}{\sum_{k=1}^{N}w_{ik}^{2} + \sum_{k=1}^{max}w_{jk}^{2} - \sum_{k=1}^{N} (w_{ik}w_{jk})} $
+%			\end{center}
+%		
+%			\vspace{0.5em}
+%			\item \textbf{Coeficiente del coseno:}
+%			\begin{center}
+%				$ S_{d_{i}, d_{j}} = \dfrac{\sum_{k=1}^{N} (w_{ik}w_{jk})}{\sqrt{\sum_{k=1}^{N}w_{ik}^{2} \sum_{k=1}^{N}w_{jk}^{2}}} $
+%			\end{center}
+%		\end{itemize}
+%	
+%	}
 	
 %	\subsection{Medidas de evaluaci\'on}
 %	\frame[allowframebreaks]
@@ -277,17 +289,17 @@
 	
 	\textcolor{white}{.}
 	
-	\vspace{0.5em}
+	\vspace{3em}
 	El primer paso de esta implementaci\'on de K-means es seleccionar al azar como centros iniciales de los cl\'usteres a K documentos, estas son las semillas. Luego, el algoritmo mueve los centros de los grupos en el espacio para minimizar el RSS. Este proceso se repite de manera iterativa hasta que se cumpla un criterio de parada.
 	
-	\vspace{1em}
-	Criterios de parada:
-	\begin{itemize}
-		\item Cuando se ha completado un número fijo de iteraciones I. 
-		\item Cuando la asignación de documentos a grupos no cambia entre iteraciones.
-		\item Cuando los centroides no cambian entre iteraciones.
-		\item Cuando RSS cae por debajo de un umbral.
-	\end{itemize}
+%	\vspace{1em}
+%	Criterios de parada:
+%	\begin{itemize}
+%		\item Cuando se ha completado un número fijo de iteraciones I. 
+%		\item Cuando la asignación de documentos a grupos no cambia entre iteraciones.
+%		\item Cuando los centroides no cambian entre iteraciones.
+%		\item Cuando RSS cae por debajo de un umbral.
+%	\end{itemize}
 }
 
 	\subsection{Agrupamiento jer\'arquico}
