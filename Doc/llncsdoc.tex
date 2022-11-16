@@ -128,7 +128,7 @@ Sean $ d_{i} $ el $ i $-ésimo documento del corpus y $ w_{ik} $ el peso del t\'
 	\end{center}
 \end{itemize}
 
-Las ecuaciones anteriores fueron tomadas de [\cite{B3}, epg. 16.2.2, p.3].
+Las ecuaciones anteriores fueron tomadas de [\cite{B3}, secci\'on 16.2.2, p.3].
 
 \subsection{Medidas de evaluaci\'on} 
 	\normalsize
@@ -217,8 +217,10 @@ El \textit{agrupamiento particionado} crea un conjunto  de clústeres sin ningun
 	El centro de un cl\'uster se define como la media o centroide $\mu$ de los documentos en un grupo $\omega$:
 	
 	\begin{center}
-		$ \overrightarrow{\mu}(\omega) \leftarrow \dfrac{1}{|\omega_{k}|} \sum_{\overrightarrow{x} \in \omega_{k}} \overrightarrow{x} $ $ ^{(} $\footnote{\scriptsize{Tomado de [\cite{B1}, cap\'itulo 6, p.131]}}$ ^{)} $
+		$ \overrightarrow{\mu}(\omega) \leftarrow \dfrac{1}{|\omega_{k}|} \sum_{\overrightarrow{x} \in \omega_{k}} \overrightarrow{x} $
 	\end{center}
+	
+	La ecuaci\'on anterior fue tomada de [\cite{B1}, cap\'itulo 6, p.131].
 	
 	Se asume que los documentos se representan como vectores de longitud normalizada  en un espacio de valor real de la manera habitual.  
 	
@@ -280,9 +282,9 @@ Algunos \textit{criterios de parada}:
 
 \subsection{Agrupamiento jer\'arquico}
 
-El \textit{agrupamiento jerárquico} produce una jerarquía, una estructura que es más informativa que el conjunto no estructurado de clústeres devuelto por el agrupamiento particionado, no requiere que se especifique previamente el número de grupos y la mayoría son deterministas, sin embargo son m\'as ineficientes que los particionados. En una representación gráfica los elementos quedan anidados en jerarquías con forma de árbol.
+El \textit{agrupamiento jerárquico} produce una jerarquía, una estructura que es más informativa que el conjunto no estructurado de clústeres devuelto por el agrupamiento particionado, no requiere que se especifique previamente el número de grupos y la mayoría son deterministas, sin embargo son m\'as ineficientes que los particionados.
 
-Los algoritmos de agrupamiento jerárquico pueden tener dos enfoques: de arriba hacia abajo (top-down) llamados de \textit{agrupamiento jer\'arquico aglomerativo} o de abajo hacia arriba (bottom-up) conocidos como de \textit{agrupamiento jer\'arquico divisivo}. 
+Los algoritmos de agrupamiento jerárquico pueden tener dos enfoques: de abajo hacia arriba (bottom-up) llamados de \textit{agrupamiento jer\'arquico aglomerativo} o de arriba hacia abajo (top-down) conocidos como de \textit{agrupamiento jer\'arquico divisivo}. 
 
 \subsubsection{Agrupamiento jer\'arquico aglomerativo}
 \textcolor{white}{.}
@@ -381,9 +383,10 @@ Dado un conjunto de N elementos a agrupar, el proceso básico del agrupamiento j
 	\end{algorithmic}
 \end{algorithm}
 
+\newpage
 Esta implementaci\'on del algoritmo HAC fue tomada de [\cite{B1}, figura 17.2, p.381].
 
-\newpage
+\vspace{0.5em}
 Notas: 
 \begin{itemize}
 	\item En cada iteración, los dos clústeres m\'as similares se fusionan y las filas y columnas del clúster fusionado i en C se actualizan.
