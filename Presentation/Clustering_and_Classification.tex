@@ -250,57 +250,59 @@
 		\frametitle{Agrupamiento particionado}
 		\vspace{7em}
 		El agrupamiento particionado crea un conjunto  de clústeres sin ninguna estructura explícita que los relacione entre sí. 
+		
+		El algoritmo m\'as importante de este tipo de agrupamiento es el K-means.
 	}
 	
-	\frame[allowframebreaks]
-	{
-		\frametitle{K-means}
-		\vspace{3em}
-		Es el algoritmo de agrupamiento particionado más importante. Su objetivo es minimizar la distancia euclidiana al cuadrado promedio entre los documentos y el centro de sus cl\'usteres. 
-		
-		El centro de un cl\'uster se define como la media o centroide $\mu$ de los documentos en un grupo $\omega$:
-		
-		\begin{center}
-			$ \overrightarrow{\mu}(\omega) \leftarrow \dfrac{1}{|\omega_{k}|} \sum_{\overrightarrow{x} \in \omega_{k}} \overrightarrow{x} $
-		\end{center}
-		
-		\framebreak
-		\textcolor{white}{.}
-		
-		\vspace{2em}
-		Una medida de qué tan bien los centroides representan a los miembros de su cl\'uster es la suma residual de cuadrados o RSS, que es la distancia al cuadrado de cada vector desde su centroide sumado sobre todos los vectores:
-		
-		\begin{center}
-			$ RSS_{k} = \sum_{\overrightarrow{x} \in \omega_{k}}|\overrightarrow{x} - \overrightarrow{\mu}(\omega_{k})|^2$
-			
-			\vspace{1em}
-			$ RSS = \sum_{k=1}^{K} RSS_{k} $
-		\end{center}
-		
-		RSS es entonces la función objetivo en K-means y nuestro objetivo es minimizarla.
-	
-	\framebreak
-	\textcolor{white}{.}
-	
-	\vspace{1em}
-	\includegraphics[width=10.5cm]{K-means.png}
-
-	\framebreak
-	
-	\textcolor{white}{.}
-	
-	\vspace{3em}
-	El primer paso de esta implementaci\'on de K-means es seleccionar al azar como centros iniciales de los cl\'usteres a K documentos, estas son las semillas. Luego, el algoritmo mueve los centros de los grupos en el espacio para minimizar el RSS. Este proceso se repite de manera iterativa hasta que se cumpla un criterio de parada.
-	
+%	\frame[allowframebreaks]
+%	{
+%		\frametitle{K-means}
+%		\vspace{3em}
+%		Es el algoritmo de agrupamiento particionado más importante. Su objetivo es minimizar la distancia euclidiana al cuadrado promedio entre los documentos y el centro de sus cl\'usteres. 
+%		
+%		El centro de un cl\'uster se define como la media o centroide $\mu$ de los documentos en un grupo $\omega$:
+%		
+%		\begin{center}
+%			$ \overrightarrow{\mu}(\omega) \leftarrow \dfrac{1}{|\omega_{k}|} \sum_{\overrightarrow{x} \in \omega_{k}} \overrightarrow{x} $
+%		\end{center}
+%		
+%		\framebreak
+%		\textcolor{white}{.}
+%		
+%		\vspace{2em}
+%		Una medida de qué tan bien los centroides representan a los miembros de su cl\'uster es la suma residual de cuadrados o RSS, que es la distancia al cuadrado de cada vector desde su centroide sumado sobre todos los vectores:
+%		
+%		\begin{center}
+%			$ RSS_{k} = \sum_{\overrightarrow{x} \in \omega_{k}}|\overrightarrow{x} - \overrightarrow{\mu}(\omega_{k})|^2$
+%			
+%			\vspace{1em}
+%			$ RSS = \sum_{k=1}^{K} RSS_{k} $
+%		\end{center}
+%		
+%		RSS es entonces la función objetivo en K-means y nuestro objetivo es minimizarla.
+%	
+%	\framebreak
+%	\textcolor{white}{.}
+%	
 %	\vspace{1em}
-%	Criterios de parada:
-%	\begin{itemize}
-%		\item Cuando se ha completado un número fijo de iteraciones I. 
-%		\item Cuando la asignación de documentos a grupos no cambia entre iteraciones.
-%		\item Cuando los centroides no cambian entre iteraciones.
-%		\item Cuando RSS cae por debajo de un umbral.
-%	\end{itemize}
-}
+%	\includegraphics[width=10.5cm]{K-means.png}
+%
+%	\framebreak
+%	
+%	\textcolor{white}{.}
+%	
+%	\vspace{3em}
+%	El primer paso de esta implementaci\'on de K-means es seleccionar al azar como centros iniciales de los cl\'usteres a K documentos, estas son las semillas. Luego, el algoritmo mueve los centros de los grupos en el espacio para minimizar el RSS. Este proceso se repite de manera iterativa hasta que se cumpla un criterio de parada.
+%	
+%%	\vspace{1em}
+%%	Criterios de parada:
+%%	\begin{itemize}
+%%		\item Cuando se ha completado un número fijo de iteraciones I. 
+%%		\item Cuando la asignación de documentos a grupos no cambia entre iteraciones.
+%%		\item Cuando los centroides no cambian entre iteraciones.
+%%		\item Cuando RSS cae por debajo de un umbral.
+%%	\end{itemize}
+%}
 
 	\subsection{Agrupamiento jer\'arquico}
 	\frame
