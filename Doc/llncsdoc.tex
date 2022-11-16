@@ -13,6 +13,12 @@
 \DeclareMathOperator*{\argmax}{arg\,max}
 \DeclareMathOperator*{\argmin}{arg\,min}
 
+\makeatletter
+\renewcommand{\ALG@name}{Algoritmo}
+\renewcommand{\listalgorithmname}{List of \ALG@name s}
+\renewcommand{\algorithmicrequire}{Par\'ametros de entrada:}
+\makeatother
+
 \usepackage[spanish]{babel}
 
 % Keywords command
@@ -23,40 +29,44 @@
 }
 
 \begin{document}
-\markboth{Sistemas de Recuperaci\'on de Informaci\'on}{Aplicaciones del agrupamiento y de la clasificación en la RI en la Web}
-\thispagestyle{empty}
-\begin{flushleft}
-\LARGE\bfseries Sistemas de Recuperaci\'on de Informaci\'on\\[2cm]
-\end{flushleft}
-\rule{\textwidth}{1pt}
-\vspace{2pt}
-\begin{flushright}
-\Huge
-\begin{tabular}{@{}l}
-Aplicaciones del\\
-agrupamiento y\\ 
-de la clasificación\\ 
-en la recuperaci\'on\\ 
-de informaci\'on\\
-en la Web\\[6pt]
-\end{tabular}
-\end{flushright}
-\rule{\textwidth}{1pt}
-\vfill
-\begin{flushleft}
-\large\itshape
-\begin{tabular}{@{}l}
-{\large\upshape\bfseries Autores}\\[8pt]
-Laura Victoria Riera P\'erez\\[5pt]
-Marcos Manuel Tirador del Riego
-\end{tabular}
-\end{flushleft}
+	\markboth{Sistemas de Recuperaci\'on de Informaci\'on}{Aplicaciones del agrupamiento y de la clasificación en la RI en la Web}
+	\thispagestyle{empty}
+	
+	\begin{flushleft}
+		\LARGE\bfseries Sistemas de Recuperaci\'on de Informaci\'on\\[2cm]
+	\end{flushleft}
+
+	\rule{\textwidth}{1pt}
+	\vspace{2pt}
+	
+	\begin{flushright}
+	\Huge
+	\begin{tabular}{@{}l}
+		Aplicaciones del\\
+		agrupamiento y\\ 
+		de la clasificación\\ 
+		en la recuperaci\'on\\ 
+		de informaci\'on\\
+		en la Web\\[6pt]
+	\end{tabular}
+	\end{flushright}
+
+	\rule{\textwidth}{1pt}
+	\vfill
+	\begin{flushleft}
+		\large\itshape
+	\begin{tabular}{@{}l}
+		{\large\upshape\bfseries Autores}\\[8pt]
+		Laura Victoria Riera P\'erez\\[5pt]
+		Marcos Manuel Tirador del Riego
+	\end{tabular}
+	\end{flushleft}
 
 \newpage
 \pagenumbering{gobble}
 	\begin{abstract}
 	La recuperación de información (RI) es un subcampo de la ciencia de la información relacionado con la representación, el almacenamiento, acceso y recuperación de la información. Las áreas de investigación actuales dentro del campo de RI incluyen búsquedas y consultas, clasificación de resultados de búsqueda, navegación y búsqueda de información, optimización de la representación de información, almacenamiento, clasificación de documentos y agrupamiento. A partir de la expansión y consolidación de Internet, como medio principal de comunicación electrónica de datos, se ha puesto a disposición de casi toda la humanidad una importante cantidad de información de todo tipo. A los efectos de aprovechar todo
-	este potencial de información, es necesario poseer accesos que permitan que la tarea de recuperación sea eficiente y efectiva a la vez que se mejore la experiencia e interfaz de usuario. El objetivo principal de este artículo es comprender el uso de la agrupación y clasificaci\'on de documentos para mejorar la recuperación de su información. De cada uno se muestran las caracter\'isticas principales, medidas de similitud y evaluaci\'on, ventajas, desventajas y las aplicaciones en la RI (en particular en la web). Adem\'as se analizan los algoritmos K-Means y HAC de agrupaci\'on; y el Naive Bayes y K-Nearest-Neighbours de clasificaci\'on. 
+	este potencial de información, es necesario poseer accesos que permitan que la tarea de recuperación sea eficiente y efectiva a la vez que se mejore la experiencia e interfaz de usuario. El objetivo principal de este artículo es comprender el uso de la agrupación y clasificaci\'on de documentos para mejorar la recuperación de su información. De cada uno se muestran las caracter\'isticas principales, medidas de similitud y evaluaci\'on, ventajas, desventajas y las aplicaciones en la RI (en particular en la web). Adem\'as, se analizan los algoritmos K-Means y HAC de agrupaci\'on; y el Naive Bayes y K-Nearest-Neighbours de clasificaci\'on. 
 	
 	\vspace{1em}
 	\keywords{agrupamiento \textbf{$\cdot$} agrupamiento particionado \textbf{$\cdot$} agrupamiento jer\'arquico \textbf{$\cdot$} clasificaci\'on \textbf{$\cdot$} web \textbf{$\cdot$} Recuperaci\'on de Informaci\'on (RI)}
@@ -80,11 +90,6 @@ La clasificaci\'on y el agrupamiento son dos m\'etodos de aprendizaje de m\'aqui
 
 \section{Agrupamiento}
 
-\begin{flushright}
-	\scriptsize*(Tomado de \cite{B1})
-	\normalsize
-\end{flushright}
-
 Los algoritmos de agrupamiento, como su nombre lo indica, agrupan un conjunto de documentos en subconjuntos o clústeres. Son utilizados para generar una estructura de categorías que se ajuste a un conjunto de observaciones. 
 
 Los grupos formados deben tener un alto grado de asociación entre los documentos de un mismo grupo, es decir, deben ser lo m\'as similares posibles, y un bajo grado entre miembros de diferentes grupos. 
@@ -99,32 +104,20 @@ La entrada clave para un algoritmo de agrupamiento es la medida de distancia. Di
 \textbf{Hip\'otesis de agrupamiento:} \textit{Los documentos en el mismo grupo se comportan de manera similar con respecto a la relevancia para las necesidades de información.}
 	
 \vspace{0.3em}
-La hipótesis establece que si hay un documento de un grupo que es relevante a una solicitud de búsqueda, entonces es probable que otros documentos del mismo clúster también sean relevantes. 
+La hipótesis, tomada de [\cite{B1}, secci\'on 16.1, p.350], establece que si hay un documento de un grupo que es relevante a una solicitud de búsqueda, entonces es probable que otros documentos del mismo clúster también sean relevantes. 
 \vspace{1em}
 
-Los algoritmos de agrupamiento pueden ser clasificados seg\'un la pertenencia a los grupos en \textit{agrupamiento exclusivo o fuerte} (hard clustering) donde cada documento es miembro de exactamente un grupo; o \textit{agrupamiento difuso o suave} (soft clustering) donde un documento tiene membresía fraccionaria en varios grupos.
-
-Tambi\'en pueden clasificarse seg\'un el tipo de estructura impuesta sobre los datos como \textit{agrupamiento particionado o plano} (flat clustering) o \textit{agrupamiento jer\'arquico} (hierarchical clustering).
+Los algoritmos de agrupamiento pueden ser clasificados seg\'un la pertenencia a los grupos en \textit{agrupamiento exclusivo o fuerte} (hard clustering) donde cada documento es miembro de exactamente un grupo; o \textit{agrupamiento difuso o suave} (soft clustering) donde un documento tiene membresía fraccionaria en varios grupos. Tambi\'en pueden clasificarse seg\'un el tipo de estructura impuesta sobre los datos como \textit{agrupamiento particionado o plano} (flat clustering) o \textit{agrupamiento jer\'arquico} (hierarchical clustering).
 
 \subsection{Medidas de similitud}
 
-\begin{flushright}
-	\scriptsize*(Tomado de \cite{B3})
-	\normalsize
-\end{flushright}
-
-Sean $ d_{i} $ el documento $ i $ del corpus y $ w_{ik} $ el peso del t\'ermino $ k $ de un total $ N $ en el documento $ i $ .
+Sean $ d_{i} $ el $ i $-ésimo documento del corpus y $ w_{ik} $ el peso del t\'ermino $ k $ de un total $ N $ $ (N>0) $ en este documento.
 
 \begin{itemize}
 	\item \textbf{Coeficiente de Dice:}
 	\begin{center}
-		$ S_{d_{i}, d_{j}} = \dfrac{2 \sum_{k=1}^{N} (w_{ik}w_{jk})}{\sum_{k=1}^{N}w_{ik}^{2} + \sum_{k=1}^{N}w_{jk}^{2}} $
+		$ S_{d_{i}, d_{j}} = \dfrac{2 \sum_{k=1}^{N} (w_{ik}w_{jk})}{\sum_{k=1}^{N}w_{ik}^{2} + \sum_{k=1}^{N}w_{jk}^{2}} $ 
 	\end{center}
-	\item \textbf{Coeficiente de Dice para documentos representados como vectores binarios:}
-	\begin{center}
-		$ S_{d_{i}, d_{j}} = \dfrac{2C}{A+B} $
-	\end{center}
-	donde C es la cantidad de t\'erminos que los documentos $ d_{i} $ y $ d_{j} $ tienen en com\'un, y A y B son la cantidad total de t\'erminos en $ d_{i} $ y $ d_{j} $ respectivamente.
 	\item \textbf{Coeficiente de Jaccard:}
 	\begin{center}
 		$ S_{d_{i}, d_{j}} = \dfrac{\sum_{k=1}^{N} (w_{ik}w_{jk})}{\sum_{k=1}^{N}w_{ik}^{2} + \sum_{k=1}^{max}w_{jk}^{2} - \sum_{k=1}^{N} (w_{ik}w_{jk})} $
@@ -135,31 +128,32 @@ Sean $ d_{i} $ el documento $ i $ del corpus y $ w_{ik} $ el peso del t\'ermino 
 	\end{center}
 \end{itemize}
 
+Las ecuaciones anteriores fueron tomadas de [\cite{B3}, epg. 16.2.2, p.3].
+
 \subsection{Medidas de evaluaci\'on} 
-	\begin{flushright}
-		\scriptsize*(Tomado de \cite{B1})
-	\end{flushright}
 	\normalsize
 	\begin{itemize}
 	\item \textbf{Pureza:} Para calcular la pureza, cada grupo se asigna a la clase que es más frecuente en el grupo, y luego se mide la precisión de esta asignación contando el número de documentos correctamente asignados y dividiendo por N.
 	
 	\begin{center}
-		$purity(\Omega, \mathbb{C}) = \dfrac{1}{N} \sum_{k}max_{j} |\omega_{k} \cap c_{j}| $
+		$purity(\Omega, C) = \dfrac{1}{N} \sum_{k}max_{j} |\omega_{k} \cap c_{j}| $ 
 	\end{center}
 	
-	donde $ \Omega = \{\omega_{1}, \omega_{2}, ... , \omega_{K}\} $ es el conjunto de cl\'usters y $ C = \{c_{1}, c_{2}, ... , c_{J}\} $ es el conjunto de clases. Se interpreta $ \omega_{k} $ como el conjunto de documentos en el cl\'uster y $ c_{j} $ como el conjunto de documentos que pertenecen a esa clase.
+	donde $ \Omega = \{\omega_{1}, \omega_{2}, ... , \omega_{K}\} $ es el conjunto de cl\'usteres y $ C = \{c_{1}, c_{2}, ... , c_{J}\} $ es el conjunto de clases. Se interpreta $ \omega_{k} $ como el conjunto de documentos en el cl\'uster y $ c_{j} $ como el conjunto de documentos que pertenecen a esa clase. Esta ecuaci\'on fue tomada de [\cite{B1}, ecuaci\'on 16.1, p.357].
 	
 	Malos agrupamientos tienen valores de pureza cercanos a 0, mientras que un agrupamiento perfecto tiene una pureza 1.
 	
-	La alta pureza es fácil de lograr cuando el número de grupos es grande, en particular, la pureza es 1 si cada documento tiene su propio grupo. Sin embargo en este caso tendr\'iamos la mayor cantidad de grupos posibles, por lo que nuestra soluci\'on no tendr\'ia calidad.
+	La alta pureza es fácil de lograr cuando el número de grupos es grande, en particular, la pureza es 1 si cada documento tiene su propio grupo. Sin embargo en este caso se tendr\'ia la mayor cantidad de grupos posibles, por lo que la soluci\'on no tendr\'ia calidad.
 	
 	\vspace{1em}
-	\item \textbf{Información mutua normalizada:} Una medida que nos permite hacer la compensaci\'on entre calidad y pureza es la información mutua normalizada o $ NMI $ por sus siglas en ingl\'es.
+	\item \textbf{Información mutua normalizada:} Una medida que permite hacer la compensaci\'on entre calidad y pureza es la información mutua normalizada o $ NMI $ por sus siglas en ingl\'es.
 	
 	\begin{center}
 		$ NMI(\Omega, \mathbb{C}) = \dfrac{I(\Omega, \mathbb{C})}{[H(\Omega) + H(\mathbb{C})]/2}
-		$
+		$ 
 	\end{center}
+	
+	Tomado de [\cite{B1}, ecuaci\'on 16.2, p.358]
 	
 	I es la informaci\'on mutua:
 	\begin{center}
@@ -167,12 +161,16 @@ Sean $ d_{i} $ el documento $ i $ del corpus y $ w_{ik} $ el peso del t\'ermino 
 	\end{center}
 	donde $ P(\omega_{k}) $, $ P(c_{j}) $ y $ P(\omega_{k} \cap c_{j}) $ son las probabilidades de que un documento sea del cl\'uster $ \omega_{k} $, clase $ c_{j} $, y est\'e en la intersección de $ \omega_{k} $ y $ c_{j} $, respectivamente.
 	
+	La ecuaci\'on anterior fue tomada de [\cite{B1}, ecuaci\'on 16.3, p.358]
+	
 	\vspace{0.5em}
 	H es la entropía (mide la incertidumbre de una fuente de información)
 	
 	\begin{center}
-		$ H(\Omega) = -\sum_{k}P(\omega_{k}) \log P(\omega_{k}) $
+		$ H(\Omega) = -\sum_{k}P(\omega_{k}) \log P(\omega_{k}) $ 
 	\end{center}
+	
+	La ecuaci\'on anterior fue tomada de [\cite{B1}, ecuaci\'on 16.5, p.358]
 	
 	Se alcanza la máxima información mutua para un agrupamiento exacto que perfectamente recrea las clases pero también si los grupos se subdividen en cl\'usteres más pequeños. 
 	
@@ -183,17 +181,19 @@ Sean $ d_{i} $ el documento $ i $ del corpus y $ w_{ik} $ el peso del t\'ermino 
 	\vspace{1em}
 	\item \textbf{\'Indice de Rand (Rand Index)}: Se asignan dos documentos al mismo clúster si y sólo si son similares. Una decisión positiva verdadera (TP) asigna
 	dos documentos similares al mismo grupo, una decisión negativa verdadera (TN) asigna dos documentos diferentes a diferentes grupos. Hay dos tipos
-	de errores que podemos cometer. Una decisión de falso positivo (FP) asigna dos documentos no similarres al mismo clúster. Una decisión de falso negativo (FN) asigna
+	de errores que se pueden cometer. Una decisión de falso positivo (FP) asigna dos documentos no similarres al mismo clúster. Una decisión de falso negativo (FN) asigna
 	dos documentos similares a diferentes agrupaciones. El índice de Rand (IR) mide el porcentaje de decisiones que son correctas (precisión).
 	
 	\begin{center}
-		$ RI = \dfrac{TP + TN}{TP + FP + FN + TN} $
+		$ RI = \dfrac{TP + TN}{TP + FP + FN + TN} $ 
 	\end{center}
+	
+	La ecuaci\'on anterior fue tomada de [\cite{B1}, secci\'on 8.3, p.155].
 	
 	El índice de Rand otorga el mismo peso a los falsos positivos y falsos negativos. Separar documentos similares a veces es peor que poner pares de dos documentos no similares en el mismo grupo.
 	
 	\vspace{1em}
-	\item \textbf{Medida F:} Podemos usar la medida F, vista anteriormente en conferencia, para penalizar los falsos negativos más fuertemente que los falsos positivos seleccionando un valor $ \beta > 1 $, dando así más peso al recobrado.
+	\item \textbf{Medida F:} Se puede usar la medida F, vista anteriormente en conferencia, para penalizar los falsos negativos más fuertemente que los falsos positivos seleccionando un valor $ \beta > 1 $, dando así más peso al recobrado.
 	\begin{center}
 		$ P = \dfrac{TP}{TP + FP}  $ \hspace{2em}
 		$ R = \dfrac{TP}{TP + FN} $
@@ -201,6 +201,7 @@ Sean $ d_{i} $ el documento $ i $ del corpus y $ w_{ik} $ el peso del t\'ermino 
 		\vspace{1em}
 		$ F_{\beta} = \dfrac{(\beta^{2} + 1)PR}{\beta^{2}P + R} $
 	\end{center}
+	La ecuaci\'on anterior fue tomada de [\cite{B1}, secci\'on 8.3, p.154].
 \end{itemize}
 
 \subsection{Agrupamiento particionado}
@@ -209,18 +210,14 @@ El \textit{agrupamiento particionado} crea un conjunto  de clústeres sin ningun
 
 \vspace{1em}
 \textbf{Algoritmo K-means}
-\begin{flushright}
-	\scriptsize*(Tomado de \cite{B1})
-	\normalsize
-\end{flushright}
 \vspace{0.5em}
 
-	Es el algoritmo de agrupamiento plano más importante. Su \textit{objetivo} es minimizar la distancia euclidiana al cuadrado promedio entre los documentos y el centro de sus cl\'usteres. 
+	Es el algoritmo de agrupamiento plano más importante. Su objetivo es minimizar la distancia euclidiana al cuadrado promedio entre los documentos y el centro de sus cl\'usteres. 
 	
 	El centro de un cl\'uster se define como la media o centroide $\mu$ de los documentos en un grupo $\omega$:
 	
 	\begin{center}
-		$ \overrightarrow{\mu}(\omega) \leftarrow \dfrac{1}{|\omega_{k}|} \sum_{\overrightarrow{x} \in \omega_{k}} \overrightarrow{x} $
+		$ \overrightarrow{\mu}(\omega) \leftarrow \dfrac{1}{|\omega_{k}|} \sum_{\overrightarrow{x} \in \omega_{k}} \overrightarrow{x} $ $ ^{(} $\footnote{\scriptsize{Tomado de [\cite{B1}, cap\'itulo 6, p.131]}}$ ^{)} $
 	\end{center}
 	
 	Se asume que los documentos se representan como vectores de longitud normalizada  en un espacio de valor real de la manera habitual.  
@@ -233,11 +230,13 @@ El \textit{agrupamiento particionado} crea un conjunto  de clústeres sin ningun
 	\vspace{1em}
 	$ RSS = \sum_{k=1}^{K} RSS_{k} $
 	\end{center}
-
-	RSS es entonces la \textit{función objetivo} en K-means y nuestro objetivo es minimizarla.
+	
+	La ecuaci\'on anterior fue tomada de [\cite{B1}, ecuaci\'on 16.7, p.360].
+	
+	RSS es entonces la función objetivo en K-means y nuestro objetivo es minimizarla.
 	
 	\begin{algorithm}
-		\caption{K-Means}
+		\caption{K-Means} 
 		\begin{algorithmic}[1]
 			\Require{$\{\overrightarrow{x_{1}}, ... , \overrightarrow{x_{N}}\}, K $} 
 			%		 			\Ensure{Trained.}
@@ -245,29 +244,26 @@ El \textit{agrupamiento particionado} crea un conjunto  de clústeres sin ningun
 			\For{$k \leftarrow 1$ \textbf{to} $K$}
 			\State{$ \overrightarrow{\mu_{k}} \leftarrow \overrightarrow{s_{k}} $}
 			\EndFor
-			\While{stopping criterion has not been met}
+			\While{no se cumpla la condici\'on de parada}
 				\For{$k \leftarrow 1$ \textbf{to} $K$}
 				\State{$ \omega_{k} \leftarrow \{\} $}
 				\EndFor
 				\For{$n \leftarrow 1$ \textbf{to} $N$}
 				\State{$ j \leftarrow \argmin_{j'}|\overrightarrow{\mu_{j'}}-\overrightarrow{x_{n}}| $}
-				\State{$ \mu_{j} \leftarrow \omega_{j} \cup \{\overrightarrow{x_{n}}\} $ \hspace{2em} (reassignment of vectors) }
+				\State{$ \mu_{j} \leftarrow \omega_{j} \cup \{\overrightarrow{x_{n}}\} $ \hspace{2em} (reasignando los vectores) }
 				\EndFor
 				\For{$k \leftarrow 1$ \textbf{to} $K$}
-				\State{$ \overrightarrow{\mu_{k}} \leftarrow \dfrac{1}{|\omega_{k}|} \sum_{\overrightarrow{x} \in \omega_{k}} \overrightarrow{x} $ \hspace{2em} (recomputation of centroids)}
+				\State{$ \overrightarrow{\mu_{k}} \leftarrow \dfrac{1}{|\omega_{k}|} \sum_{\overrightarrow{x} \in \omega_{k}} \overrightarrow{x} $ \hspace{2em} (reeligiendo las semillas)}
 				\EndFor
 			\EndWhile
 			\State{\Return {$\{\overrightarrow{\mu_{1}}, ... , \overrightarrow{\mu_{N}}\}$}}
 		\end{algorithmic}
 	\end{algorithm}
 
-El primer paso de esta implementaci\'on de K-means es seleccionar al azar como centros iniciales de los cl\'usteres a K documentos, estas son las semillas. Luego, el algoritmo mueve los centros de los grupos en el espacio para minimizar el RSS. Este proceso se repite de manera iterativa hasta que se cumpla un criterio de parada.
+En esta implementaci\'on de K-means, tomada de [\cite{B1}, figura 16.5, p.361], el primer paso es seleccionar al azar como centros iniciales de los cl\'usteres a K documentos, estas son las semillas. Luego, el algoritmo mueve los centros de los grupos en el espacio para minimizar el RSS. Este proceso se repite de manera iterativa hasta que se cumpla un criterio de parada.
 
+\vspace{0.5em}
 Opciones para la \textit{elecci\'on de las semillas}:
-\begin{flushright}
-	\scriptsize*(Tomado de \cite{B2})
-	\normalsize
-\end{flushright}
 \begin{itemize}
 	\item Escoger al azar.
 	\item Calcular la media $ m $ de todos los datos y generar k centros iniciales agregando un pequeño vector aleatorio a la media ($ m \pm \varsigma $).
@@ -275,10 +271,6 @@ Opciones para la \textit{elecci\'on de las semillas}:
 \end{itemize}
 
 Algunos \textit{criterios de parada}:
-\begin{flushright}
-	\scriptsize*(Tomado de \cite{B1})
-	\normalsize
-\end{flushright}
 \begin{itemize}
 	\item Cuando se ha completado un número fijo de iteraciones I. Esta condición limita el tiempo de ejecución del algoritmo de agrupamiento, pero en algunos casos la calidad de el agrupamiento será deficiente debido a un número insuficiente de iteraciones.
 	\item Cuando la asignación de documentos a grupos no cambia entre iteraciones. Excepto en los casos con un m\'inimo local malo, esto produce un buen agrupamiento, pero los tiempos de ejecución pueden ser demasiado largos.
@@ -288,12 +280,7 @@ Algunos \textit{criterios de parada}:
 
 \subsection{Agrupamiento jer\'arquico}
 
-\begin{flushright}
-	\scriptsize*(Tomado de \cite{B1})
-	\normalsize
-\end{flushright}
-
-El \textit{agrupamiento jerárquico} produce una jerarquía, una estructura que es más informativa que el conjunto no estructurado de clústeres devuelto por el agrupamiento particionado, no requiere que especifiquemos previamente el número de grupos y la mayoría son deterministas, sin embargo son m\'as ineficientes que los particionados. En una representación gráfica los elementos quedan anidados en jerarquías con forma de árbol.
+El \textit{agrupamiento jerárquico} produce una jerarquía, una estructura que es más informativa que el conjunto no estructurado de clústeres devuelto por el agrupamiento particionado, no requiere que se especifique previamente el número de grupos y la mayoría son deterministas, sin embargo son m\'as ineficientes que los particionados. En una representación gráfica los elementos quedan anidados en jerarquías con forma de árbol.
 
 Los algoritmos de agrupamiento jerárquico pueden tener dos enfoques: de arriba hacia abajo (top-down) llamados de \textit{agrupamiento jer\'arquico aglomerativo} o de abajo hacia arriba (bottom-up) conocidos como de \textit{agrupamiento jer\'arquico divisivo}. 
 
@@ -301,7 +288,7 @@ Los algoritmos de agrupamiento jerárquico pueden tener dos enfoques: de arriba 
 \textcolor{white}{.}
 
 \vspace{0.5em}
-Los algoritmos de abajo hacia arriba tratan cada documento como un clúster único desde el principio y luego fusionan (o aglomeran) sucesivamente pares de grupos hasta que todos los grupos se han fusionado en uno solo que contiene todos los documentos. 
+Los algoritmos de \textit{abajo hacia arriba} tratan cada documento como un clúster único desde el principio y luego fusionan (o aglomeran) sucesivamente pares de grupos hasta que todos los grupos se han fusionado en uno solo que contiene todos los documentos. 
 Es por esto que se denomina agrupamiento jerárquico aglomerativo o HAC por sus siglas en ingl\'es. 
 
 Toman decisiones basadas en patrones locales sin tener inicialmente en cuenta la distribución global. Estas decisiones tempranas no se pueden deshacer.
@@ -309,17 +296,14 @@ Toman decisiones basadas en patrones locales sin tener inicialmente en cuenta la
 \vspace{1em}
 \textbf{Medidas de similitud para cl\'usteres en HAC}
 
-\begin{flushright}
-	\scriptsize*(Tomado de \cite{B1} y \cite{B3})
-	\normalsize
-\end{flushright}
-
 \begin{itemize}
-	\item \textbf{Agrupamiento por enlazamiento \'unico} (Single link clustering): La similitud entre dos cl\'usters es la similitud de los dos objetos más cercanos entre ellos (mayor similitud).
+	\item \textbf{Agrupamiento por enlazamiento \'unico} (single link clustering): La similitud entre dos cl\'usters es la similitud de los dos objetos más cercanos entre ellos (mayor similitud).
 	
 	\begin{center}
 		$ sim(\omega_{i}, \omega_{j}) = max_{\overrightarrow{x} \in \omega_{i}, \overrightarrow{y} \in \omega_{j}} SIM(\overrightarrow{x}, \overrightarrow{y})$
 	\end{center}
+	
+	La ecuaci\'on anterior fue tomada de [\cite{B2}, p.50].
 	
 	\vspace{1em}
 	\item \textbf{Agrupamiento por enlazamiento completo} (complete link clustering): La similitud entre dos cl\'usters es la similitud de los dos objetos más alejados entre ellos (menor similitud). 
@@ -327,6 +311,8 @@ Toman decisiones basadas en patrones locales sin tener inicialmente en cuenta la
 	\begin{center}
 		$ sim(\omega_{i}, \omega_{j}) = min_{\overrightarrow{x} \in \omega_{i}, \overrightarrow{y} \in \omega_{j}} SIM(\overrightarrow{x}, \overrightarrow{y})$
 	\end{center}
+	
+	La ecuaci\'on anterior fue tomada de [\cite{B2}, p.51].
 	
 	\vspace{1em}
 	\item \textbf{Agrupamiento aglomerativo por promedio de grupo} (group-average agglomerative clustering): El agrupamiento aglomerativo por promedio de grupo o GAAC por sus siglas en ingl\'es, calcula la similitud promedio SIM-GA de todos los pares de documentos, incluidos los pares del mismo grupo (las auto-similitudes no están incluidas en el promedio).
@@ -336,7 +322,9 @@ Toman decisiones basadas en patrones locales sin tener inicialmente en cuenta la
 	$ SIM-GA(\omega_{i}, \omega_{j}) = \dfrac{1}{(N_{i} + N_{j})(N_{i} + N_{j} - 1)} \sum_{\overrightarrow{x} \in \omega_{i} \cup \omega_{j}} \sum_{\overrightarrow{y} \in \omega_{i} \cup \omega_{j}, \overrightarrow{x} \neq \overrightarrow{y}} \overrightarrow{x} \cdot \overrightarrow{y} $
 	\end{center}
 	
-	Este evalúa la calidad de un clúster basada en todas las similitudes entre documentos, evitando así castigar valores extremos como en los criterios de enlace único y enlace completo, que establecen la similitud del cl\'uster con la similitud de un solo par de documentos.
+	La ecuaci\'on anterior fue tomada de [\cite{B1}, ecuaci\'on 17.1, p.389].
+	
+	Esta evalúa la calidad de un clúster basada en todas las similitudes entre documentos, evitando así castigar valores extremos como en los criterios de enlace único y enlace completo, que establecen la similitud del cl\'uster con la similitud de un solo par de documentos.
 	
 	\vspace{1em}
 	\item \textbf{Agrupamiento por centroide} (centroid clustering): La similitud de dos cl\'usters est\'a definida como la similitud de sus centroides
@@ -347,15 +335,13 @@ Toman decisiones basadas en patrones locales sin tener inicialmente en cuenta la
 			& = \dfrac{1}{N_{i}N_{j}} \sum_{\overrightarrow{x} \in \omega_{i}}\sum_{\overrightarrow{y} \in \omega_{j}}\overrightarrow{x}\cdot\overrightarrow{y} \nonumber
 		\end{align}
 	
+	La ecuaci\'on anterior fue tomada de  [\cite{B1}, ecuaci\'on 17.6, p.391].
+	
 	A diferencia de GAAC, el agrupamiento por centroide excluye el c\'alculo de pares del mismo cl\'uster.
 \end{itemize}
 
 \vspace{1em}
 \textbf{Algoritmo HAC}
-\begin{flushright}
-	\scriptsize*(Tomado de \cite{B1})
-	\normalsize
-\end{flushright}
 
 Dado un conjunto de N elementos a agrupar, el proceso básico del agrupamiento jerárquico es:
 \begin{enumerate}
@@ -378,23 +364,26 @@ Dado un conjunto de N elementos a agrupar, el proceso básico del agrupamiento j
 		\For{$n \leftarrow 1$ \textbf{to} $N$}
 		\For{$i \leftarrow 1$ \textbf{to} $N$}
 		\State{$ C[n][i] \leftarrow SIM(d_{n}, d_{i}) $}
-		\State{$ I[n] \leftarrow 1 $ (keeps track of active clusters)}
+		\State{$ I[n] \leftarrow 1 $ (lleva los cl\'usteres activos)}
 		\EndFor
-		\State{$ A \leftarrow [] $ (assembles clustering as a sequence of merges)}
+		\State{$ A \leftarrow [] $ (secuencia de mezclas aplicadas en el agrupamiento)}
 		\EndFor
 		\For{$k \leftarrow 1$ \textbf{to} $N-1$}
 		\State{$ <i,m> \leftarrow \argmax_{<i,m>:i \neq \wedge I[i] = 1 \wedge I[m] = 1} C[i][m] $}
-		\State{$ A.APPEND(<i,m>) $ (store merge)}
+		\State{$ A.APPEND(<i,m>) $ (almacena la mezcla)}
 		\For{$j \leftarrow 1$ \textbf{to} $N$}
 		\State{$ C[i][j] \leftarrow SIM(i,m,j)$}
 		\State{$ C[j][i] \leftarrow SIM(i,m,j)$}
 		\EndFor
-		\State{$ I[m] \leftarrow 0 $ (deactivate cluster)}
+		\State{$ I[m] \leftarrow 0 $ (desactiva el cl\'uster)}
 		\EndFor
 		\State{\Return {A}}
 	\end{algorithmic}
 \end{algorithm}
 
+Esta implementaci\'on del algoritmo HAC fue tomada de [\cite{B1}, figura 17.2, p.381].
+
+\newpage
 Notas: 
 \begin{itemize}
 	\item En cada iteración, los dos clústeres m\'as similares se fusionan y las filas y columnas del clúster fusionado i en C se actualizan.
@@ -405,32 +394,21 @@ Notas:
 
 Una suposición fundamental en HAC es que la operación de fusión es mon\'otona, es decir si $ s_{1}, s_{2}, . . . , s_{K-1}$ son las similitudes de combinación de las fusiones sucesivas de un HAC, entonces se cumple $ s_{1} \geq s_{2} \geq . . . \geq s_{K-1}$.
 
-El agrupamiento jerárquico no requiere un número predeterminado de clústeres. Sin embargo, en algunas aplicaciones queremos una partición de clústeres disjuntos como en el agrupamiento particionado. En esos casos, la jerarquía debe cortarse en algún momento. Se pueden utilizar varios criterios para determinar el punto de corte:
+El agrupamiento jerárquico no requiere un número predeterminado de clústeres. Sin embargo, en algunas aplicaciones se quiere una partición de clústeres disjuntos como en el agrupamiento particionado. En esos casos, la jerarquía debe cortarse en algún momento. Se pueden utilizar varios criterios para determinar el punto de corte:
 \begin{itemize}
 	\item Cortar a un nivel de similitud preespecificado.
-	\item  Aplicar la ecuación:
-	\begin{center}
-		$K = \argmin_{K'}[RSS(K') + \lambda K'] $
-	\end{center}
-	donde $ K' $ se refiere al corte de la jerarquía que resulta en $ K' $ clusters, $ RSS $ es la suma residual de cuadrados y $\lambda$ es una penalización por cada grupo adicional.
 	\item Al igual que en el agrupamiento particionado, también se puede preespecificar el número de agrupamientos $ K $ y seleccionar el punto de corte que produce $ K $ cl\'usteres.
 \end{itemize}
 
 \subsubsection{Agrupamiento jer\'arquico divisivo}
 
 \textcolor{white}{.}
-\begin{flushright}
-	\scriptsize*(Tomado de \cite{B1})
-	\normalsize
-\end{flushright}
 
 \vspace{0.5em}
-Los algoritmos de arriba hacia abajo comienzan con todos los documentos en un grupo. El clúster se divide utilizando un algoritmo de agrupamiento particionado. Este procedimiento se aplica recursivamente hasta que cada documento está en su
+Los algoritmos de \textit{arriba hacia abajo} comienzan con todos los documentos en un grupo. El clúster se divide utilizando un algoritmo de agrupamiento particionado. Este procedimiento se aplica recursivamente hasta que cada documento está en su
 propio clúster.
 
-A pesar de necesitar un segundo algoritmo de agrupamiento particionado como una subrutina, tiene la ventaja de ser más eficiente si no generamos una jerarquía completa hasta las hojas de documentos individuales. Para un número fijo de niveles, y utilizando un algoritmo particionado eficiente como K-means, los algoritmos divisivos son lineales en el número de documentos y clústeres.
-
-Adem\'as se beneficia de la información completa sobre la distribución global al tomar decisiones de partición de alto nivel.
+A pesar de necesitar un segundo algoritmo de agrupamiento particionado como una subrutina, tiene la ventaja de ser más eficiente si no se genera una jerarquía completa hasta las hojas de documentos individuales. Adem\'as, se beneficia de la información completa sobre la distribución global al tomar decisiones de partición de alto nivel.
 
 \subsection{Ventajas} 
 
@@ -453,11 +431,7 @@ Adem\'as se beneficia de la información completa sobre la distribución global 
 \subsection{Ejemplos de aplicaci\'on} 
 El agrupamiento es una técnica importante para descubrir subregiones o subespacios relativamente densos de una distribución de datos multidimensional. Se ha utilizado en la recuperación de información para muchos propósitos diferentes, como la expansión de consultas, la agrupación e indexación de documentos y la visualización de resultados de búsqueda. Permiten mejorar interfaz y experiencia de usuario y proporcionar una mayor eficacia o eficiencia del sistema de búsqueda. 
 
-A continuaci\'on se describen con m\'as detalle algunas de las aplicaciones m\'as importantes:
-\begin{flushright}
-	\scriptsize*(Tomado de \cite{B1})
-	\normalsize
-\end{flushright} 
+A continuaci\'on se describen con m\'as detalle algunas de las aplicaciones m\'as importantes en la web:
 \begin{itemize}
 	\item Agrupamiento de resultados de búsqueda (Search result clustering): La presentación predeterminada de los resultados de búsqueda (documentos devueltos en respuesta a una consulta) en la recuperación de información es una lista sencilla. Los usuarios escanean la lista de arriba a abajo hasta que encuentran la información que buscan. 
 	
@@ -465,15 +439,15 @@ A continuaci\'on se describen con m\'as detalle algunas de las aplicaciones m\'a
 	
 	\item Dispersión-recopilación (Scatter-Gather): Su objetivo es tambi\'en una mejor interfaz de usuario. Este agrupa toda la colección para obtener grupos de documentos que el usuario puede seleccionar o reunir manualmente. Los grupos seleccionados se fusionan y el conjunto resultante se vuelve a agrupar. Este proceso se repite hasta que se encuentre un grupo de interés.
 	
-	La navegación basada en la agrupaci\'on de clústeres es una alternativa interesante a la búsqueda de palabras clave a la información estándar paradigma de recuperación de información. Esto es especialmente cierto en escenarios donde los usuarios prefieren navegar en lugar de buscar porque no están seguros de qué búsqueda términos a utilizar.
+	La navegación basada en la agrupaci\'on de clústeres es una alternativa interesante a la búsqueda por palabras clave, el paradigma de recuperación de información estándar. Esto es especialmente cierto en escenarios donde los usuarios prefieren navegar en lugar de buscar porque no están seguros de qué términos utilizar en la búsqueda.
 	
-	\item Modelado de lenguaje (Language modeling): Explota directamente la hipótesis del agrupamiento para mejorar los resultados de búsqueda, basado en una agrupación de toda la colección. Usamos un índice invertido estándar para identificar un conjunto inicial de documentos que coincide con la consulta, pero luego agregamos otros documentos de los mismos grupos incluso si tienen poca similitud con la consulta. 
+	\item Modelado de lenguaje (Language modeling): Explota directamente la hipótesis del agrupamiento para mejorar los resultados de búsqueda, basado en una agrupación de toda la colección. Se usa un índice invertido estándar para identificar un conjunto inicial de documentos que coincide con la consulta, pero luego se agregan otros documentos de los mismos grupos, incluso si tienen poca similitud con la consulta. 
 	
- 	Para evitar problemas de datos escasos en el modelado lenguaje enfocado a RI, el modelo de documento d se puede interpolar con un modelo de colección. Pero la colección contiene muchos documentos con términos atípicos de d. Al reemplazar el modelo de colección con un modelo derivado de grupo de d, obtenemos estimaciones más precisas de las probabilidades de ocurrencia de términos en d.
+ 	Para evitar problemas de datos escasos en el modelado de lenguaje enfocado a la RI, el modelo de documento \textit{d} se puede interpolar con un modelo de colección. Pero la colección contiene muchos documentos con términos atípicos de \textit{d}. Al reemplazar el modelo de colección con un modelo derivado del grupo de \textit{d}, se obtienen estimaciones más precisas de las probabilidades de ocurrencia de términos en \textit{d}.
 	
 	\item Recuperaci\'on basada en cl\'usteres (Cluster-based retrieval): La agrupación también puede acelerar la búsqueda. 
 	
-	La búsqueda en el modelo de espacio vectorial equivale a encontrar los vecinos más cercanos a la consulta. El índice invertido admite la búsqueda rápida del vecino más cercano para la configuración estándar de RI. Sin embargo, a veces es posible que no podamos usar un índice invertido de manera eficiente. En tales casos, podríamos calcular la similitud de la consulta con cada documento, pero esto es lento. La hipótesis de agrupamiento ofrece una alternativa: encontrar los cl\'usteres que están más cerca de la consulta y sólo considerar los documentos de estos. Como hay muchos menos clústeres que documentos, se disminuye grandemente el espacio de b\'usqueda, y encontrar el clúster más cercano es rápido. Adem\'as los elementos que coinciden con una consulta son similares entre sí, por lo que tienden a estar en los mismos cl\'usteres, de esta forma la calidad no disminuye en gran medida.
+	La búsqueda en el modelo de espacio vectorial equivale a encontrar los vecinos más cercanos a la consulta. El índice invertido admite la búsqueda rápida del vecino más cercano para la configuración estándar de la RI. Sin embargo, a veces es posible que no se pueda usar un índice invertido de manera eficiente. En tales casos, se podr\'ia calcular la similitud de la consulta con cada documento, pero esto es lento. La hipótesis de agrupamiento ofrece una alternativa: encontrar los cl\'usteres que están más cerca de la consulta y sólo considerar los documentos de estos. Como hay muchos menos clústeres que documentos, se disminuye grandemente el espacio de b\'usqueda, y encontrar el clúster más cercano es rápido. Adem\'as, los elementos que coinciden con una consulta son similares entre sí, por lo que tienden a estar en los mismos cl\'usteres, de esta forma la calidad no disminuye en gran medida.
 \end{itemize}
 
 \section{Clasificaci\'on}
@@ -794,7 +768,7 @@ La bioinform\'atica es una rama cient\'ifica que ha adquirido un desarrollo impr
 
 Una de estas aplicaciones biol\'ogicas de las que hablabamos es la predicci\'on de gen. Esta consiste en determinar que fracciones de una secuencia de ADN codifican prote\'inas. Tambi\'en se ve aplicado en la investigaci\'on de comunidades de microbios en nichos ecol\'ogicos. As\'i se puede obtener informaci\'on taxon\'omica y metab\'olica de las comunidades estudiadas. Existen otras muchas aplicaciones en esta ciencia entre las que podemos mencionar la prote\'omica, los microarrays y la biolog\'ia de sistemas.
 
-Sali\'endonos un tanto del marco de la bioinform\'atica, pero no del todo lejos de la biolog\'ia, encontramos algunas otras aplicaciones interesantes. Nos referimos al reconocimiento de algunos rasgos distintivos de una persona, como pueden ser, reconocimiento de rostros, huellas o voz. Este \'ultimo lo tenemos al alcance de nuestras manos en asistentes virtuales como Siri o  Google. Estas aplicaciones se entrenan para reconocer caracter\'isticas distintivas de tu voz, mediante un proceso de aprendizaje supervisado, para luego poder diferencias c\'uando eres t\'u quien les est\'a hablando.
+Si se sale un tanto del marco de la bioinform\'atica, pero no del todo lejos de la biolog\'ia, se pueden encontrar algunas otras aplicaciones interesantes. Nos referimos al reconocimiento de algunos rasgos distintivos de una persona, como pueden ser, reconocimiento de rostros, huellas o voz. Este \'ultimo lo tenemos al alcance de nuestras manos en asistentes virtuales como Siri o  Google. Estas aplicaciones se entrenan para reconocer caracter\'isticas distintivas de tu voz, mediante un proceso de aprendizaje supervisado, para luego poder diferencias c\'uando eres t\'u quien les est\'a hablando.
 
 El mercado financiero es una de los espacios de la vida del hombre donde m\'as repercute la clasificaci\'on. Se puede emplear en mejorar el mercado digital, las ventas en l\'inea, identificar el valor de vida \'util de un cliente, la tasa de abandono, recomendaciones de productos y an\'alisis de impacto de campa\~nas de mercado.
 
