@@ -458,22 +458,24 @@
 		\frametitle{Clasificaci\'on}
 		El problema de clasificaci\'on en sentido general consiste en determinar dentro de un conjunto de clases a cu\'al de ellas pertenece un objeto dado. En el marco de este documento es de inter\'es estudiar la clasificaci\'on de textos. 
 		
-		La forma m\'as antigua de llevar a cabo la clasificaci\'on es manualmente. Por ejemplo, los bibliotecarios clasifican los libros de acuerdo a ciertos criterios, de modo que encontrar una informaci\'on buscada no resulte una tarea de gigante dificultad. Sin embargo, la clasificaci\'on manual tiene sus l\'imites de escalabilidad. 
-		
 		\framebreak
+		
+		Formas que requieren un alto esfuerzo humano:
+		
+		\begin{itemize}
+			\item  Manualmente.
+			\item  Uso de reglas (relacionado con las standing queries): Una regla captura una cierta combinaci\'on de palabras claves que identifican una clase.
+		\end{itemize}
+	
+		
 %		\textcolor{white}{.}
-		
-		Como alternativa podr\'ia pensarse el uso de \emph{reglas} para determinar autom\'aticamente si un texto pertenece o no a una clase determinada de documentos. Esto est\'a relacionado con las consultas permanentes  (o \emph{standing querys} en ingl\'es). Una consulta permanente es aquella que se ejecuta peri\'odicamente en una colecci\'on a la cual nuevos  documentos se adicionan en el tiempo. Toda consulta permanente se puede ver como un tipo de regla que se aplica a un sistema de clasificaci\'on que divide una colecci\'on en documentos que satisfacen la consulta y documentos que no.
-		\smallskip
-		
-		Una regla captura una cierta combinaci\'on de palabras claves que identifican una clase. Reglas codificadas a mano pueden llegar a ser altamente escalable, pero crearlas y mantenerlas requiere un elevado costo en recursos humanos.
 		
 		\framebreak
 		\textcolor{white}{.}
 		
 		Existe, sin embargo, un enfoque adicional a los dos anteriores mencionados. Este es el uso de \emph{Aprendizaje de M\'aquinas}. En este enfoque el conjunto de reglas de clasificaci\'on, o en general, el criterio usado para clasificar, es aprendido de forma autom\'atica a partir de los datos de entrenamiento.
 		
-		Al uso del Aprendizaje de M\'aquinas en la clasificaci\'on de textos se le conoce como clasificaci\'on estad\'istica de texto (o en ingl\'es \emph{statistical text classification}) si el m\'etodo de aprendizaje usado es estad\'itico.
+		Al uso del Aprendizaje de M\'aquinas en la clasificaci\'on de textos se le conoce como \textbf{clasificaci\'on estad\'istica} de texto (o en ingl\'es \emph{statistical text classification}) si el m\'etodo de aprendizaje usado es estad\'itico.
 		
 		\framebreak
 		
@@ -485,11 +487,15 @@
 		
 		\framebreak
 		
-		El aprendizaje que toma parte en la b\'usqueda de $\gamma$ es llamado \emph{aprendizaje supervisado} debido a que se necesita la ayuda de uno o varios expertos que creen el conjunto de entrenamiento $D$. Estos expertos son  tambi\'en quienes determinan el conjunto de clases en que se clasificar\'an los textos. Por ahora este trabajo se enfocar\'a nos enfocaremos en problemas en que cada documento se clasifica dentro de una sola clase.
+		\begin{itemize}
+		\item  Estos expertos son  tambi\'en quienes determinan el conjunto de clases en que se clasificar\'an los textos. 
+		\item Por ahora este trabajo se enfocar\'a nos enfocaremos en problemas en que cada documento se clasifica dentro de una sola clase.
+		\item El aprendizaje que toma parte en la b\'usqueda de $\gamma$ es llamado \textbf{aprendizaje supervisado} debido a que se necesita la ayuda de uno o varios expertos que creen el conjunto de entrenamiento $D$.
+		\end{itemize}
 		
+		\framebreak
 	
-	}
-	
+}
 	\subsection{Naive Bayes}
 	\frame[allowframebreaks, c]{
 		\frametitle{Naive Bayes}
@@ -508,8 +514,7 @@
 		\framebreak
 		
 		
-		La clase escogida para $d$ se denota por $c_{map}$ debido a que este m\'etodo de clasificaci\'on, de acuerdo a la clase m\'as probable para un documento dado, es conocido como \emph{maximum a posteriori} (MAP).
-		
+	
 		Sin embargo la probabilidad condicional $P(c \mid d)$ es dif\'icil de determinar. Haciendo uso del \emph{Teorema de Bayes} la probabilidad anterior puede ser expresada como
 		
 		\[
@@ -518,7 +523,12 @@
 		
 		\framebreak
 		
-		El factor de normalizaci\'on $P(d)$ es usualmente ignorado ya que no aporta informaci\'on a la hora de buscar la clase m\'as apropiada para un documento $d$, ya que este tiene el mismo efecto en todos los candidatos. Este c\'alculo puede ser simplificado si lo expresamos en funci\'on de los t\'erminos en los documentos. Supongamos que $\{t_1, t_2, \dots , t_n \}$ son los t\'erminos que aparecen en $d$. Entonces tenemos que  
+		\begin{itemize}
+		\item El factor de normalizaci\'on $P(d)$ es usualmente ignorado ya que no aporta informaci\'on a la hora de buscar la clase m\'as apropiada para un documento $d$, ya que este tiene el mismo efecto en todos los candidatos. 
+		\end{itemize}
+		
+		
+Este c\'alculo puede ser simplificado si lo expresamos en funci\'on de los t\'erminos en los documentos. Supongamos que $\{t_1, t_2, \dots , t_n \}$ son los t\'erminos que aparecen en $d$. Entonces tenemos que  
 		
 		\[
 		c_{map} = \argmax_{c\in\mathcal{C}} P(c) P(d \mid c) = \argmax_{c\in\mathcal{C}} P(c) \prod_{1\leq k\leq n} P(t_k \mid c),
@@ -526,10 +536,12 @@
 		donde $P(t_k \mid c)$ es la probabilidad de que el t\'ermino $t_k$ aparezca en un documento de la clase $c$. 
 		
 		
+		\framebreak
+		
 		Podemos considerar $p(t_k \mid c)$ como una medida de qu\'e tanto demuestra el t\'ermino $t_k$ que $c$ es la clase correcta. 
 		
 		\framebreak
-		
+
 		Para simplificar aun m\'as el c\'omputo se pueden sustituir los valores anteriores por sus logaritmos. Esto reducir\'a el costo de hacer los c\'alculos y adem\'as los errores aritm\'eticos, dado que la multiplicaci\'on se transforma en suma. La clase seleccionada ser\'ia entonces
 		
 		
@@ -591,27 +603,34 @@
 	\frame[allowframebreaks, c]{
 		\frametitle{Feature Selection}
 		
-		Un t\'ermino con ruido (\emph{noise feature}) es aquel que al pertenecer a la representaci\'on de los documentos, provoca un aumento del error de clasificaci\'on de los datos. Por ejemplo, sup\'ongase que se tiene una palabra que ocurre rara vez, pero que en el conjunto de entrenamiento ocurre siempre en la misma clase $c$. Entonces al clasificar un documento nuevo que contiene esta palabra, la misma provocar\'a que el clasificador se incline en cierta medida por seleccionar a $c$ como respuesta. Sin embargo, dado que la ocurrencia de esta palabra \'unicamente en $c$ es accidental, claramente no aporta informaci\'on suficiente para la clasificaci\'on y por tanto, al considerar lo contrario, aumenta el error.
+		Un t\'ermino con ruido (\emph{noise feature}) es aquel que al pertenecer a la representaci\'on de los documentos, provoca un aumento del error de clasificaci\'on de los datos.
 		
 	\framebreak
 	
-		Este es uno de los prop\'ositos que tiene la selecci\'on de t\'erminos (\emph{feature selection} (FS)). Esta consiste en reducir el vocabulario, considerado en la clasificaci\'on de textos solo un subconjunto del que aparece en el conjunto de entrenamiento. N\'otese que, al disminuir el tama\~no del vocabulario aumenta la eficiencia de los m\'etodos de entrenamiento y clasificaci\'on (aunque no es el caso de NB).
+		La selecci\'on de t\'erminos consiste en reducir el vocabulario, considerado en la clasificaci\'on de textos solo un subconjunto del que aparece en el conjunto de entrenamiento. N\'otese que, al disminuir el tama\~no del vocabulario aumenta la eficiencia de los m\'etodos de entrenamiento y clasificaci\'on (aunque no es el caso de NB).
 		
 	\framebreak
 				
-		Selecci\'on de t\'erminos prefiere un clasificador m\'as simple antes que uno m\'as complejo. Esto es \'util cuando el conjunto de entrenamiento no es muy grande.
+%		Selecci\'on de t\'erminos prefiere un clasificador m\'as simple antes que uno m\'as complejo. Esto es \'util cuando el conjunto de entrenamiento no es muy grande.
 		
 		%		Nos concentraremos en describir la Selecci\'on de t\'erminos para la clasificaci\'on de dos clases.
 		
-		En FS usualmente se fija una cantidad $k$ de vocablos por cada clase $c$, que ser\'an los usados por el clasificador. Para seleccionar los $k$ t\'erminos deseados se establece un ranking entre los t\'erminos de la clase, haciendo uso de una funci\'on de medida de utilidad $A(t,c)$, y luego se escogen los $k$ mejor posicionados. El algoritmo b\'asico consiste en para cada clase $c$ iterar por todos los t\'erminos del vocabulario y computar su medida de utilidad para la clase; para finalmente ordenar los resultados y devolver una lista con los $k$ mejores.
+		\begin{itemize}
+		\item En FS usualmente se fija una cantidad $k$ de vocablos por cada clase $c$, que ser\'an los usados por el clasificador. 
 		
+		\item Para seleccionar los $k$ t\'erminos deseados se establece un ranking entre los t\'erminos de la clase, haciendo uso de una funci\'on de medida de utilidad $A(t,c)$, y luego se escogen los $k$ mejor posicionados. 
+		
+		\end{itemize}
+%		El algoritmo b\'asico consiste en para cada clase $c$ iterar por todos los t\'erminos del vocabulario y computar su medida de utilidad para la clase; para finalmente ordenar los resultados y devolver una lista con los $k$ mejores.
+		
+		\framebreak
 		Se presenta a continuaci\'on tres de los m\'etodos de calcular $A(t,c)$ m\'as comunes.
 		
 		\begin{itemize}
 			\item\textbf{Informaci\'on Manual.}
 			\smallskip
 			
-			Computar $A(t,c)$ como el valor esperado de informaci\'on mutua (\emph{Mutual Information} (MI)), da una medida de cu\'anta informaci\'on aporta, la presencia en $c$ de un t\'ermino dado, a tomar la decisi\'on correcta de clasificaci\'on de un documento. 
+			Computar $A(t,c)$ como el valor esperado de informaci\'on mutua (\emph{Mutual Information} (MI)), da una medida de \textbf{cu\'anta informaci\'on aporta, la presencia en $c$ de un t\'ermino dado, a tomar la decisi\'on correcta de clasificaci\'on de un documento. }
 			\[
 			I(U_t;C_t) = \sum_{e_t \in \{ 1,0 \} } \sum_{e_c \in \{ 1,0 \} } P( U_t = e_t, C_t = e_c) \log_2 \frac{P (U_t = e_t, C_t = e_c) }{ P(U_t = e_t) P(C_t = e_c) },
 			\]
@@ -619,18 +638,18 @@
 			
 			\smallskip
 			
-		\framebreak
-			
-			MI mide cu\'anta informaci\'on un t\'ermino contiene acerca de una clase. Por tanto, mantener los t\'erminos que est\'an cargados de informaci\'on, y eliminar los que no, contribuye a reducir el ruido y mejorar la precisi\'on del clasificador.
-			
-			\smallskip
+%		\framebreak
+%			
+%			MI mide cu\'anta informaci\'on un t\'ermino contiene acerca de una clase. Por tanto, mantener los t\'erminos que est\'an cargados de informaci\'on, y eliminar los que no, contribuye a reducir el ruido y mejorar la precisi\'on del clasificador.
+%			
+%			\smallskip
 			
 		\framebreak
 			
 			\item\textbf{Selecci\'on Chi cuadrado $\chi^2$.} 
 			\smallskip
 			
-			El test $\chi^2$ se usa para medir el grado de independencia de los eventos: ocurrencia de los t\'erminos y ocurrencia de las clases. 
+			El test $\chi^2$ se usa para medir el grado de independencia de los eventos: \textbf{ocurrencia de los t\'erminos y ocurrencia de las clases. }
 			
 			\[
 			\chi^2(D,t,c) = \sum_{e_t\in \{ 1, 0 \}} \sum_{e_c\in \{ 1, 0 \}} \frac{(N_{e_te_c} - E_{e_t e_c}) ^2 } { E_{e_t e_c}},
@@ -644,11 +663,11 @@
 			\item \textbf{Selecci\'on basada en frecuencia}.
 			\smallskip
 			
-			Esta medida consiste en priorizar los t\'erminos que son m\'as comunes en la  clase. Puede ser calculada de dos formas diferentes. La primera es cantidad de repeticiones de un t\'ermino en los documentos de una clase, conocida como frecuencia en colecci\'on. La otra es frecuencia de documentos, y se calcula como la cantidad de documentos en la clase que contienen al t\'ermino en cuesti\'on.
+			Esta medida consiste en priorizar los t\'erminos que son m\'as comunes en la  clase. Puede ser calculada de dos formas diferentes. La primera es\textbf{ cantidad de repeticiones de un t\'ermino en los documentos de una clase}, conocida como \textbf{frecuencia en colecci\'on}. La otra es \textbf{frecuencia de documentos}, y se calcula como la \textbf{cantidad de documentos en la clase que contienen al t\'ermino en cuesti\'on.}
 			
-			\smallskip
-			
-			Cuando son seleccionados varios miles de t\'erminos, entonces esta medida es bastante buena. Esta es preferible a otros m\'etodos m\'as complejos cuando se aceptan soluciones sub\'optimas.
+%			\smallskip
+%			
+%			Cuando son seleccionados varios miles de t\'erminos, entonces esta medida es bastante buena. Esta es preferible a otros m\'etodos m\'as complejos cuando se aceptan soluciones sub\'optimas.
 			
 		\end{itemize}
 		
@@ -657,6 +676,7 @@
 
 	\subsection{K Nearest Neighbor}
 	\frame[allowframebreaks, c]
+	{
 		\frametitle{K Nearest Neighbor}
 				
 		
@@ -672,15 +692,15 @@
 			
 		\framebreak	
 						
-			La tarea de la clasificaci\'on en el modelo de espacio de vectores es determinar las fronteras entre los documentos pertenecientes a una u otra clase. Estas \'ultimas son llamadas fronteras de decisi\'on ya que dividen el espacio en diferentes poliedros, tales que si un documento pertenece a uno determinado, autom\'aticamente sabemos de qu\'e clase es. 
+			La tarea de la clasificaci\'on en el modelo de espacio de vectores es determinar las fronteras entre los documentos pertenecientes a una u otra clase. Estas \'ultimas son llamadas \textbf{ fronteras de decisi\'on} ya que dividen el espacio en diferentes poliedros, tales que si un documento pertenece a uno determinado, autom\'aticamente sabemos de qu\'e clase es. 
 			
 		\framebreak	
 						
 			En K Nearest Neighbor la frontera de decisi\'on se determina localmente. En este se asigna cada documento a la misma clase que la mayor\'ia de los $k$ puntos m\'as cercanos al documento. Basado en la hip\'otsis de contig\"uidad se espera que el documento $d$ pertenezca a la misma clase que aquellos m\'as cercanos a \'el.
 			
-		\framebreak	
-						
-			En $kNN$ para subdividir el espacio de documentos en regiones, dado un $k \in \mathbb{N}$ fijo, consideramos cada regi\'on como el conjunto de puntos para los cuales los $k$ puntos m\'as cercanos son los mismos. Estas regiones son poliedros convexos. Luego para cada una de estas regiones existe una clase a la que pertenecen todos sus puntos, que es aquella a la que pertenecen la mayor\'ia de los documentos, ya clasificados, que est\'an dentro de la regi\'on. En caso de que haya empate, la decisi\'on de a que clase asignar a un nuevo documento que pertenece a esta regi\'on del espacio, es tomada aleatoriamente entre las clases empatadas.
+%		\framebreak	
+%						
+%			En $kNN$ para subdividir el espacio de documentos en regiones, dado un $k \in \mathbb{N}$ fijo, consideramos cada regi\'on como el conjunto de puntos para los cuales los $k$ puntos m\'as cercanos son los mismos. Estas regiones son poliedros convexos. Luego para cada una de estas regiones existe una clase a la que pertenecen todos sus puntos, que es aquella a la que pertenecen la mayor\'ia de los documentos, ya clasificados, que est\'an dentro de la regi\'on. En caso de que haya empate, la decisi\'on de a que clase asignar a un nuevo documento que pertenece a esta regi\'on del espacio, es tomada aleatoriamente entre las clases empatadas.
 			
 		\framebreak
 			
@@ -696,14 +716,14 @@
 			
 			El par\'ametro $k$ es usualmente seleccionado basado en el conocimiento que se posee sobre los problemas de clasificaci\'on similares al que se tiene. Otra forma de seleccionar $k$ es usando conjuntos de documentos de prueba (ya clasificados) para ver qu\'e valor de $k$ producen mejores resultados.
 			
-		\framebreak	
-						
-			Tambi\'en hay variantes del m\'etodo donde lo que se hace es calcular una similitud entre el documento $d$ a clasificar y cada uno de los $k$ m\'as cercanos, usando, por ejemplo, el coseno entre los vectores. Luego se hace un ranking entre las clases a las que pertenecen cada uno de los $k$ puntos. Para ello se calcula para cada $c$, la suma de la similitud entre $d$ y cada uno de los puntos que pertenecen a $c$ y a la vez est\'an entre los $k$ mencionados. La siguiente funci\'on $score$ produce el resultado deseado
-			\[
-			score(c,d)  = \sum_{d'\in S_k(d)} I_c(d') \cos(\overrightarrow{v}(d'),\overrightarrow{v}(d)),
-			\]
-			donde $S_k(d)$ es el conjunto de los $k$ puntos m\'as cercanos a $d$ e $I_c(d')$ es $1$ o $0$ en dependencia de si $d'$ pertenece a la clase $c$ o no. Finalmente se selecciona para $d$ la clase $c$ que m\'as alto aparezca en el ranking. En ocasiones esta variante presenta mayor exactitud que la anterior.
-			
+%		\framebreak	
+%						
+%			Tambi\'en hay variantes del m\'etodo donde lo que se hace es calcular una similitud entre el documento $d$ a clasificar y cada uno de los $k$ m\'as cercanos, usando, por ejemplo, el coseno entre los vectores. Luego se hace un ranking entre las clases a las que pertenecen cada uno de los $k$ puntos. Para ello se calcula para cada $c$, la suma de la similitud entre $d$ y cada uno de los puntos que pertenecen a $c$ y a la vez est\'an entre los $k$ mencionados. La siguiente funci\'on $score$ produce el resultado deseado
+%			\[
+%			score(c,d)  = \sum_{d'\in S_k(d)} I_c(d') \cos(\overrightarrow{v}(d'),\overrightarrow{v}(d)),
+%			\]
+%			donde $S_k(d)$ es el conjunto de los $k$ puntos m\'as cercanos a $d$ e $I_c(d')$ es $1$ o $0$ en dependencia de si $d'$ pertenece a la clase $c$ o no. Finalmente se selecciona para $d$ la clase $c$ que m\'as alto aparezca en el ranking. En ocasiones esta variante presenta mayor exactitud que la anterior.
+%			
 	}
 	
 	\subsection{Medidas de evaluaci\'on}
@@ -720,7 +740,7 @@
 
 		\framebreak	
 			
-			Para evaluar la labor de un clasificador se debe emplear un conjunto de documentos diferente al conjunto entrenante el cual se llama conjunto de prueba. Este debe estar en todo momento aislado del conjunto de entrenamiento. Si se juntan el clasificador puede aprender en su entrenamiento a reconocer los documentos del conjunto de prueba, y luego  al evaluar el mismo, el desempe\~no del sistema ser\'a mucho m\'as alto que el resultado real que tenga cuando se ponga en uso. Usualmente los datos que se tienen se dividen entre el conjunto entrenante y de prueba a raz\'on de $4:1$.
+			Para evaluar la labor de un clasificador se debe emplear un conjunto de documentos diferente al conjunto entrenante el cual se llama conjunto de prueba. Este debe estar en todo momento aislado del conjunto de entrenamiento. Usualmente los datos que se tienen se dividen entre el conjunto entrenante y de prueba a raz\'on de $4:1$.
 
 		\framebreak	
 			
