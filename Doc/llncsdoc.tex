@@ -559,6 +559,7 @@ A continuaci\'on se describen con m\'as detalle algunas de las aplicaciones m\'a
 		 	\tiny{Algoritmo para entrenar Naive Bayes tomado de \cite[Figura 13.2]{B1}}
 		 \end{algorithm}
 		 
+%		 \newpage
 		 \begin{algorithm}\label{Alg2}
 		 	\caption{ApplyMultinomialNB}
 		 	\begin{algorithmic}[1]
@@ -582,7 +583,7 @@ A continuaci\'on se describen con m\'as detalle algunas de las aplicaciones m\'a
 		 
 		Podemos deducir de los algoritmos que la complejidad de ambos es linear en el tiempo que toma escanear la informaci\'on. Dado que esto hay que hacerlo al menos una vez, se puede decir que este m\'etodo tiene complejidad temporal \'optima. Dicha eficiencia hace que NB sea un m\'etodo de clasificaci\'on tan usado.
 	
-	
+	\newpage
 	\subsection{Feature Selection}
 		Un t\'ermino con ruido (\emph{noise feature}) es aquel que al pertenecer a la representaci\'on de los documentos, provoca un aumento del error de clasificaci\'on de los datos. Por ejemplo, sup\'ongase que se tiene una palabra que ocurre rara vez, pero que en el conjunto de entrenamiento ocurre siempre en la misma clase $c$. Entonces al clasificar un documento nuevo que contiene esta palabra, la misma provocar\'a que el clasificador se incline en cierta medida por seleccionar esta a $c$ como respuesta. Sin embargo, dado que la ocurrencia de esta palabra \'unicamente en $c$ es accidental, claramente no aporta informaci\'on suficiente para la clasificaci\'on y por tanto, al considerar lo contrario, aumenta el error.
 		
@@ -647,16 +648,6 @@ A continuaci\'on se describen con m\'as detalle algunas de las aplicaciones m\'a
 		 En K Nearest Neighbor la frontera de decisi\'on se determina localmente. En este se asigna cada documento a la misma clase que la mayor\'ia de los $k$ puntos m\'as cercanos al documento. Basado en la hip\'otsis de contig\"uidad se espera que el documento $d$ pertenezca a la misma clase que aquellos m\'as cercanos a \'el.
 		 
 		En $kNN$ para subdividir el espacio de documentos en regiones, dado un $k \in \mathbb{N}$ fijo, consideramos cada regi\'on como el conjunto de puntos para los cuales los $k$ puntos m\'as cercanos son los mismos. Estas regiones son poliedros convexos. Luego para cada una de estas regiones existe una clase a la que pertenecen todos sus puntos, que es aquella a la que pertenecen la mayor\'ia de los documentos, ya clasificados, que est\'an dentro de la regi\'on. En caso de que haya empate, la decisi\'on de a que clase asignar a un nuevo documento que pertenece a esta regi\'on del espacio, es tomada aleatoriamente entre las clases empatadas. Los algoritmos $5$ y $6$ corresponden a los m\'etodos de entrenamiento y aplicaci\'on de kNN. 
-		
-		El par\'ametro $k$ es usualmente seleccionado basado en el conocimiento que se posee sobre los problemas de clasificaci\'on similares al que se tiene. Otra forma de seleccionar $k$ es usando conjuntos de documentos de prueba (ya clasificados) para ver qu\'e valor de $k$ producen mejores resultados.
-		
-		Tambi\'en hay variantes del m\'etodo donde lo que se hace es calcular una similitud entre el documento $d$ a clasificar y cada uno de los $k$ m\'as cercanos, usando, por ejemplo, el coseno entre los vectores. Luego se hace un ranking entre las clases a las que pertenecen cada uno de los $k$ puntos. Para ello se calcula para cada $c$, la suma de la similitud entre $d$ y cada uno de los puntos que pertenecen a $c$ y a la vez est\'an entre los $k$ mencionados. La siguiente funci\'on $score$ produce el resultado deseado
-		\[
-			score(c,d)  = \sum_{d'\in S_k(d)} I_c(d') \cos(\overrightarrow{v}(d'),\overrightarrow{v}(d)),
-		\]
-		donde $S_k(d)$ es el conjunto de los $k$ puntos m\'as cercanos a $d$ e $I_c(d')$ es $1$ o $0$ en dependencia de si $d'$ pertenece a la clase $c$ o no. Finalmente se selecciona para $d$ la clase $c$ que m\'as alto aparezca en el ranking. En ocasiones esta variante presenta mayor exactitud que la anterior.
-		
-		
 		\begin{algorithm}{}
 			\caption{Train-kNN}
 			\begin{algorithmic}[1]
@@ -690,6 +681,16 @@ A continuaci\'on se describen con m\'as detalle algunas de las aplicaciones m\'a
 			\smallskip
 			\tiny{Algoritmo para aplicar KNN tomado de \cite[Figura 14.7]{B1}}
 		\end{algorithm}
+		
+		El par\'ametro $k$ es usualmente seleccionado basado en el conocimiento que se posee sobre los problemas de clasificaci\'on similares al que se tiene. Otra forma de seleccionar $k$ es usando conjuntos de documentos de prueba (ya clasificados) para ver qu\'e valor de $k$ producen mejores resultados.
+		
+		Tambi\'en hay variantes del m\'etodo donde lo que se hace es calcular una similitud entre el documento $d$ a clasificar y cada uno de los $k$ m\'as cercanos, usando, por ejemplo, el coseno entre los vectores. Luego se hace un ranking entre las clases a las que pertenecen cada uno de los $k$ puntos. Para ello se calcula para cada $c$, la suma de la similitud entre $d$ y cada uno de los puntos que pertenecen a $c$ y a la vez est\'an entre los $k$ mencionados. La siguiente funci\'on $score$ produce el resultado deseado
+		\[
+			score(c,d)  = \sum_{d'\in S_k(d)} I_c(d') \cos(\overrightarrow{v}(d'),\overrightarrow{v}(d)),
+		\]
+		donde $S_k(d)$ es el conjunto de los $k$ puntos m\'as cercanos a $d$ e $I_c(d')$ es $1$ o $0$ en dependencia de si $d'$ pertenece a la clase $c$ o no. Finalmente se selecciona para $d$ la clase $c$ que m\'as alto aparezca en el ranking. En ocasiones esta variante presenta mayor exactitud que la anterior.
+		
+		
 		
 		
 	\subsection{Medidas de evaluaci\'on}
