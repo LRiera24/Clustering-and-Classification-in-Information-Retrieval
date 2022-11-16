@@ -434,10 +434,9 @@
 	}
 
 	\section{Clasificaci\'on}
-	\frame[allowframebreaks]
+	\frame[allowframebreaks, c]
 	{
 		\frametitle{Clasificaci\'on}
-		\vspace{6em}
 		El problema de clasificaci\'on en sentido general consiste en determinar dentro de un conjunto de clases a cu\'al de ellas pertenece un objeto dado. En el marco de este documento es de inter\'es estudiar la clasificaci\'on de textos. 
 		
 		La forma m\'as antigua de llevar a cabo la clasificaci\'on es manualmente. Por ejemplo, los bibliotecarios clasifican los libros de acuerdo a ciertos criterios, de modo que encontrar una informaci\'on buscada no resulte una tarea de gigante dificultad. Sin embargo, la clasificaci\'on manual tiene sus l\'imites de escalabilidad. 
@@ -461,7 +460,6 @@
 		
 		Se presenta a continuaci\'on la definici\'on formal del problema de clasificaci\'on de textos, en el contexto del Aprendizaje de M\'aquinas.
 		
-		\vspace{.5em}
 		
 		\textbf{Definici\'on 1:}
 			Sea $\mathcal{{X}}$ el espacio de documentos y $\mathcal{C} := \{c_i \mid c_i \subset \mathcal{X}, i \in \{ 1,2,\dots,n\} \}$ un conjunto fijo de clases (tambi\'en llamadas categor\'ias o etiquetas). Sea adem\'as $D$ un conjunto entrenado de documentos clasificados $(d,c) \in \mathcal X \times \mathcal{C}$. El \emph{problema de la clasificaci\'on de textos} consiste en encontrar, usando m\'etodos o algoritmos de aprendizaje, una funci\'on \emph{clasificadora} $\gamma : \mathcal{X} \rightarrow \mathcal{C}$, que mapee documentos a clases, que satisfaga que $D \subset \gamma$. 	
@@ -474,10 +472,14 @@
 	}
 	
 	\subsection{Naive Bayes}
-	\frame[allowframebreaks]{
+	\frame[allowframebreaks, c]{
 		\frametitle{Naive Bayes}
 		
-		Uno de los m\'etodos m\'as comunes de aprendizaje supervisado es el conocido como \emph{Naive Bayes} (NB). Este es un m\'etodo de aprendizaje probabil\'istico. La probabilidad de un documento $d$ de pertenecer a una clase $c$ se puede expresar como $P(c\mid d)$. La tarea del algoritmo es encontrar la mejor clase para cada documento $d$. Para ello NB establece que la clase m\'as apropiada para un documento es la m\'as probable, o sea
+		Uno de los m\'etodos m\'as comunes de aprendizaje supervisado es el conocido como \emph{Naive Bayes} (NB). Este es un m\'etodo de aprendizaje probabil\'istico.
+		
+		
+		\framebreak
+		 La probabilidad de un documento $d$ de pertenecer a una clase $c$ se puede expresar como $P(c\mid d)$. NB establece que la clase m\'as apropiada para un documento es la m\'as probable, o sea
 		
 		\[
 		c_{map} = \argmax_{c\in\mathcal{C}} P(c \mid d).
@@ -496,16 +498,18 @@
 		\]
 		
 		\framebreak
-		El factor de normalizaci\'on $P(d)$ es usualmente ignorado ya que no aporta informaci\'on a la hora de buscar la clase m\'as apropiada para un documento $d$, ya que este tiene el mismo efecto en todos los candidatos. Este c\'alculo puede ser simplificado si lo expresamos en t\'erminos de los t\'erminos en los documentos. Supongamos que $\{t_1, t_2, \dots , t_n \}$ son los t\'erminos que aparecen en $d$. Entonces tenemos que  
+		
+		El factor de normalizaci\'on $P(d)$ es usualmente ignorado ya que no aporta informaci\'on a la hora de buscar la clase m\'as apropiada para un documento $d$, ya que este tiene el mismo efecto en todos los candidatos. Este c\'alculo puede ser simplificado si lo expresamos en funci\'on de los t\'erminos en los documentos. Supongamos que $\{t_1, t_2, \dots , t_n \}$ son los t\'erminos que aparecen en $d$. Entonces tenemos que  
 		
 		\[
 		c_{map} = \argmax_{c\in\mathcal{C}} P(c) P(d \mid c) = \argmax_{c\in\mathcal{C}} P(c) \prod_{1\leq k\leq n} P(t_k \mid c),
 		\]
 		donde $P(t_k \mid c)$ es la probabilidad de que el t\'ermino $t_k$ aparezca en un documento de la clase $c$. 
 		
-		\framebreak
 		
-		Podemos considerar $p(t_k \mid c)$ como una medida de qu\'e tanto demuestra el t\'ermino $t_k$ que $c$ es la clase correcta. El t\'ermino $P(c)$ es conocido como probabilidad previa (\emph{prior probability}) y en caso de que la informaci\'on aportada por los t\'erminos no sea determinante en la selecci\'on podemos siempre escoger la clase con mayor valor de $P(c)$.
+		Podemos considerar $p(t_k \mid c)$ como una medida de qu\'e tanto demuestra el t\'ermino $t_k$ que $c$ es la clase correcta. 
+		
+		\framebreak
 		
 		Para simplificar aun m\'as el c\'omputo se pueden sustituir los valores anteriores por sus logaritmos. Esto reducir\'a el costo de hacer los c\'alculos y adem\'as los errores aritm\'eticos, dado que la multiplicaci\'on se transforma en suma. La clase seleccionada ser\'ia entonces
 		
@@ -517,15 +521,21 @@
 		\framebreak
 		
 		
-		Solo queda ver como se estiman los par\'ametros $P(c)$ y $P (t_k\mid c)$, dado que los valores reales no son posibles de calcular.	Para la probabilidad previa se puede contar la frecuencia relativa de cada clase en $D$:
+		Solo queda ver como se estiman los par\'ametros $P(c)$ y $P (t_k\mid c)$, dado que los valores reales no son posibles de calcular.
+		
+		
+			Para la probabilidad previa se puede contar la frecuencia relativa de cada clase en $D$:
 		
 		\[P(c) = \frac{ N_c }{N} , \]
-		donde $N_c$ es el n\'umero de documentos en la clase $c$ y $N$ es el n\'umero total de documentos. Se procede de manera similar para la probabilidad espec\'ifica de una palabra en una clase
+		donde $N_c$ es el n\'umero de documentos en la clase $c$ y $N$ es el n\'umero total de documentos.
+		
+		\framebreak
+		
+		 Se procede de manera similar para la probabilidad espec\'ifica de una palabra en una clase
 		\[
 		P(t_k\mid c) =\frac{ T_{c,t_k}}{T_{c}},
 		\]
 		
-		\framebreak
 		
 		
 		donde $T_{c,t_k}$ indica la cantidad de veces que ocurre  la palabra $t_k$ en todos los documentos de la clase $c$ y $T_{c}$ es la cantidad total de palabras (contando repeticiones) en toda la clase $c$. 
@@ -538,22 +548,18 @@
 		\]
 		donde $|V|$ es el n\'umero total de t\'eminos en el vocabulario.
 		
-		Es importante destacar que en este m\'etodo se est\'a obviando la posici\'on de las palabras. Se presentan aqu\'i los Algoritmos $3$ y $4$ para entrenar y clasificar usando BN que fueron tomados de \cite[Figure $13.2$]{B1}.
+		Es importante destacar que en este m\'etodo se est\'a obviando la posici\'on de las palabras.
 		
 		
 		\framebreak
 		
-		\textcolor{white}{.}
 		
-		\vspace{1.5em}
 		\includegraphics[width=10.5cm]{TrainMultinomial.png}
 		
 		\framebreak
 		
 		
-		\textcolor{white}{.}
 		
-		\vspace{3em}
 		\includegraphics[width=10.5cm]{ApplyMN.png}
 		
 		
@@ -563,43 +569,287 @@
 	}
 
 	\subsection{Feature Selection}
-	\frame{
+	\frame[allowframebreaks, c]{
 		\frametitle{Feature Selection}
+		
+		Un t\'ermino con ruido (\emph{noise feature}) es aquel que al pertenecer a la representaci\'on de los documentos, provoca un aumento del error de clasificaci\'on de los datos. Por ejemplo, sup\'ongase que se tiene una palabra que ocurre rara vez, pero que en el conjunto de entrenamiento ocurre siempre en la misma clase $c$. Entonces al clasificar un documento nuevo que contiene esta palabra, la misma provocar\'a que el clasificador se incline en cierta medida por seleccionar a $c$ como respuesta. Sin embargo, dado que la ocurrencia de esta palabra \'unicamente en $c$ es accidental, claramente no aporta informaci\'on suficiente para la clasificaci\'on y por tanto, al considerar lo contrario, aumenta el error.
+		
+	\framebreak
+	
+		Este es uno de los prop\'ositos que tiene la selecci\'on de t\'erminos (\emph{feature selection} (FS)). Esta consiste en reducir el vocabulario, considerado en la clasificaci\'on de textos solo un subconjunto del que aparece en el conjunto de entrenamiento. N\'otese que, al disminuir el tama\~no del vocabulario aumenta la eficiencia de los m\'etodos de entrenamiento y clasificaci\'on (aunque no es el caso de NB).
+		
+	\framebreak
+				
+		Selecci\'on de t\'erminos prefiere un clasificador m\'as simple antes que uno m\'as complejo. Esto es \'util cuando el conjunto de entrenamiento no es muy grande.
+		
+		%		Nos concentraremos en describir la Selecci\'on de t\'erminos para la clasificaci\'on de dos clases.
+		
+		En FS usualmente se fija una cantidad $k$ de vocablos por cada clase $c$, que ser\'an los usados por el clasificador. Para seleccionar los $k$ t\'erminos deseados se establece un ranking entre los t\'erminos de la clase, haciendo uso de una funci\'on de medida de utilidad $A(t,c)$, y luego se escogen los $k$ mejor posicionados. El algoritmo b\'asico consiste en para cada clase $c$ iterar por todos los t\'erminos del vocabulario y computar su medida de utilidad para la clase; para finalmente ordenar los resultados y devolver una lista con los $k$ mejores.
+		
+		Se presenta a continuaci\'on tres de los m\'etodos de calcular $A(t,c)$ m\'as comunes.
+		
+		\begin{itemize}
+			\item\textbf{Informaci\'on Manual.}
+			\smallskip
+			
+			Computar $A(t,c)$ como el valor esperado de informaci\'on mutua (\emph{Mutual Information} (MI)), da una medida de cu\'anta informaci\'on aporta, la presencia en $c$ de un t\'ermino dado, a tomar la decisi\'on correcta de clasificaci\'on de un documento. 
+			\[
+			I(U_t;C_t) = \sum_{e_t \in \{ 1,0 \} } \sum_{e_c \in \{ 1,0 \} } P( U_t = e_t, C_t = e_c) \log_2 \frac{P (U_t = e_t, C_t = e_c) }{ P(U_t = e_t) P(C_t = e_c) },
+			\]
+			donde $U_t$ es una variable aleatoria que toma valor $e_t = 1$ si el documento contiene el t\'ermino $t$ y $e_t = 0$ en otro caso, y $C$ es otra variable aleatoria que toma valor $e_c = 1$ si el documento est\'a en la clase $c$ y $e_c = 0  $ en otro caso. 
+			
+			\smallskip
+			
+		\framebreak
+			
+			MI mide cu\'anta informaci\'on un t\'ermino contiene acerca de una clase. Por tanto, mantener los t\'erminos que est\'an cargados de informaci\'on, y eliminar los que no, contribuye a reducir el ruido y mejorar la precisi\'on del clasificador.
+			
+			\smallskip
+			
+		\framebreak
+			
+			\item\textbf{Selecci\'on Chi cuadrado $\chi^2$.} 
+			\smallskip
+			
+			El test $\chi^2$ se usa para medir el grado de independencia de los eventos: ocurrencia de los t\'erminos y ocurrencia de las clases. 
+			
+			\[
+			\chi^2(D,t,c) = \sum_{e_t\in \{ 1, 0 \}} \sum_{e_c\in \{ 1, 0 \}} \frac{(N_{e_te_c} - E_{e_t e_c}) ^2 } { E_{e_t e_c}},
+			\]
+			donde $N$ es la frecuencia seg\'un $D$, $E$ es la frecuencia esperada y $e_t$ y  $e_c$ se definen como en la medida anterior.
+			
+			\smallskip
+			
+		\framebreak
+		
+			\item \textbf{Selecci\'on basada en frecuencia}.
+			\smallskip
+			
+			Esta medida consiste en priorizar los t\'erminos que son m\'as comunes en la  clase. Puede ser calculada de dos formas diferentes. La primera es cantidad de repeticiones de un t\'ermino en los documentos de una clase, conocida como frecuencia en colecci\'on. La otra es frecuencia de documentos, y se calcula como la cantidad de documentos en la clase que contienen al t\'ermino en cuesti\'on.
+			
+			\smallskip
+			
+			Cuando son seleccionados varios miles de t\'erminos, entonces esta medida es bastante buena. Esta es preferible a otros m\'etodos m\'as complejos cuando se aceptan soluciones sub\'optimas.
+			
+		\end{itemize}
+		
+		
 	}
 
 	\subsection{K Nearest Neighbor}
-	\frame{
+	\frame[allowframebreaks, c]
 		\frametitle{K Nearest Neighbor}
+				
+		
+			El m\'etodo que ser\'a presentado en esta secci\'on, as\'i como otros similares, asignan a cada t\'ermino cierto valor de importancia relativa al documento en que aparece. Para esto se cambia la representaci\'on de los documentos a vectores de $\mathbb{R}^{|V|}$, donde a cada componente corresponde cierto peso que se le asigna al t\'ermino correspondiente a esta. Entonces, el espacio de documentos $\mathcal{X}$ (dominio de $\gamma$) es $\mathbb{R}^{|V|}$. A esta forma de representaci\'on de documentos se le conoce como \textbf{modelo de espacio de vectores}.
+			
+		\framebreak		
+			
+			\textbf{Hip\'otesis de contig\"uidad:} Documentos en la misma clase forman una regi\'on contigua  y regiones de diferentes clases no se superponen.
+			
+		\framebreak	
+				
+			Las decisiones de muchos clasificadores basados en espacio de vectores dependen de una noci\'on de distancia. Pueden ser usadas por ejemplo similitud basado en el coseno (del \'angulo formado entre los vectores) o distancia Euclideana. Por lo general, no hay mucha diferencia entre usar una u otra de estas distancias.
+			
+		\framebreak	
+						
+			La tarea de la clasificaci\'on en el modelo de espacio de vectores es determinar las fronteras entre los documentos pertenecientes a una u otra clase. Estas \'ultimas son llamadas fronteras de decisi\'on ya que dividen el espacio en diferentes poliedros, tales que si un documento pertenece a uno determinado, autom\'aticamente sabemos de qu\'e clase es. 
+			
+		\framebreak	
+						
+			En K Nearest Neighbor la frontera de decisi\'on se determina localmente. En este se asigna cada documento a la misma clase que la mayor\'ia de los $k$ puntos m\'as cercanos al documento. Basado en la hip\'otsis de contig\"uidad se espera que el documento $d$ pertenezca a la misma clase que aquellos m\'as cercanos a \'el.
+			
+		\framebreak	
+						
+			En $kNN$ para subdividir el espacio de documentos en regiones, dado un $k \in \mathbb{N}$ fijo, consideramos cada regi\'on como el conjunto de puntos para los cuales los $k$ puntos m\'as cercanos son los mismos. Estas regiones son poliedros convexos. Luego para cada una de estas regiones existe una clase a la que pertenecen todos sus puntos, que es aquella a la que pertenecen la mayor\'ia de los documentos, ya clasificados, que est\'an dentro de la regi\'on. En caso de que haya empate, la decisi\'on de a que clase asignar a un nuevo documento que pertenece a esta regi\'on del espacio, es tomada aleatoriamente entre las clases empatadas.
+			
+		\framebreak
+			
+			
+			\includegraphics[width=10.5cm]{TrainkNN.png}
+			
+		\framebreak
+			
+			
+			\includegraphics[width=10.5cm]{ApplykNN.png}
+			
+		\framebreak
+			
+			El par\'ametro $k$ es usualmente seleccionado basado en el conocimiento que se posee sobre los problemas de clasificaci\'on similares al que se tiene. Otra forma de seleccionar $k$ es usando conjuntos de documentos de prueba (ya clasificados) para ver qu\'e valor de $k$ producen mejores resultados.
+			
+		\framebreak	
+						
+			Tambi\'en hay variantes del m\'etodo donde lo que se hace es calcular una similitud entre el documento $d$ a clasificar y cada uno de los $k$ m\'as cercanos, usando, por ejemplo, el coseno entre los vectores. Luego se hace un ranking entre las clases a las que pertenecen cada uno de los $k$ puntos. Para ello se calcula para cada $c$, la suma de la similitud entre $d$ y cada uno de los puntos que pertenecen a $c$ y a la vez est\'an entre los $k$ mencionados. La siguiente funci\'on $score$ produce el resultado deseado
+			\[
+			score(c,d)  = \sum_{d'\in S_k(d)} I_c(d') \cos(\overrightarrow{v}(d'),\overrightarrow{v}(d)),
+			\]
+			donde $S_k(d)$ es el conjunto de los $k$ puntos m\'as cercanos a $d$ e $I_c(d')$ es $1$ o $0$ en dependencia de si $d'$ pertenece a la clase $c$ o no. Finalmente se selecciona para $d$ la clase $c$ que m\'as alto aparezca en el ranking. En ocasiones esta variante presenta mayor exactitud que la anterior.
+			
 	}
 	
 	\subsection{Medidas de evaluaci\'on}
-	\frame
+	\frame[allowframebreaks, c]
 	{
-		\frametitle{Medidas de evaluaci\'on}	
+		\frametitle{Medidas de evaluaci\'on}
+			Una alta exactitud en la clasificaci\'on de los datos de entrenamiento no necesariamente se traduce en resultados correctos en los nuevos documentos introducidos. Puede suceder que el sistema resulte sobreentrenado (\emph{over-fitting}) o subentrenado (\emph{under-fitting}).
+
+		\framebreak	
+			
+			 El primero de estos ocurre cuando un sistema se entrena demasiado o se entrena con datos extra\~nos. En este caso el algoritmo de aprendizaje puede quedar ajustado a unas caracter\'isticas muy espec\'ificas de los datos de entrenamiento que no tienen relaci\'on causal con la funci\'on objetivo. Entonces el clasificador puede aprende incorrectamente a clasificar los elementos de alguna clase.
+			 
+			  Por otro lado under-fitting ocurre cuando el sistema tiene informaci\'on muy vaga sobre la frontera entre clases lo que provoca cierta aleatoriedad en la clasificaci\'on.
+
+		\framebreak	
+			
+			Para evaluar la labor de un clasificador se debe emplear un conjunto de documentos diferente al conjunto entrenante el cual se llama conjunto de prueba. Este debe estar en todo momento aislado del conjunto de entrenamiento. Si se juntan el clasificador puede aprender en su entrenamiento a reconocer los documentos del conjunto de prueba, y luego  al evaluar el mismo, el desempe\~no del sistema ser\'a mucho m\'as alto que el resultado real que tenga cuando se ponga en uso. Usualmente los datos que se tienen se dividen entre el conjunto entrenante y de prueba a raz\'on de $4:1$.
+
+		\framebreak	
+			
+			Las siguientes tres m\'etricas pueden ser utilizadas para evaluar clasificadores de dos clases (c y \~c):	
+			
+			\begin{itemize}
+				
+		\framebreak	
+				\item\textbf{Precisi\'on}
+				\[
+				Precision = \frac{tp}{tp + fp},
+				\]
+				
+				donde $tp$ es el n\'umero de documentos clasificados correctamente como de $c$ y $tp + fp$ es el total de documentos clasificados como $c$.
+				
+		\framebreak	
+				\item\textbf{Recobrado}
+				\[
+					Recobrado = \frac{tp}{tp + fn},
+				\]
+				donde $tp$ es el n\'umero de documentos correctamente identificados como $c$ y $tp + fn$ es el n\'umero de documentos que pertenecen a $c$.
+				
+				
+		\framebreak	
+				\item\textbf{Medida $F$} 
+				$$
+				F = 2 \times  \frac{Precision \times Recobrado}{Precision + Recobrado}
+				$$
+			\end{itemize}
+			
+			
+			
+		\framebreak	
+			
+			Podemos ver las clasificaciones anteriores en la matriz de contingencia. 
+			
+			\includegraphics[width=10.5cm]{Tabla.png}
+			
+		\framebreak	
+					
+			En el caso que la cantidad de clases sea mayor que dos, podemos computar promedios entre las m\'etricas anteriores viendo el clasificador como uno de dos clases aplicado a cada clase $c$ (y su complemento). Existen dos promedios que son los m\'as usados para esto. Macropromedio calcula simplemente la media entre las medidas anteriores para cada clasificador de dos clases. Micropromedio primero adiciona las matrices de contingencia correspondientes a diferentes clases y luego aplica una de las m\'etricas anteriores sobre la matriz resultante. 
+			
+				
 	}
 	
 	\subsection{Ventajas}
-	\frame
+	\frame[allowframebreaks, c]
 	{
 		\frametitle{Ventajas}
+		
+		\textbf{Ventajas:}
+		\begin{itemize}
+			\item Al usar el aprendizaje supervisado se puede tener una idea exacta sobre las clases de los documentos, dado que estas se crean en base a caracter\'isticas expl\'icitas de los mismos. 
+			\item La salida suele ser m\'as precisa que en el aprendizaje supervisado
+			\item El proceso es f\'acil de comprender ya que las acciones de la m\'aquina se reconocen con precisi\'on.
+			\item Es m\'as facil de trabajar con el aprendizaje supervisado que con el no supervisado. 
+			\item Se eval\'ua y recibe retroalimentaci\'on para comprobar la correctitud. 
+		\end{itemize}
 	}
 	
 	\subsection{Desventajas}
-	\frame
+	\frame[allowframebreaks, c]
 	{
 		\frametitle{Desventajas}
+		
+			\textbf{Desventajas:}
+			\begin{itemize}
+				\item Se necesita un especialista que determine cu\'ales ser\'an las clases en que se desea clasificar.
+				\item Se requiere de un conjunto de datos entrenantes.
+				\item Por lo general no se resuelven tareas tan complejas como en el aprendizaje supervisado.
+				\item Los algoritmos solo funcionan dentro de las restricciones que se le han impuestos por lo que no proporcionan soluciones creativas.
+				\item Suelen requerir mucho tiempo de entrenamiento.
+				\item Puede predecir la salida incorrecta si los datos de prueba son diferentes de los datos de entrenamiento.
+			\end{itemize}
 	}
 	
 	\subsection{Aplicaciones en la Recuperaci\'on de la Informaci\'on}
-	\frame
+	\frame[allowframebreaks, c]
 	{
 		\frametitle{Aplicaciones en la Recuperaci\'on de la Informaci\'on}
+		
+		
+		\begin{itemize}
+
+		\item Recuperaci\'on de consultas permanentes.
+
+		\framebreak	
+			
+			\item La organizaci\'on del correo personal: Es otros de los ejemplos relacionados con la Web que pueden ser resueltos mediante clasificaci\'on. En muchas ocasiones una persona tiene un n\'umero grande de correos en el buz\'on de entrada. A la hora de revisarlo ser\'ia deseable que pudiera dirigirse directamente a aquellos que son de inter\'es para \'el. Para ello la organizaci\'on autom\'atica del correo en carpetas podr\'ia ser una ventaja invaluable. Un ejemplo particular ser\'ia la carpeta de correo spam.
+
+		\framebreak	
+			
+		\item Clasificaci\'on de valoraciones sobre algo en positivas o negativas: Esto tendr\'ia numerosas aplicaciones pr\'acticas como pudiera ser la selecci\'on de una pel\'icula. Un usuario podr\'ia revisar la cantidad de comentarios negativos, antes de lanzarse a disponer de dos horas de su tiempo viendo un material audiovisual que no resultar\'a muy placentero. Los sistema que se especializan en este tipo de sugerencias de contenido, son llamados usualmente \textbf{sistemas de recomendaci\'on}.
+
+		\framebreak	
+			
+		\item	La clasificaci\'on de documentos en t\'opicos: Esta clasificaci\'on facilitar\'ia la implementaci\'on de un \textbf{motor de b\'usqueda vertical}, que permita al usuario restringir su b\'usqueda al tema deseado. Un SRI con semejante caracter\'istica permite hacer una b\'usqueda m\'as precisa en las consultas m\'as especializadas por el usuario.
+			
+		\framebreak				
+			
+		\item Creaci\'on de \'indices de los contenidos almacenados en un SRI: En el proceso de creaci\'on de los mencionados \'indices la clasificaci\'on puede jugar un importante papel. Por citar algunos ejemplos puede usarse para detectar el lenguaje de un documento, la segmentaci\'on y capitalizaci\'on de las palabras y el codificado del documento.
+			
+	\end{itemize}	
 	}
 	
 	\subsection{Otros ejemplos de aplicaci\'on}
-	\frame
+	\frame[allowframebreaks, c]
 	{
 		\frametitle{Otros ejemplos de aplicaci\'on}
+		
+		\begin{itemize}
+
+		\item La bioinform\'atica: Con el uso de sus algoritmos se permite automatizar la b\'usqueda de patrones en conjuntos de datos, que puedan ayudar a entender diferentes procesos biol\'ogicos que se manifiestan en los mismos. Debido a los grandes vol\'umenes de datos que se tienen ha crecido mucho en los \'ultimos a\~nos la aplicaci\'on de la clasificaci\'on en esta disciplina.
+		
+		
+		\framebreak		
+			
+		\begin{itemize}
+			
+			\item Predicci\'on de gen. Esta consiste en determinar que fracciones de una secuencia de ADN codifican prote\'inas. 
+			
+			\item Investigaci\'on de comunidades de microbios en nichos ecol\'ogicos. As\'i se puede obtener informaci\'on taxon\'omica y metab\'olica de las comunidades estudiadas. 
+			
+			\item Prote\'omica
+			
+			\item Microarrays 
+			
+			\item La biolog\'ia de sistemas.
+		
+		\end{itemize}
+		
+		\framebreak			
+		
+		\item Reconocimiento de algunos rasgos distintivos de una persona, como pueden ser, reconocimiento de rostros, huellas o voz. Este \'ultimo lo tenemos al alcance de nuestras manos en asistentes virtuales como Siri o  Google. Estas aplicaciones se entrenan para reconocer caracter\'isticas distintivas de tu voz, mediante un proceso de aprendizaje supervisado, para luego poder diferencias c\'uando eres t\'u quien les est\'a hablando.
+		
+		\framebreak			
+		
+		\item El mercado financiero: Se puede emplear en mejorar el mercado digital, las ventas en l\'inea, identificar el valor de vida \'util de un cliente, la tasa de abandono, recomendaciones de productos y an\'alisis de impacto de campa\~nas de mercado.
+		
+		\framebreak	
+				
+		\item En la seguridad inform\'atica: acciones como detecci\'on de virus, enlaces maliciosos y fraude. 
+		\item Internet de las cosas (IoT).
+		
+		\item Los motores de recomendaci\'on 
+		\item La fijaci\'on de precios din\'amicos de productos.
+		
+		\end{itemize}
 	}
 
 %	\section{Conclusiones}
