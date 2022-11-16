@@ -575,7 +575,7 @@ Este c\'alculo puede ser simplificado si lo expresamos en funci\'on de los t\'er
 		
 		\framebreak
 		
-		Sin embargo, a\'un tenemos un problema con estas f\'ormulas y es que estamos asignando probabilidad cero a todos las clases que no contengan a todas las palabras del documento a clasificar. Para evitar esto adicionamos por defecto una unidad a cada contador lo cual es conocido como \emph{Laplace smoothing}
+		Sin embargo, a\'un tenemos un problema con estas f\'ormulas y es que estamos asignando \textbf{probabilidad cero a todos las clases que no contengan a todas las palabras del documento a clasificar}. Para evitar esto adicionamos por defecto una unidad a cada contador lo cual es conocido como \emph{Laplace smoothing}
 		\[
 		P(t\mid c) = \frac{T_{c,t} + 1}{T_c + |V|},	
 		\]
@@ -629,7 +629,7 @@ Este c\'alculo puede ser simplificado si lo expresamos en funci\'on de los t\'er
 		Se presenta a continuaci\'on tres de los m\'etodos de calcular $A(t,c)$ m\'as comunes.
 		
 		\begin{itemize}
-			\item\textbf{Informaci\'on Manual.}
+			\item\textbf{Informaci\'on Mutua.}
 			\smallskip
 			
 			Computar $A(t,c)$ como el valor esperado de informaci\'on mutua (\emph{Mutual Information} (MI)), da una medida de \textbf{cu\'anta informaci\'on aporta, la presencia en $c$ de un t\'ermino dado, a tomar la decisi\'on correcta de clasificaci\'on de un documento. }
@@ -698,7 +698,7 @@ Este c\'alculo puede ser simplificado si lo expresamos en funci\'on de los t\'er
 			
 		\framebreak	
 						
-			En K Nearest Neighbor la frontera de decisi\'on se determina localmente. En este se asigna cada documento a la misma clase que la mayor\'ia de los $k$ puntos m\'as cercanos al documento. Basado en la hip\'otsis de contig\"uidad se espera que el documento $d$ pertenezca a la misma clase que aquellos m\'as cercanos a \'el.
+			En K Nearest Neighbor la frontera de decisi\'on se determina localmente. En este se asigna cada documento a la misma clase que la mayor\'ia de los $k$ puntos m\'as cercanos al documento. Basado en la hip\'otesis de contig\"uidad se espera que el documento $d$ pertenezca a la misma clase que aquellos m\'as cercanos a \'el.
 			
 %		\framebreak	
 %						
