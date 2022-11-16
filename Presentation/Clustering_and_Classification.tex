@@ -1,5 +1,7 @@
 \documentclass[t,compress,10pt,xcolor=dvipsnames]{beamer}
 
+\usepackage{amsmath}
+\newtheorem{mydef}{Definici\'on}
 \usepackage{lmodern}
 \usepackage[labelformat=empty,labelsep=none]{subfig}
 \usepackage{caption}
@@ -420,9 +422,53 @@
 	}
 
 	\section{Clasificaci\'on}
-	\frame
+	\frame[allowframebreaks]
 	{
 		\frametitle{Clasificaci\'on}
+		\vspace{6em}
+		El problema de clasificaci\'on en sentido general consiste en determinar dentro de un conjunto de clases a cu\'al de ellas pertenece un objeto dado. En el marco de este documento es de inter\'es estudiar la clasificaci\'on de textos. 
+		
+		La forma m\'as antigua de llevar a cabo la clasificaci\'on es manualmente. Por ejemplo, los bibliotecarios clasifican los libros de acuerdo a ciertos criterios, de modo que encontrar una informaci\'on buscada no resulte una tarea de gigante dificultad. Sin embargo, la clasificaci\'on manual tiene sus l\'imites de escalabilidad. 
+		
+		\framebreak
+%		\textcolor{white}{.}
+		
+		Como alternativa podr\'ia pensarse el uso de \emph{reglas} para determinar autom\'aticamente si un texto pertenece o no a una clase determinada de documentos.
+		
+		Se ilustrar\'a un ejemplo de regla aplicada autom\'aticamente. Supongamos que un usuario necesita hacer una consulta en una p\'agina de noticias, por ejemplo, necesita tener actualidad sobre noticias relacionadas con las finanzas para tomar decisiones en su negocio. Al usuario entonces le podr\'ia interesar que de hacer una consulta en el sistema dicha consulta se mantenga ejecutando y le provea peri\'odicamente las noticias relativas a finanzas. 
+		
+		\framebreak
+		
+		A este tipo de consultas se le denomina consultas permanentes  (o \emph{standing querys} en ingl\'es). Una consulta permanente es aquella que se ejecuta peri\'odicamente en una colecci\'on a la cual nuevos  documentos se adicionan en el tiempo. Toda consulta permanente se puede ver como un tipo de regla que se aplica a un sistema de clasificaci\'on que divide una colecci\'on en documentos que satisfacen la consulta y documentos que no.
+		
+		
+		%	 Por ejemplo las consultas permanentes son un ejemplo de regla aplicada autom\'aticamente. Una consulta permanente es como una consulta normal pero que es ejecutada repetidamente sobre una colecci\'on de textos a la cual se van adicionando documentos nuevos constantemente. Su finalidad es determinar si los nuevos textos pertenecen o no a la clase en cuesti\'on.
+		
+		Una regla captura una cierta combinaci\'on de palabras claves que identifican una clase. Reglas codificadas a mano pueden llegar a ser altamente escalable, pero crearlas y mantenerlas requiere un elevado costo en recursos humanos.
+		
+		\framebreak
+		\textcolor{white}{.}
+		
+		Existe, sin embargo, un enfoque adicional a los dos anteriores mencionados. Este es el uso de \emph{Aprendizaje de M\'aquinas}. En este enfoque el conjunto de reglas de clasificaci\'on, o en general, el criterio usado para clasificar, es aprendido de forma autom\'atica a partir de los datos de entrenamiento.
+		
+		Al uso del Aprendizaje de M\'aquinas en la clasificaci\'on de textos se le conoce como clasificaci\'on estad\'istica de texto (o en ingl\'es \emph{statistical text classification}) si el m\'etodo de aprendizaje usado es estad\'itico.
+		
+		\framebreak
+		
+		Se presenta a continuaci\'on la definici\'on formal del problema de clasificaci\'on de textos, en el contexto del Aprendizaje de M\'aquinas.
+		
+		\vspace{.5em}
+		
+		\textbf{Definici\'on:}
+			Sea $\mathcal{{X}}$ el espacio de documentos y $\mathcal{C} := \{c_i \mid c_i \subset \mathcal{X}, i \in \{ 1,2,\dots,n\} \}$ un conjunto fijo de clases (tambi\'en llamadas categor\'ias o etiquetas). Sea adem\'as $D$ un conjunto entrenado de documentos clasificados $(d,c) \in \mathcal X \times \mathcal{C}$. El \emph{problema de la clasificaci\'on de textos} consiste en encontrar, usando m\'etodos o algoritmos de aprendizaje, una funci\'on \emph{clasificadora} $\gamma : \mathcal{X} \rightarrow \mathcal{C}$, que mapee documentos a clases, que satisfaga que $D \subset \gamma$. 	
+		
+		\framebreak
+		
+		El aprendizaje que toma parte en la b\'usqueda de $\gamma$ es llamado \emph{aprendizaje supervisado} debido a que se necesita la ayuda de uno o varios expertos que creen el conjunto de entrenamiento $D$. Estos expertos son  tambi\'en quienes determinan el conjunto de clases en que se clasificar\'an los textos. Se denotar\'a  por $\Gamma$ el m\'etodo de aprendizaje supervisado descrito, el cual act\'ua como una funci\'on que mapea un conjunto de datos de entrenamiento en una funci\'on clasificadora, o sea que $\Gamma(D) = \gamma$.
+		
+		La definici\'on \ref{Problema_de_clasificacion} implica que cada documento pertenece a una sola clase. Pero existe otro tipo de problemas que permiten que un documento pertenezca a m\'as de una clase. Por ahora este trabajo se enfocar\'a en el tipo de una clase.
+		
+	
 	}
 	
 	\subsection{Naive Bayes}
