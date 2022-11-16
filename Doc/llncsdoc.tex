@@ -10,7 +10,6 @@
 \usepackage[noend]{algpseudocode}
 
 \usepackage{amsmath}
-%\usepackage{amsthm}
 %\theoremstyle{spanish}
 %\newtheorem{thm}{Theorem}[section]
 \newtheorem{mydef}{Definici\'on}
@@ -269,14 +268,14 @@ El \textit{agrupamiento particionado} crea un conjunto  de clústeres sin ningun
 En esta implementaci\'on de K-means, tomada de [\cite{B1}, figura 16.5, p.361], el primer paso es seleccionar al azar como centros iniciales de los cl\'usteres a K documentos, estas son las semillas. Luego, el algoritmo mueve los centros de los grupos en el espacio para minimizar el RSS. Este proceso se repite de manera iterativa hasta que se cumpla un criterio de parada.
 
 \vspace{0.5em}
-Opciones para la \textit{elecci\'on de las semillas}:
+Opciones para la elecci\'on de las semillas:
 \begin{itemize}
 	\item Escoger al azar.
 	\item Calcular la media $ m $ de todos los datos y generar k centros iniciales agregando un pequeño vector aleatorio a la media ($ m \pm \varsigma $).
 	\item Utilizar otro método como un algoritmo de agrupamiento jerárquico en un subconjunto de los objetos.
 \end{itemize}
 
-Algunos \textit{criterios de parada}:
+Algunos criterios de parada:
 \begin{itemize}
 	\item Cuando se ha completado un número fijo de iteraciones I. Esta condición limita el tiempo de ejecución del algoritmo de agrupamiento, pero en algunos casos la calidad de el agrupamiento será deficiente debido a un número insuficiente de iteraciones.
 	\item Cuando la asignación de documentos a grupos no cambia entre iteraciones. Excepto en los casos con un m\'inimo local malo, esto produce un buen agrupamiento, pero los tiempos de ejecución pueden ser demasiado largos.
@@ -417,8 +416,12 @@ propio clúster.
 
 A pesar de necesitar un segundo algoritmo de agrupamiento particionado como una subrutina, tiene la ventaja de ser más eficiente si no se genera una jerarquía completa hasta las hojas de documentos individuales. Adem\'as, se beneficia de la información completa sobre la distribución global al tomar decisiones de partición de alto nivel.
 
-\subsection{Ventajas} 
+\subsection{Ventajas y desventajas} 
 
+El agrupamiento juega un papel fundamental en la recuperaci\'on de informaci\'on, sin embargo, no es siempre la respuesta a los problemas de este tipo. Debemos tener en cuenta sus ventajas y desventajas para utilizarlo correctamente, en el momento apropiado. 
+
+\vspace{0.5em}
+\textbf{Ventajas:}
 \begin{itemize}
 	\item No es necesario identificar las clases antes del procesamiento por lo que no se debe contar con expertos para este fin.
 	
@@ -429,7 +432,7 @@ A pesar de necesitar un segundo algoritmo de agrupamiento particionado como una 
 	\item Debido a su amplia aplicación en dis\'imiles campos, cuenta el apoyo de una serie de paquetes de software, a menudo disponibles en la informática académica y otros entornos, por lo que se facilita su utilizaci\'on.
 \end{itemize}
 
-\subsection{Desventajas} 
+\textbf{Desventajas:} 
 	\begin{itemize}
 		\item No se tiene una idea exacta de las clases creadas.
 		\item No recibe retroalimentaci\'on.
