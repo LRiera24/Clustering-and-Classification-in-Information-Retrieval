@@ -7,6 +7,18 @@
 \usepackage{caption}
 \usepackage{float}
 \usepackage{wrapfig}
+\usepackage{algorithm}
+
+
+%\makeatletter
+%\renewcommand{\ALG@name}{Algoritmo}
+%\renewcommand{\listalgorithmname}{List of \ALG@name s}
+%\renewcommand{\algorithmicrequire}{Par\'ametros de entrada:}
+%\makeatother
+
+
+\DeclareMathOperator*{\argmax}{arg\,max}
+\DeclareMathOperator*{\argmin}{arg\,min}
 
 \newcommand*\oldmacro{}%
 \let\oldmacro\insertshorttitle% 
@@ -433,16 +445,8 @@
 		\framebreak
 %		\textcolor{white}{.}
 		
-		Como alternativa podr\'ia pensarse el uso de \emph{reglas} para determinar autom\'aticamente si un texto pertenece o no a una clase determinada de documentos.
-		
-		Se ilustrar\'a un ejemplo de regla aplicada autom\'aticamente. Supongamos que un usuario necesita hacer una consulta en una p\'agina de noticias, por ejemplo, necesita tener actualidad sobre noticias relacionadas con las finanzas para tomar decisiones en su negocio. Al usuario entonces le podr\'ia interesar que de hacer una consulta en el sistema dicha consulta se mantenga ejecutando y le provea peri\'odicamente las noticias relativas a finanzas. 
-		
-		\framebreak
-		
-		A este tipo de consultas se le denomina consultas permanentes  (o \emph{standing querys} en ingl\'es). Una consulta permanente es aquella que se ejecuta peri\'odicamente en una colecci\'on a la cual nuevos  documentos se adicionan en el tiempo. Toda consulta permanente se puede ver como un tipo de regla que se aplica a un sistema de clasificaci\'on que divide una colecci\'on en documentos que satisfacen la consulta y documentos que no.
-		
-		
-		%	 Por ejemplo las consultas permanentes son un ejemplo de regla aplicada autom\'aticamente. Una consulta permanente es como una consulta normal pero que es ejecutada repetidamente sobre una colecci\'on de textos a la cual se van adicionando documentos nuevos constantemente. Su finalidad es determinar si los nuevos textos pertenecen o no a la clase en cuesti\'on.
+		Como alternativa podr\'ia pensarse el uso de \emph{reglas} para determinar autom\'aticamente si un texto pertenece o no a una clase determinada de documentos. Esto est\'a relacionado con las consultas permanentes  (o \emph{standing querys} en ingl\'es). Una consulta permanente es aquella que se ejecuta peri\'odicamente en una colecci\'on a la cual nuevos  documentos se adicionan en el tiempo. Toda consulta permanente se puede ver como un tipo de regla que se aplica a un sistema de clasificaci\'on que divide una colecci\'on en documentos que satisfacen la consulta y documentos que no.
+		\smallskip
 		
 		Una regla captura una cierta combinaci\'on de palabras claves que identifican una clase. Reglas codificadas a mano pueden llegar a ser altamente escalable, pero crearlas y mantenerlas requiere un elevado costo en recursos humanos.
 		
@@ -459,21 +463,103 @@
 		
 		\vspace{.5em}
 		
-		\textbf{Definici\'on:}
+		\textbf{Definici\'on 1:}
 			Sea $\mathcal{{X}}$ el espacio de documentos y $\mathcal{C} := \{c_i \mid c_i \subset \mathcal{X}, i \in \{ 1,2,\dots,n\} \}$ un conjunto fijo de clases (tambi\'en llamadas categor\'ias o etiquetas). Sea adem\'as $D$ un conjunto entrenado de documentos clasificados $(d,c) \in \mathcal X \times \mathcal{C}$. El \emph{problema de la clasificaci\'on de textos} consiste en encontrar, usando m\'etodos o algoritmos de aprendizaje, una funci\'on \emph{clasificadora} $\gamma : \mathcal{X} \rightarrow \mathcal{C}$, que mapee documentos a clases, que satisfaga que $D \subset \gamma$. 	
 		
 		\framebreak
 		
-		El aprendizaje que toma parte en la b\'usqueda de $\gamma$ es llamado \emph{aprendizaje supervisado} debido a que se necesita la ayuda de uno o varios expertos que creen el conjunto de entrenamiento $D$. Estos expertos son  tambi\'en quienes determinan el conjunto de clases en que se clasificar\'an los textos. Se denotar\'a  por $\Gamma$ el m\'etodo de aprendizaje supervisado descrito, el cual act\'ua como una funci\'on que mapea un conjunto de datos de entrenamiento en una funci\'on clasificadora, o sea que $\Gamma(D) = \gamma$.
-		
-		La definici\'on \ref{Problema_de_clasificacion} implica que cada documento pertenece a una sola clase. Pero existe otro tipo de problemas que permiten que un documento pertenezca a m\'as de una clase. Por ahora este trabajo se enfocar\'a en el tipo de una clase.
+		El aprendizaje que toma parte en la b\'usqueda de $\gamma$ es llamado \emph{aprendizaje supervisado} debido a que se necesita la ayuda de uno o varios expertos que creen el conjunto de entrenamiento $D$. Estos expertos son  tambi\'en quienes determinan el conjunto de clases en que se clasificar\'an los textos. Por ahora este trabajo se enfocar\'a nos enfocaremos en problemas en que cada documento se clasifica dentro de una sola clase.
 		
 	
 	}
 	
 	\subsection{Naive Bayes}
-	\frame{
+	\frame[allowframebreaks]{
 		\frametitle{Naive Bayes}
+		
+		Uno de los m\'etodos m\'as comunes de aprendizaje supervisado es el conocido como \emph{Naive Bayes} (NB). Este es un m\'etodo de aprendizaje probabil\'istico. La probabilidad de un documento $d$ de pertenecer a una clase $c$ se puede expresar como $P(c\mid d)$. La tarea del algoritmo es encontrar la mejor clase para cada documento $d$. Para ello NB establece que la clase m\'as apropiada para un documento es la m\'as probable, o sea
+		
+		\[
+		c_{map} = \argmax_{c\in\mathcal{C}} P(c \mid d).
+		\]
+		
+		
+		\framebreak
+		
+		
+		La clase escogida para $d$ se denota por $c_{map}$ debido a que este m\'etodo de clasificaci\'on, de acuerdo a la clase m\'as probable para un documento dado, es conocido como \emph{maximum a posteriori} (MAP).
+		
+		Sin embargo la probabilidad condicional $P(c \mid d)$ es dif\'icil de determinar. Haciendo uso del \emph{Teorema de Bayes} la probabilidad anterior puede ser expresada como
+		
+		\[
+		P(c \mid d) =\frac{ P(d\mid c) P(c)}{P(d)}.
+		\]
+		
+		\framebreak
+		El factor de normalizaci\'on $P(d)$ es usualmente ignorado ya que no aporta informaci\'on a la hora de buscar la clase m\'as apropiada para un documento $d$, ya que este tiene el mismo efecto en todos los candidatos. Este c\'alculo puede ser simplificado si lo expresamos en t\'erminos de los t\'erminos en los documentos. Supongamos que $\{t_1, t_2, \dots , t_n \}$ son los t\'erminos que aparecen en $d$. Entonces tenemos que  
+		
+		\[
+		c_{map} = \argmax_{c\in\mathcal{C}} P(c) P(d \mid c) = \argmax_{c\in\mathcal{C}} P(c) \prod_{1\leq k\leq n} P(t_k \mid c),
+		\]
+		donde $P(t_k \mid c)$ es la probabilidad de que el t\'ermino $t_k$ aparezca en un documento de la clase $c$. 
+		
+		\framebreak
+		
+		Podemos considerar $p(t_k \mid c)$ como una medida de qu\'e tanto demuestra el t\'ermino $t_k$ que $c$ es la clase correcta. El t\'ermino $P(c)$ es conocido como probabilidad previa (\emph{prior probability}) y en caso de que la informaci\'on aportada por los t\'erminos no sea determinante en la selecci\'on podemos siempre escoger la clase con mayor valor de $P(c)$.
+		
+		Para simplificar aun m\'as el c\'omputo se pueden sustituir los valores anteriores por sus logaritmos. Esto reducir\'a el costo de hacer los c\'alculos y adem\'as los errores aritm\'eticos, dado que la multiplicaci\'on se transforma en suma. La clase seleccionada ser\'ia entonces
+		
+		
+		\[
+		c_{map} = \argmax_{c\in\mathcal{C}} \left( \log(P(c))  + \sum_{1\leq k\leq n} \log(P(t_k\mid c)) \right).
+		\]
+		
+		\framebreak
+		
+		
+		Solo queda ver como se estiman los par\'ametros $P(c)$ y $P (t_k\mid c)$, dado que los valores reales no son posibles de calcular.	Para la probabilidad previa se puede contar la frecuencia relativa de cada clase en $D$:
+		
+		\[P(c) = \frac{ N_c }{N} , \]
+		donde $N_c$ es el n\'umero de documentos en la clase $c$ y $N$ es el n\'umero total de documentos. Se procede de manera similar para la probabilidad espec\'ifica de una palabra en una clase
+		\[
+		P(t_k\mid c) =\frac{ T_{c,t_k}}{T_{c}},
+		\]
+		
+		\framebreak
+		
+		
+		donde $T_{c,t_k}$ indica la cantidad de veces que ocurre  la palabra $t_k$ en todos los documentos de la clase $c$ y $T_{c}$ es la cantidad total de palabras (contando repeticiones) en toda la clase $c$. 
+		
+		\framebreak
+		
+		Sin embargo, a\'un tenemos un problema con estas f\'ormulas y es que estamos asignando probabilidad cero a todos las clases que no contengan a todas las palabras del documento a clasificar. Para evitar esto adicionamos por defecto una unidad a cada contador lo cual es conocido como \emph{Laplace smoothing}
+		\[
+		P(t\mid c) = \frac{T_{c,t} + 1}{T_c + |V|},	
+		\]
+		donde $|V|$ es el n\'umero total de t\'eminos en el vocabulario.
+		
+		Es importante destacar que en este m\'etodo se est\'a obviando la posici\'on de las palabras. Se presentan aqu\'i los Algoritmos $3$ y $4$ para entrenar y clasificar usando BN que fueron tomados de \cite[Figure $13.2$]{B1}.
+		
+		
+		\framebreak
+		
+		\textcolor{white}{.}
+		
+		\vspace{1.5em}
+		\includegraphics[width=10.5cm]{TrainMultinomial.png}
+		
+		\framebreak
+		
+		
+		\textcolor{white}{.}
+		
+		\vspace{3em}
+		\includegraphics[width=10.5cm]{ApplyMN.png}
+		
+		
+		\framebreak
+		
+		Podemos deducir de los algoritmos que la complejidad de ambos es linear en el tiempo que toma escanear la informaci\'on. Dado que esto hay que hacerlo al menos una vez, se puede decir que este m\'etodo tiene complejidad temporal \'optima. Dicha eficiencia hace que NB sea un m\'etodo de clasificaci\'on tan usado.
 	}
 
 	\subsection{Feature Selection}
