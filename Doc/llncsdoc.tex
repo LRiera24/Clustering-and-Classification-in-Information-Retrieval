@@ -10,6 +10,10 @@
 \usepackage[noend]{algpseudocode}
 
 \usepackage{amsmath}
+\usepackage{amsthm}
+%\theoremstyle{spanish}
+%\newtheorem{thm}{Theorem}[section]
+\newtheorem{mydef}{Definici\'on}
 \DeclareMathOperator*{\argmax}{arg\,max}
 \DeclareMathOperator*{\argmin}{arg\,min}
 
@@ -482,10 +486,10 @@ A continuaci\'on se describen con m\'as detalle algunas de las aplicaciones m\'a
 	
 	Se presenta a continuaci\'on la definici\'on formal del problema de clasificaci\'on de textos, en el contexto del Aprendizaje de M\'aquinas.
 	
-	\begin{definition} \label{Problema_de_clasificacion}
+	\begin{mydef} \label{Problema_de_clasificacion}
 		Sea $\mathcal{{X}}$ el espacio de documentos y $\mathcal{C} := \{c_i \mid c_i \subset \mathcal{X}, i \in \{ 1,2,\dots,n\} \}$ un conjunto fijo de clases (tambi\'en llamadas categor\'ias o etiquetas). Sea adem\'as $D$ un conjunto entrenado de documentos clasificados $(d,c) \in \mathcal X \times \mathcal{C}$. El \emph{problema de la clasificaci\'on de textos} consiste en encontrar, usando m\'etodos o algoritmos de aprendizaje, una funci\'on \emph{clasificadora} $\gamma : \mathcal{X} \rightarrow \mathcal{C}$, que mapee documentos a clases, que satisfaga que $D \subset \gamma$. 	
 
-	\end{definition}
+	\end{mydef}
 	
 	El aprendizaje que toma parte en la b\'usqueda de $\gamma$ es llamado \emph{aprendizaje supervisado} debido a que se necesita la ayuda de uno o varios expertos que creen el conjunto de entrenamiento $D$. Estos expertos son  tambi\'en quienes determinan el conjunto de clases en que se clasificar\'an los textos. Se denotar\'a  por $\Gamma$ el m\'etodo de aprendizaje supervisado descrito, el cual act\'ua como una funci\'on que mapea un conjunto de datos de entrenamiento en una funci\'on clasificadora, o sea que $\Gamma(D) = \gamma$.
 	
