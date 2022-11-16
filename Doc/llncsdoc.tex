@@ -107,7 +107,7 @@ La entrada clave para un algoritmo de agrupamiento es la medida de distancia. Di
 \textbf{Hip\'otesis de agrupamiento:} \textit{Los documentos en el mismo grupo se comportan de manera similar con respecto a la relevancia para las necesidades de información.}
 	
 \vspace{0.3em}
-La hipótesis, tomada de [\cite{B1}, secci\'on 16.1, p.350], establece que si hay un documento de un grupo que es relevante a una solicitud de búsqueda, entonces es probable que otros documentos del mismo clúster también sean relevantes. 
+La hipótesis, tomada de \cite[Secci\'on 16.1, p.350]{B1}, establece que si hay un documento de un grupo que es relevante a una solicitud de búsqueda, entonces es probable que otros documentos del mismo clúster también sean relevantes. 
 \vspace{1em}
 
 Los algoritmos de agrupamiento pueden ser clasificados seg\'un la pertenencia a los grupos en \textit{agrupamiento exclusivo o fuerte} (hard clustering) donde cada documento es miembro de exactamente un grupo; o \textit{agrupamiento difuso o suave} (soft clustering) donde un documento tiene membresía fraccionaria en varios grupos. Tambi\'en pueden clasificarse seg\'un el tipo de estructura impuesta sobre los datos como \textit{agrupamiento particionado o plano} (flat clustering) o \textit{agrupamiento jer\'arquico} (hierarchical clustering).
@@ -131,7 +131,7 @@ Sean $ d_{i} $ el $ i $-ésimo documento del corpus y $ w_{ik} $ el peso del t\'
 	\end{center}
 \end{itemize}
 
-Las ecuaciones anteriores fueron tomadas de [\cite{B3}, secci\'on 16.2.2, p.3].
+Las ecuaciones anteriores fueron tomadas de \cite[Secci\'on 16.2.2, p.3]{B3}.
 
 \subsection{Medidas de evaluaci\'on} 
 	\normalsize
@@ -142,7 +142,7 @@ Las ecuaciones anteriores fueron tomadas de [\cite{B3}, secci\'on 16.2.2, p.3].
 		$purity(\Omega, C) = \dfrac{1}{N} \sum_{k}max_{j} |\omega_{k} \cap c_{j}| $ 
 	\end{center}
 	
-	donde $ \Omega = \{\omega_{1}, \omega_{2}, ... , \omega_{K}\} $ es el conjunto de cl\'usteres y $ C = \{c_{1}, c_{2}, ... , c_{J}\} $ es el conjunto de clases. Se interpreta $ \omega_{k} $ como el conjunto de documentos en el cl\'uster y $ c_{j} $ como el conjunto de documentos que pertenecen a esa clase. Esta ecuaci\'on fue tomada de [\cite{B1}, ecuaci\'on 16.1, p.357].
+	donde $ \Omega = \{\omega_{1}, \omega_{2}, ... , \omega_{K}\} $ es el conjunto de cl\'usteres y $ C = \{c_{1}, c_{2}, ... , c_{J}\} $ es el conjunto de clases. Se interpreta $ \omega_{k} $ como el conjunto de documentos en el cl\'uster y $ c_{j} $ como el conjunto de documentos que pertenecen a esa clase. Esta ecuaci\'on fue tomada de \cite[Ecuaci\'on 16.1, p.357]{B1}.
 	
 	Malos agrupamientos tienen valores de pureza cercanos a 0, mientras que un agrupamiento perfecto tiene una pureza 1.
 	
@@ -156,7 +156,7 @@ Las ecuaciones anteriores fueron tomadas de [\cite{B3}, secci\'on 16.2.2, p.3].
 		$ 
 	\end{center}
 	
-	Tomado de [\cite{B1}, ecuaci\'on 16.2, p.358]
+	Tomado de \cite[Ecuaci\'on 16.2, p.358]{B1}.
 	
 	I es la informaci\'on mutua:
 	\begin{center}
@@ -164,7 +164,7 @@ Las ecuaciones anteriores fueron tomadas de [\cite{B3}, secci\'on 16.2.2, p.3].
 	\end{center}
 	donde $ P(\omega_{k}) $, $ P(c_{j}) $ y $ P(\omega_{k} \cap c_{j}) $ son las probabilidades de que un documento sea del cl\'uster $ \omega_{k} $, clase $ c_{j} $, y est\'e en la intersección de $ \omega_{k} $ y $ c_{j} $, respectivamente.
 	
-	La ecuaci\'on anterior fue tomada de [\cite{B1}, ecuaci\'on 16.3, p.358]
+	La ecuaci\'on anterior fue tomada de \cite[Ecuaci\'on 16.3, p.358]{B1}.
 	
 	\vspace{0.5em}
 	H es la entropía (mide la incertidumbre de una fuente de información)
@@ -173,7 +173,7 @@ Las ecuaciones anteriores fueron tomadas de [\cite{B3}, secci\'on 16.2.2, p.3].
 		$ H(\Omega) = -\sum_{k}P(\omega_{k}) \log P(\omega_{k}) $ 
 	\end{center}
 	
-	La ecuaci\'on anterior fue tomada de [\cite{B1}, ecuaci\'on 16.5, p.358]
+	La ecuaci\'on anterior fue tomada de \cite[Ecuaci\'on 16.5, p.358]{B1}. 
 	
 	Se alcanza la máxima información mutua para un agrupamiento exacto que perfectamente recrea las clases pero también si los grupos se subdividen en cl\'usteres más pequeños. 
 	
@@ -191,7 +191,7 @@ Las ecuaciones anteriores fueron tomadas de [\cite{B3}, secci\'on 16.2.2, p.3].
 		$ RI = \dfrac{TP + TN}{TP + FP + FN + TN} $ 
 	\end{center}
 	
-	La ecuaci\'on anterior fue tomada de [\cite{B1}, secci\'on 8.3, p.155].
+	La ecuaci\'on anterior fue tomada de \cite[Secci\'on 8.3, p.155]{B1}.
 	
 	El índice de Rand otorga el mismo peso a los falsos positivos y falsos negativos. Separar documentos similares a veces es peor que poner pares de dos documentos no similares en el mismo grupo.
 	
@@ -204,7 +204,7 @@ Las ecuaciones anteriores fueron tomadas de [\cite{B3}, secci\'on 16.2.2, p.3].
 		\vspace{1em}
 		$ F_{\beta} = \dfrac{(\beta^{2} + 1)PR}{\beta^{2}P + R} $
 	\end{center}
-	La ecuaci\'on anterior fue tomada de [\cite{B1}, secci\'on 8.3, p.154].
+	La ecuaci\'on anterior fue tomada de \cite[Secci\'on 8.3, p.154]{B1}.
 \end{itemize}
 
 \subsection{Agrupamiento particionado}
@@ -223,7 +223,7 @@ El \textit{agrupamiento particionado} crea un conjunto  de clústeres sin ningun
 		$ \overrightarrow{\mu}(\omega) \leftarrow \dfrac{1}{|\omega_{k}|} \sum_{\overrightarrow{x} \in \omega_{k}} \overrightarrow{x} $
 	\end{center}
 	
-	La ecuaci\'on anterior fue tomada de [\cite{B1}, cap\'itulo 6, p.131].
+	La ecuaci\'on anterior fue tomada de \cite[Cap\'itulo 6, p.131]{B1}.
 	
 	Se asume que los documentos se representan como vectores de longitud normalizada  en un espacio de valor real de la manera habitual.  
 	
@@ -236,7 +236,7 @@ El \textit{agrupamiento particionado} crea un conjunto  de clústeres sin ningun
 	$ RSS = \sum_{k=1}^{K} RSS_{k} $
 	\end{center}
 	
-	La ecuaci\'on anterior fue tomada de [\cite{B1}, ecuaci\'on 16.7, p.360].
+	La ecuaci\'on anterior fue tomada de \cite[Ecuaci\'on 16.7, p.360]{B1}.
 	
 	RSS es entonces la función objetivo en K-means y nuestro objetivo es minimizarla.
 	
@@ -265,7 +265,7 @@ El \textit{agrupamiento particionado} crea un conjunto  de clústeres sin ningun
 		\end{algorithmic}
 	\end{algorithm}
 
-En esta implementaci\'on de K-means, tomada de [\cite{B1}, figura 16.5, p.361], el primer paso es seleccionar al azar como centros iniciales de los cl\'usteres a K documentos, estas son las semillas. Luego, el algoritmo mueve los centros de los grupos en el espacio para minimizar el RSS. Este proceso se repite de manera iterativa hasta que se cumpla un criterio de parada.
+En esta implementaci\'on de K-means, tomada de \cite[Figura 16.5, p.361]{B1}, el primer paso es seleccionar al azar como centros iniciales de los cl\'usteres a K documentos, estas son las semillas. Luego, el algoritmo mueve los centros de los grupos en el espacio para minimizar el RSS. Este proceso se repite de manera iterativa hasta que se cumpla un criterio de parada.
 
 \vspace{0.5em}
 Opciones para la elecci\'on de las semillas:
@@ -308,7 +308,7 @@ Toman decisiones basadas en patrones locales sin tener inicialmente en cuenta la
 		$ sim(\omega_{i}, \omega_{j}) = max_{\overrightarrow{x} \in \omega_{i}, \overrightarrow{y} \in \omega_{j}} SIM(\overrightarrow{x}, \overrightarrow{y})$
 	\end{center}
 	
-	La ecuaci\'on anterior fue tomada de [\cite{B2}, p.50].
+	La ecuaci\'on anterior fue tomada de \cite[p.50]{B2}.
 	
 	\vspace{1em}
 	\item \textbf{Agrupamiento por enlazamiento completo} (complete link clustering): La similitud entre dos cl\'usters es la similitud de los dos objetos más alejados entre ellos (menor similitud). 
@@ -317,7 +317,7 @@ Toman decisiones basadas en patrones locales sin tener inicialmente en cuenta la
 		$ sim(\omega_{i}, \omega_{j}) = min_{\overrightarrow{x} \in \omega_{i}, \overrightarrow{y} \in \omega_{j}} SIM(\overrightarrow{x}, \overrightarrow{y})$
 	\end{center}
 	
-	La ecuaci\'on anterior fue tomada de [\cite{B2}, p.51].
+	La ecuaci\'on anterior fue tomada de \cite[p.51]{B2}.
 	
 	\vspace{1em}
 	\item \textbf{Agrupamiento aglomerativo por promedio de grupo} (group-average agglomerative clustering): El agrupamiento aglomerativo por promedio de grupo o GAAC por sus siglas en ingl\'es, calcula la similitud promedio SIM-GA de todos los pares de documentos, incluidos los pares del mismo grupo (las auto-similitudes no están incluidas en el promedio).
@@ -327,7 +327,7 @@ Toman decisiones basadas en patrones locales sin tener inicialmente en cuenta la
 	$ SIM-GA(\omega_{i}, \omega_{j}) = \dfrac{1}{(N_{i} + N_{j})(N_{i} + N_{j} - 1)} \sum_{\overrightarrow{x} \in \omega_{i} \cup \omega_{j}} \sum_{\overrightarrow{y} \in \omega_{i} \cup \omega_{j}, \overrightarrow{x} \neq \overrightarrow{y}} \overrightarrow{x} \cdot \overrightarrow{y} $
 	\end{center}
 	
-	La ecuaci\'on anterior fue tomada de [\cite{B1}, ecuaci\'on 17.1, p.389].
+	La ecuaci\'on anterior fue tomada de \cite[Ecuaci\'on 17.1, p.389]{B1}
 	
 	Esta evalúa la calidad de un clúster basada en todas las similitudes entre documentos, evitando así castigar valores extremos como en los criterios de enlace único y enlace completo, que establecen la similitud del cl\'uster con la similitud de un solo par de documentos.
 	
@@ -340,7 +340,7 @@ Toman decisiones basadas en patrones locales sin tener inicialmente en cuenta la
 			& = \dfrac{1}{N_{i}N_{j}} \sum_{\overrightarrow{x} \in \omega_{i}}\sum_{\overrightarrow{y} \in \omega_{j}}\overrightarrow{x}\cdot\overrightarrow{y} \nonumber
 		\end{align}
 	
-	La ecuaci\'on anterior fue tomada de  [\cite{B1}, ecuaci\'on 17.6, p.391].
+	La ecuaci\'on anterior fue tomada de  \cite[Ecuaci\'on 17.6, p.391]{B1}.
 	
 	A diferencia de GAAC, el agrupamiento por centroide excluye el c\'alculo de pares del mismo cl\'uster.
 \end{itemize}
@@ -387,7 +387,7 @@ Dado un conjunto de N elementos a agrupar, el proceso básico del agrupamiento j
 \end{algorithm}
 
 \newpage
-Esta implementaci\'on del algoritmo HAC fue tomada de [\cite{B1}, figura 17.2, p.381].
+Esta implementaci\'on del algoritmo HAC fue tomada de \cite[Figura 17.2, p.381]{B1}.
 
 \vspace{0.5em}
 Notas: 
@@ -593,7 +593,6 @@ A continuaci\'on se describen con m\'as detalle algunas de las aplicaciones m\'a
 		 
 		Podemos deducir de los algoritmos que la complejidad de ambos es linear en el tiempo que toma escanear la informaci\'on. Dado que esto hay que hacerlo al menos una vez, se puede decir que este m\'etodo tiene complejidad temporal \'optima. Dicha eficiencia hace que NB sea un m\'etodo de clasificaci\'on tan usado.
 	
-	\newpage
 	\subsection{Feature Selection}
 		Un t\'ermino con ruido (\emph{noise feature}) es aquel que al pertenecer a la representaci\'on de los documentos, provoca un aumento del error de clasificaci\'on de los datos. Por ejemplo, sup\'ongase que se tiene una palabra que ocurre rara vez, pero que en el conjunto de entrenamiento ocurre siempre en la misma clase $c$. Entonces al clasificar un documento nuevo que contiene esta palabra, la misma provocar\'a que el clasificador se incline en cierta medida por seleccionar esta a $c$ como respuesta. Sin embargo, dado que la ocurrencia de esta palabra \'unicamente en $c$ es accidental, claramente no aporta informaci\'on suficiente para la clasificaci\'on y por tanto, al considerar lo contrario, aumenta el error.
 		
