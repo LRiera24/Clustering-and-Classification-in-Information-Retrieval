@@ -528,7 +528,7 @@ A continuaci\'on se describen con m\'as detalle algunas de las aplicaciones m\'a
 		\]
 		donde $|V|$ es el n\'umero total de t\'eminos en el vocabulario.
 		
-		 Es importante destacar que en este m\'etodo se est\'a obviando la posici\'on de las palabras. Se presentan aqu\'i los algoritmos para entrenar y clasificar usando BN que fueron tomados de \cite[Figure $13.2$]{B1}.
+		 Es importante destacar que en este m\'etodo se est\'a obviando la posici\'on de las palabras. Se presentan aqu\'i los Algoritmos $3$ y $4$ para entrenar y clasificar usando BN que fueron tomados de \cite[Figure $13.2$]{B1}.
 		 
 		 
 		 
@@ -537,7 +537,7 @@ A continuaci\'on se describen con m\'as detalle algunas de las aplicaciones m\'a
 		 	\begin{algorithmic}[1]
 		 		
 		 		% ENTRADA / SALIDA
-		 		\Require{Set of classes $\mathcal{C}$ and training set $D$.} 
+		 		\Require{Conjunto de clases $\mathcal{C}$ y conjunto de entrenamiento $D$.} 
 %		 		\Ensure{Trained.}
 		 		\State{$ V \leftarrow ExtractVocabulary(D)$}
 		 		\State{$ N \leftarrow CountDocs(D)$}
@@ -662,7 +662,7 @@ A continuaci\'on se describen con m\'as detalle algunas de las aplicaciones m\'a
 			\begin{algorithmic}[1]
 				
 				% ENTRADA / SALIDA
-				\Require{Set of classes $\mathcal{C}$ and training set $D$.} 
+				\Require{Conjunto de clases $\mathcal{C}$ y conjunto de entrenamiento $D$.} 
 				%		 		\Ensure{Trained.}
 				\State{$ D' \leftarrow PreProcess(D)$}
 				\State{$ k \leftarrow Selectk(\mathcal{C}, D')$}
@@ -728,7 +728,13 @@ A continuaci\'on se describen con m\'as detalle algunas de las aplicaciones m\'a
 			En el caso que la cantidad de clases sea mayor que dos, podemos computar promedios entre las m\'etricas anteriores viendo el clasificador como uno de dos clases aplicado a cada clase $c$ (y su complemento). Existen dos promedios que son los m\'as usados para esto. Macropromedio calcula simplemente la media entre las medidas anteriores para cada clasificador de dos clases. Micropromedio primero adiciona las matrices de contingencia correspondientes a diferentes clases y luego aplica una de las m\'etricas anteriores sobre la matriz resultante. 
 			
 			
-	\subsection{Ventajas}
+	\subsection{Ventajas y desventajas}
+		Al igual que usar los m\'etodos de agrupamiento tiene sus ventajas y desventajas, lo mismo sucede con los de clasificaci\'on. N\'otese que, algunas de estas ventajas que se presentar\'an constituyen desventajas de los modelos no supervisados, y contrariamente, algunas de las ventajas de los modelos no supervisados constituyen desventajas de los supervisados. Esto es bueno porque si no es divisable con cu\'al de los m\'etodos alinea mejor el problema a solucionar, con el an\'alisis de pros y contras se puede reducir f\'acilmente la selecci\'on del correcto. 
+		
+		Se listan a continuaci\'on las ventajas y desventajas de la clasificaci\'on.
+		
+			\smallskip
+			 \textbf{Ventajas:}
 				\begin{itemize}
 					\item Al usar el aprendizaje supervisado se puede tener una idea exacta sobre las clases de los documentos, dado que estas se crean en base a caracter\'isticas expl\'icitas de los mismos. 
 					\item La salida suele ser m\'as precisa que en el aprendizaje supervisado
@@ -737,7 +743,8 @@ A continuaci\'on se describen con m\'as detalle algunas de las aplicaciones m\'a
 					\item Se eval\'ua y recibe retroalimentaci\'on para comprobar la correctitud. 
 				\end{itemize}
 		
-	\subsection{Desventajas}
+				\smallskip
+				\textbf{Desventajas:}
 				\begin{itemize}
 					\item Se necesita un especialista que determine cu\'ales ser\'an las clases en que se desea clasificar.
 					\item Se requiere de un conjunto de datos entrenantes.
